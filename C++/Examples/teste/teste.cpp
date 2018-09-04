@@ -122,12 +122,15 @@ int main(int argc, char *argv[])
 
         
         barometer.refreshPressure();
-        usleep(10000);
-    	barometer.refreshTemperature();
-    	usleep(10000);
+        usleep(10000); // Waiting for pressure data ready
         barometer.readPressure();
+
+        barometer.refreshTemperature();
+        usleep(10000); // Waiting for temperature data ready
         barometer.readTemperature();
+
         barometer.calculatePressureAndTemperature();
+
         printf("Temperature(C): %f Pressure(millibar): %f\n", 
                 barometer.getTemperature(), barometer.getPressure());
                 
