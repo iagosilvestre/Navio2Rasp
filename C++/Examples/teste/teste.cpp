@@ -122,7 +122,9 @@ int main(int argc, char *argv[])
 
         
         barometer.refreshPressure();
+        usleep(10000);
     	barometer.refreshTemperature();
+    	usleep(10000);
         barometer.readPressure();
         barometer.readTemperature();
         barometer.calculatePressureAndTemperature();
