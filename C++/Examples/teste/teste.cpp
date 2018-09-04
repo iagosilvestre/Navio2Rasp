@@ -110,25 +110,25 @@ int main(int argc, char *argv[])
 //-------------------------------------------------------------------------
 
     while(1) {
-    	barometer.refreshPressure();
-    	barometer.refreshTemperature();
+
     	
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
         sensor->read_magnetometer(&mx, &my, &mz);
+        printf("Acc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
+        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
+        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
+
         
+        barometer.refreshPressure();
+    	barometer.refreshTemperature();
         barometer.readPressure();
         barometer.readTemperature();
-        
-        
         barometer.calculatePressureAndTemperature();
         printf("Temperature(C): %f Pressure(millibar): %f\n", 
                 barometer.getTemperature(), barometer.getPressure());
                 
-        printf("Acc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
-        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
-        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
 
        usleep(500000);
     }
