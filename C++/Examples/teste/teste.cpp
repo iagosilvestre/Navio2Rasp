@@ -122,11 +122,11 @@ int main(int argc, char *argv[])
 
         
         barometer.refreshPressure();
-        usleep(5000); // Waiting for pressure data ready
+        usleep(50000); // Waiting for pressure data ready
         barometer.readPressure();
 
         barometer.refreshTemperature();
-        usleep(5000); // Waiting for temperature data ready
+        usleep(50000); // Waiting for temperature data ready
         barometer.readTemperature();
 
         barometer.calculatePressureAndTemperature();
