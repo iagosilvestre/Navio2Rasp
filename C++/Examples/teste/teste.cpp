@@ -536,7 +536,7 @@ int main(int argc, char *argv[])
         printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
         printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
 
-        
+        /*
         barometer.refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer.readPressure();
@@ -549,8 +549,19 @@ int main(int argc, char *argv[])
 
         printf("Temperatura(C): %f Pressao (milibar): %f\n\n\n",
                 barometer.getTemperature(), barometer.getPressure());
-                
-        usleep(5000);
-       //usleep(500000);
+                */
+        barometer.refreshPressure();
+                usleep(10000); // Waiting for pressure data ready
+                barometer.refreshTemperature();
+                usleep(10000); // Waiting for temperature data ready
+                barometer.readPressure();
+                barometer.readTemperature();
+
+                barometer.calculatePressureAndTemperature();
+
+                printf("Temperatura(C): %f Pressao (milibar): %f\n\n\n",
+                        barometer.getTemperature(), barometer.getPressure());
+
+       usleep(1000000);
     }
 }
