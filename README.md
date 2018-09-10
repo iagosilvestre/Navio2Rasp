@@ -1,8 +1,9 @@
-Alteracoes feitas em cima do repositorio base da Navio2 para raspberry para verificacao de tempo de resposta 
-dos sensores atraves do novo programa teste.
+Alteracoes feitas em cima do repositorio base da Navio2 para raspberry, tendo como objetivo a verificacao de tempo de resposta 
+dos sensores atraves do novo programa teste para possivel utilizacao no projeto ProVant.
 
 Realizado por:
-Iago de Oliveira Silvestre.
+Iago de Oliveira Silvestre
+
 Universidade Federal de Santa Catarina - Engenharia de Controle e Automacao
 
 
