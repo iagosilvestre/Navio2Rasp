@@ -183,10 +183,10 @@ int main(int argc, char *argv[])
         	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx2, gy2, gz2);
         	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
         	printf("----------------------Leitura do barometro----------------------");
-        	printf("Temperatura(C): %f Pressao (milibar): %f\n",
+        	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
         	                        barometer.getTemperature(), barometer.getPressure());
         	printf("----------------------Leitura do GPS----------------------");
-        	        printf("GPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
+        	        printf("\nGPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
                     printf("Longitude: %lf\n", pos_data[1]/10000000);
                     printf("Latitude: %lf\n", pos_data[2]/10000000);
                     printf("Height above Ellipsoid: %.3lf m\n", pos_data[3]/1000);
