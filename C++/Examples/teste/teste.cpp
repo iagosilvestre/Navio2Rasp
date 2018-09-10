@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 	        return 1;
 	    }
 
-	MS5611 barometer;
+	MS5611 baro;
 	pthread_t baro_thread;
 	barometer.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
