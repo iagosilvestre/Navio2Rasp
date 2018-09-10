@@ -149,7 +149,10 @@ int main(int argc, char *argv[])
         /*printf("\n\n Acc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
         printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
         printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);*/
-
+        sensor2->update();
+        sensor2->read_accelerometer(&ax2, &ay2, &az2);
+        sensor2->read_gyroscope(&gx2, &gy2, &gz2);
+        sensor2->read_magnetometer(&mx2, &my2, &mz2);
 
         barometer.refreshPressure();
         usleep(10000); // Waiting for pressure data ready
