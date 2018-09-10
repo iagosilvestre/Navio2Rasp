@@ -103,11 +103,13 @@ int main(int argc, char *argv[])
 	std::vector<double> pos_data;
 	Ublox gps;
 
-    auto sensor_name = get_sensor_name(argc, argv);
+    /*auto sensor_name = get_sensor_name(argc, argv);
     if (sensor_name.empty())
-        return EXIT_FAILURE;
+        return EXIT_FAILURE;*/
 
-    auto sensor = get_inertial_sensor(sensor_name);
+    auto sensor = get_inertial_sensor("mpu");
+    auto sensor2 = get_inertial_sensor("lsm");
+
 
     if (!sensor) {
         printf("Wrong sensor name. Select: mpu or lsm\n");
@@ -124,6 +126,10 @@ int main(int argc, char *argv[])
     float ax, ay, az;
     float gx, gy, gz;
     float mx, my, mz;
+
+    float ax2, ay2, az2;
+    float gx2, gy2, gz2;
+    float mx2, my2, mz2;
 //-------------------------------------------------------------------------
 
 
