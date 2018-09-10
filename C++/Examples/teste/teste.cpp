@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
                 printf("Setting new rate: FAILED\n");
             }
     while(1) {
-
+//----------------Leitura das IMUs---------------------------------//
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
         sensor2->read_accelerometer(&ax2, &ay2, &az2);
         sensor2->read_gyroscope(&gx2, &gy2, &gz2);
         sensor2->read_magnetometer(&mx2, &my2, &mz2);
-
+//----------------Leitura do barometro ---------------------------------//
         barometer.refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer.readPressure();
@@ -173,10 +173,15 @@ int main(int argc, char *argv[])
                        // after desired message is successfully decoded, we can use the information stored in pos_data vector
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
+        	printf("----------------------Leitura da IMU MPU9250----------------------");
         			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
         	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
         	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
-        	        printf("Temperatura(C): %f Pressao (milibar): %f\n",
+        	printf("----------------------Leitura da IMU LSM9DS1----------------------");
+        	        printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax2, ay2, az2);
+        	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx2, gy2, gz2);
+        	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
+        	printf("Temperatura(C): %f Pressao (milibar): %f\n",
         	                        barometer.getTemperature(), barometer.getPressure());
 
         	        printf("GPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
