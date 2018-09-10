@@ -535,7 +535,7 @@ int main(int argc, char *argv[])
           else
               sock = Socket();
 
-      auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
+      auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(sensor)) };
 
       //-------------------- Setup gyroscope offset -----------------------------
 
