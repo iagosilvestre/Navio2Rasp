@@ -542,7 +542,7 @@ int main(int argc, char *argv[])
       ahrs->setGyroOffset();
     while(1) {
 
-    	
+    	imuLoop(ahrs.get(), sock);
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
