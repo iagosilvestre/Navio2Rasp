@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
                        // after desired message is successfully decoded, we can use the information stored in pos_data vector
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
-        			printf("\n\n Acc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
+        			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
         	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
         	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
         	        printf("Temperatura(C): %f Pressao (milibar): %f\n",
