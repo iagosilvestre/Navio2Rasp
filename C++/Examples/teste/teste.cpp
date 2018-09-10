@@ -35,7 +35,22 @@ For print help:
 #define PI   3.14159
 
 
-
+std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
+{
+    if (sensor_name == "mpu") {
+        printf("Selected: MPU9250\n");
+        auto ptr = std::unique_ptr <InertialSensor>{ new MPU9250() };
+        return ptr;
+    }
+    else if (sensor_name == "lsm") {
+        printf("Selected: LSM9DS1\n");
+        auto ptr = std::unique_ptr <InertialSensor>{ new LSM9DS1() };
+        return ptr;
+    }
+    else {
+        return NULL;
+    }
+}
 void print_help()
 {
     printf("Possible parameters:\nSensor selection: -i [sensor name]\n");
