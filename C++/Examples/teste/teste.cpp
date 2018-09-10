@@ -22,21 +22,40 @@ For print help:
 #include <string>
 #include <stdio.h>
 #include <memory>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <stdint.h>
 #include <unistd.h>
 #include <sys/time.h>
 #include <Common/MPU9250.h>
 #include <Navio2/LSM9DS1.h>
 #include <Common/Util.h>
-#include "AHRS.hpp"
+#include <pthread.h>
 
 #define G_SI 9.80665
 #define PI   3.14159
 
 using namespace std;
+
+
+void * acquireBarometerData(void * barom)
+{
+    MS5611* barometer = (MS5611*)barom;
+
+    while (true) {
+        barometer->refreshPressure();
+        usleep(10000); // Waiting for pressure data ready
+        barometer->readPressure();
+
+        barometer->refreshTemperature();
+        usleep(10000); // Waiting for temperature data ready
+        barometer->readTemperature();
+
+        barometer->calculatePressureAndTemperature();
+
+        //sleep(0.5);
+    }
+
+    pthread_exit(NULL);
+}
 
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
@@ -100,6 +119,13 @@ int main(int argc, char *argv[])
 	    }
 
 	MS5611 barometer;
+	pthread_t baro_thread;
+	barometer.initialize();
+	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
+	    {
+	        printf("Error: Failed to create barometer thread\n");
+	        return 0;
+	    }
 	std::vector<double> pos_data;
 	Ublox gps;
 
@@ -122,7 +148,7 @@ int main(int argc, char *argv[])
     }
     sensor->initialize();
     sensor2->initialize();
-	barometer.initialize();
+
 	
     float ax, ay, az;
     float gx, gy, gz;
@@ -155,7 +181,7 @@ int main(int argc, char *argv[])
         sensor2->read_gyroscope(&gx2, &gy2, &gz2);
         sensor2->read_magnetometer(&mx2, &my2, &mz2);
 //----------------Leitura do barometro ---------------------------------//
-        barometer.refreshPressure();
+        /*barometer.refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer.readPressure();
 
@@ -165,7 +191,7 @@ int main(int argc, char *argv[])
 
         barometer.calculatePressureAndTemperature();
 
-        /*printf("Temperatura(C): %f Pressao (milibar): %f\n",
+        printf("Temperatura(C): %f Pressao (milibar): %f\n",
                 barometer.getTemperature(), barometer.getPressure());*/
 
 
@@ -254,7 +280,7 @@ int main(int argc, char *argv[])
                printf("Ublox test not passed\nAbort program!\n");
 
            }
-
+    pthread_exit(NULL);
            return 0;
        }
 
