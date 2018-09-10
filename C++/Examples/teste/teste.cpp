@@ -582,7 +582,7 @@ int main(int argc, char *argv[])
         printf("Temperatura(C): %f Pressao (milibar): %f\n\n\n",
                 barometer.getTemperature(), barometer.getPressure());
                 
-
-       usleep(1000000);
+        usleep(5000);
+       //usleep(500000);
     }
 }
