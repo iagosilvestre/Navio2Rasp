@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 
         barometer.calculatePressureAndTemperature();
 
-        printf("Temperature(C): %f Pressure(millibar): %f\n", 
+        printf("Temperature(C): %f Pressure(millibar): %f\n\n\",
                 barometer.getTemperature(), barometer.getPressure());
                 
 
