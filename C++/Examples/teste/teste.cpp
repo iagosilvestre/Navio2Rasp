@@ -174,6 +174,7 @@ int main(int argc, char *argv[])
                        // after desired message is successfully decoded, we can use the information stored in pos_data vector
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
+        	  printf("--------------------------------------------------------------------------------------------------");
         	printf("----------------------Leitura da IMU MPU9250----------------------");
         			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
         	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
@@ -193,7 +194,7 @@ int main(int argc, char *argv[])
                     printf("Height above mean sea level: %.3lf m\n", pos_data[4]/1000);
                     printf("Horizontal Accuracy Estateimate: %.3lf m\n", pos_data[5]/1000);
                     printf("Vertical Accuracy Estateimate: %.3lf m\n", pos_data[6]/1000);
-
+                    printf("--------------------------------------------------------------------------------------------------");
                    } else {
                        // printf("Message not captured\n");
                        // use this to see, how often you get the right messages
