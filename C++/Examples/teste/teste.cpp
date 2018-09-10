@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 
 	MS5611 baro;
 	pthread_t baro_thread;
-	barometer.initialize();
+	baro.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
 	    {
 	        printf("Error: Failed to create barometer thread\n");
@@ -211,7 +211,7 @@ int main(int argc, char *argv[])
         	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
         	printf("----------------------Leitura do barometro----------------------");
         	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
-        	                        barometer.getTemperature(), barometer.getPressure());
+        	                        baro.getTemperature(), baro.getPressure());
         	printf("----------------------Leitura do GPS----------------------");
         	        printf("\nGPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
                     printf("Longitude: %lf\n", pos_data[1]/10000000);
