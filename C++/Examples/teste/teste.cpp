@@ -368,46 +368,7 @@ std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
     }
 }
 
-void print_help()
-{
-    printf("Possible parameters:\nSensor selection: -i [sensor name]\n");
-    printf("Sensors names: mpu is MPU9250, lsm is LSM9DS1\nFor help: -h\n");
-    printf("If you want to visualize IMU data on another machine,\n");
-    printf("add IP address and port number (by default 7000):\n");
-    printf("-i [sensor name] ipaddress portnumber\n");
 
-}
-
-std::string get_sensor_name(int argc, char *argv[])
-{
-    if (get_navio_version() == NAVIO2) {
-
-        if (argc < 2) {
-            printf("Enter parameter\n");
-            print_help();
-            return std::string();
-        }
-
-        // prevent the error message
-        opterr = 0;
-        int parameter;
-
-        while ((parameter = getopt(argc, argv, "i:h")) != -1) {
-            switch (parameter) {
-            case 'i': if (!strcmp(optarg,"mpu") ) return "mpu";
-                            else return "lsm";
-            case 'h': print_help(); return "";
-            case '?': printf("Wrong parameter.\n");
-                      print_help();
-                      return std::string();
-            }
-        }
-
-    } else { //sensor on NAVIO+
-
-        return "mpu";
-    }
-}
 
 //============================== Main loop ====================================
 
@@ -541,9 +502,9 @@ int main(int argc, char *argv[])
         return 1;
     }
     auto sensor_name ="mpu";
-    //auto sensor_name = get_sensor_name(argc, argv);
+    /*auto sensor_name = get_sensor_name(argc, argv);
     if (sensor_name.empty())
-        return EXIT_FAILURE;
+        return EXIT_FAILURE;*/
 
     auto sensor = get_inertial_sensor(sensor_name);
 
