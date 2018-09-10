@@ -472,6 +472,8 @@ void imuLoop(AHRS* ahrs, Socket sock)
     }
 }
 
+/*
+
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
     if (sensor_name == "mpu") {
@@ -488,6 +490,11 @@ std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
         return NULL;
     }
 }
+
+
+*/
+
+
 
 void print_help()
 {
@@ -533,8 +540,8 @@ int main(int argc, char *argv[])
     if (check_apm()) {
         return 1;
     }
-
-    auto sensor_name = get_sensor_name(argc, argv);
+    auto sensor_name ="mpu";
+    //auto sensor_name = get_sensor_name(argc, argv);
     if (sensor_name.empty())
         return EXIT_FAILURE;
 
