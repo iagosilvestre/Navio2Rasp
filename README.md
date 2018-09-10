@@ -1,3 +1,16 @@
+Alteracoes feitas em cima do repositorio base da Navio2 para raspberry para verificacao de tempo de resposta 
+dos sensores atraves do novo programa teste.
+
+Realizado por:
+Iago de Oliveira Silvestre
+Universidade Federal de Santa Catarina - Engenharia de Controle e Automacao
+
+
+
+
+
+
+
 Navio 2
 =====
 
