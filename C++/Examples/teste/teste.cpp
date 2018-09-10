@@ -524,7 +524,22 @@ int main(int argc, char *argv[])
     float gx, gy, gz;
     float mx, my, mz;
 //-------------------------------------------------------------------------
+    //--------------------------- Network setup -------------------------------
 
+      Socket sock;
+
+      if (argc == 5)
+          sock = Socket(argv[3], argv[4]);
+      else if ( (get_navio_version() == NAVIO) && (argc == 3) )
+              sock = Socket(argv[1], argv[2]);
+          else
+              sock = Socket();
+
+      auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
+
+      //-------------------- Setup gyroscope offset -----------------------------
+
+      ahrs->setGyroOffset();
     while(1) {
 
     	
@@ -536,7 +551,7 @@ int main(int argc, char *argv[])
         printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
         printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
 
-        /*
+
         barometer.refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer.readPressure();
@@ -549,18 +564,8 @@ int main(int argc, char *argv[])
 
         printf("Temperatura(C): %f Pressao (milibar): %f\n\n\n",
                 barometer.getTemperature(), barometer.getPressure());
-                */
-        barometer.refreshPressure();
-                usleep(10000); // Waiting for pressure data ready
-                barometer.refreshTemperature();
-                usleep(10000); // Waiting for temperature data ready
-                barometer.readPressure();
-                barometer.readTemperature();
 
-                barometer.calculatePressureAndTemperature();
 
-                printf("Temperatura(C): %f Pressao (milibar): %f\n\n\n",
-                        barometer.getTemperature(), barometer.getPressure());
 
        usleep(1000000);
     }
