@@ -176,9 +176,7 @@ int main(int argc, char *argv[])
 //----------------Leitura das IMUs---------------------------------//
     	gettimeofday(&tv,NULL);
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
-    	gettimeofday(&tv2,NULL);
-    	        	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-    	        	dtlong=currenttime-previoustime;
+
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
@@ -202,6 +200,9 @@ int main(int argc, char *argv[])
 
         pressao=baro.getPressure();
 
+    	gettimeofday(&tv2,NULL);
+    	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
+    	dtlong=currenttime-previoustime;
         /*printf("Temperatura(C): %f Pressao (milibar): %f\n",
                 barometer.getTemperature(), barometer.getPressure());*/
 
