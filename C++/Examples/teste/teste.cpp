@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
         	gettimeofday(&tv2,NULL);
         	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
         	dtlong=currenttime-previoustime;
-        	printf("Duracao em microsegundos da leitura dos sensores: %l\n", dtlong);
+        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtlong);
         	time_t rawtime;
         	struct tm * timeinfo;
 
