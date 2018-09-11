@@ -53,9 +53,7 @@ std::unique_ptr <Led> get_led()
 void * acquireBarometerData(void * barom)
 {
     MS5611* barometer = (MS5611*)barom;
-    auto led = get_led();
     while (true) {
-    	led->setColor(Colors::Green);
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer->readPressure();
@@ -132,6 +130,9 @@ int main(int argc, char *argv[])
 	if (check_apm()) {
 	        return 1;
 	    }
+	auto led = get_led();
+	if (!led->initialize())
+	        return EXIT_FAILURE;
 
 	MS5611 baro;
 	pthread_t baro_thread;
@@ -191,6 +192,10 @@ int main(int argc, char *argv[])
 //----------------Leitura das IMUs---------------------------------//
     	gettimeofday(&tv,NULL);
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+
+
+    	led->setColor(Colors::Green);
+
 
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
