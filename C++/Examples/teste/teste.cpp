@@ -225,7 +225,7 @@ int main(int argc, char *argv[])
         	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
         	printf("-----------------------------------Leitura do barometro-------------------------------------------");
         	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
-        	                        temperatura, pressao());
+        	                        temperatura, pressao);
         	printf("-----------------------------------Leitura do GPS-------------------------------------------------");
         	        printf("\nGPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
                     printf("Longitude: %lf\n", pos_data[1]/10000000);
