@@ -176,6 +176,9 @@ int main(int argc, char *argv[])
 //----------------Leitura das IMUs---------------------------------//
     	gettimeofday(&tv,NULL);
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+    	gettimeofday(&tv2,NULL);
+    	        	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
+    	        	dtlong=currenttime-previoustime;
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
@@ -209,9 +212,9 @@ int main(int argc, char *argv[])
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
         	printf("--------------------------------------------------------------------------------------------------\n");
-        	gettimeofday(&tv2,NULL);
+        	/*gettimeofday(&tv2,NULL);
         	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-        	dtlong=currenttime-previoustime;
+        	dtlong=currenttime-previoustime;*/
         	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtlong);
         	time_t rawtime;
         	struct tm * timeinfo;
