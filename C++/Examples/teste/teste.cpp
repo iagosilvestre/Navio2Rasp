@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
 
 	struct timeval tv,tv2;
 	float dt;
-	static unsigned long previoustime, currenttime;
+	static unsigned long previoustime, currenttime,dtlong;
 	
     float ax, ay, az;
     float gx, gy, gz;
@@ -209,12 +209,16 @@ int main(int argc, char *argv[])
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
         	printf("--------------------------------------------------------------------------------------------------\n");
+        	gettimeofday(&tv2,NULL);
+        	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
+        	dtlong=currenttime-previoustime;
+        	printf("Duracao em microsegundos da leitura dos sensores: %l\n", dtlong);
         	time_t rawtime;
-        	  struct tm * timeinfo;
+        	struct tm * timeinfo;
 
-        	  time ( &rawtime );
-        	  timeinfo = localtime ( &rawtime );
-        	  printf ( "Current local time and date: %s", asctime (timeinfo) );
+        	time ( &rawtime );
+        	timeinfo = localtime ( &rawtime );
+        	printf ( "Current local time and date: %s", asctime (timeinfo) );
         	printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
         			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
         	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
