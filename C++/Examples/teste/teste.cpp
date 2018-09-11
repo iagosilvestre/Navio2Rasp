@@ -201,6 +201,12 @@ int main(int argc, char *argv[])
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
         	printf("--------------------------------------------------------------------------------------------------\n");
+        	time_t rawtime;
+        	  struct tm * timeinfo;
+
+        	  time ( &rawtime );
+        	  timeinfo = localtime ( &rawtime );
+        	  printf ( "Current local time and date: %s", asctime (timeinfo) );
         	printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
         			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
         	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
