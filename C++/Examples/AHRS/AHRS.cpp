@@ -423,8 +423,7 @@ void imuLoop(AHRS* ahrs, Socket sock)
     float roll, pitch, yaw;
 
     struct timeval tv;
-    float dt;
-    // Timing data
+    float dt;// Timing data
 
     static float maxdt;
     static float mindt = 0.01;

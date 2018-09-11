@@ -149,6 +149,9 @@ int main(int argc, char *argv[])
     sensor->initialize();
     sensor2->initialize();
 
+	struct timeval tv,tv2;
+	float dt;
+	static unsigned long previoustime, currenttime;
 	
     float ax, ay, az;
     float gx, gy, gz;
@@ -157,6 +160,8 @@ int main(int argc, char *argv[])
     float ax2, ay2, az2;
     float gx2, gy2, gz2;
     float mx2, my2, mz2;
+
+    float temperatura,pressao;
 //-------------------------------------------------------------------------
 
 
@@ -169,6 +174,8 @@ int main(int argc, char *argv[])
             }
     while(1) {
 //----------------Leitura das IMUs---------------------------------//
+    	gettimeofday(&tv,NULL);
+    	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
@@ -186,12 +193,13 @@ int main(int argc, char *argv[])
         barometer.readPressure();
 
         barometer.refreshTemperature();
-        usleep(10000); // Waiting for temperature data ready
-        barometer.readTemperature();
+        usleep(10000); // Waiting for temperature data ready*/
 
-        barometer.calculatePressureAndTemperature();
+        temperatura=barometer.readTemperature();
 
-        printf("Temperatura(C): %f Pressao (milibar): %f\n",
+        pressao=barometer.calculatePressureAndTemperature();
+
+        /*printf("Temperatura(C): %f Pressao (milibar): %f\n",
                 barometer.getTemperature(), barometer.getPressure());*/
 
 
@@ -217,7 +225,7 @@ int main(int argc, char *argv[])
         	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
         	printf("-----------------------------------Leitura do barometro-------------------------------------------");
         	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
-        	                        baro.getTemperature(), baro.getPressure());
+        	                        temperatura, pressao());
         	printf("-----------------------------------Leitura do GPS-------------------------------------------------");
         	        printf("\nGPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
                     printf("Longitude: %lf\n", pos_data[1]/10000000);
