@@ -195,9 +195,9 @@ int main(int argc, char *argv[])
         barometer.refreshTemperature();
         usleep(10000); // Waiting for temperature data ready*/
 
-        temperatura=baro.readTemperature();
+        temperatura=baro.getTemperature();
 
-        pressao=baro.calculatePressureAndTemperature();
+        pressao=baro.getPressure();
 
         /*printf("Temperatura(C): %f Pressao (milibar): %f\n",
                 barometer.getTemperature(), barometer.getPressure());*/
