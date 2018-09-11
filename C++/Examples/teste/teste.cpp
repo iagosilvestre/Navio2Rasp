@@ -16,7 +16,8 @@ Sensors names: mpu is MPU9250, lsm is LSM9DS1.
 For print help:
 ./AccelGyroMag -h
 */
-
+#include <Navio2/Led_Navio2.h>
+#include <Navio+/Led_Navio.h>
 #include <Common/Ublox.h>
 #include <Common/MS5611.h>
 #include <string>
@@ -35,12 +36,26 @@ For print help:
 
 using namespace std;
 
+std::unique_ptr <Led> get_led()
+{
+    if (get_navio_version() == NAVIO2)
+    {
+        auto ptr = std::unique_ptr <Led>{ new Led_Navio2() };
+        return ptr;
+    } else
+    {
+        auto ptr = std::unique_ptr <Led>{ new Led_Navio() };
+        return ptr;
+    }
+}
+
 
 void * acquireBarometerData(void * barom)
 {
     MS5611* barometer = (MS5611*)barom;
-
+    auto led = get_led();
     while (true) {
+    	led->setColor(Colors::Green);
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer->readPressure();
