@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
 	struct timeval tv,tv2;
 	float dt;
-	static unsigned long previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0;
+	static unsigned long previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0;
 	
     float ax, ay, az;
     float gx, gy, gz;
@@ -226,9 +226,11 @@ int main(int argc, char *argv[])
     	    		max=dtlong;
     	    		mem=dtlong;
     	    		media=dtlong;
+    	    		sum=dtlong;
     	    	}
     	else{
-    		media=(dtlong+media)/2;
+    		sum=sum+dtlong;
+    		media=sum/count;
     		if(dtlong<min){
     			min=dtlong;
     		}
