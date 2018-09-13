@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
 	struct timeval tv,tv2;
 	float dt;
-	static unsigned long previoustime, currenttime,dtlong;
+	static unsigned long previoustime, currenttime,dtlong,count=0,min,max;
 	
     float ax, ay, az;
     float gx, gy, gz;
@@ -189,42 +189,47 @@ int main(int argc, char *argv[])
                 printf("Setting new rate: FAILED\n");
             }
     while(1) {
-//----------------Leitura das IMUs---------------------------------//
+    	count++;
+//----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
     	gettimeofday(&tv,NULL);
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
-
+//----------------Escrita no PWM  ---------------------------------//
 
     	led->setColor(Colors::Green);
 
-
+//----------------Leitura da IMU MPU ---------------------------------//
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
         sensor->read_magnetometer(&mx, &my, &mz);
-        /*printf("\n\n Acc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
-        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
-        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);*/
+
+//----------------Leitura da IMU LSM---------------------------------//
         sensor2->update();
         sensor2->read_accelerometer(&ax2, &ay2, &az2);
         sensor2->read_gyroscope(&gx2, &gy2, &gz2);
         sensor2->read_magnetometer(&mx2, &my2, &mz2);
 //----------------Leitura do barometro ---------------------------------//
-        /*barometer.refreshPressure();
-        usleep(10000); // Waiting for pressure data ready
-        barometer.readPressure();
 
-        barometer.refreshTemperature();
-        usleep(10000); // Waiting for temperature data ready*/
 
         temperatura=baro.getTemperature();
 
         pressao=baro.getPressure();
-
+//----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
     	gettimeofday(&tv2,NULL);
     	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
     	dtlong=currenttime-previoustime;
-        /*printf("Temperatura(C): %f Pressao (milibar): %f\n",
-                barometer.getTemperature(), barometer.getPressure());*/
+    	if(count==1){
+    	    		min=dtlong;
+    	    		max=dtlong;
+    	    	}
+    	else{
+    		if(dtlong<min){
+    			min=dtlong;
+    		}
+    		if(dtlong>max){
+    			max=dtlong;
+    		}
+    	}
 
 
         if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
@@ -236,7 +241,9 @@ int main(int argc, char *argv[])
         	/*gettimeofday(&tv2,NULL);
         	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
         	dtlong=currenttime-previoustime;*/
+        	printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
         	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtlong);
+        	printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
         	time_t rawtime;
         	struct tm * timeinfo;
 
