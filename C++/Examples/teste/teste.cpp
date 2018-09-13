@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
 	struct timeval tv,tv2;
 	float dt;
-	static unsigned long previoustime, currenttime,dtlong,count=0,min,max;
+	static unsigned long previoustime, currenttime,dtlong,count=0,min,max,mem;
 	
     float ax, ay, az;
     float gx, gy, gz;
@@ -215,12 +215,16 @@ int main(int argc, char *argv[])
 
         pressao=baro.getPressure();
 //----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
-    	gettimeofday(&tv2,NULL);
+        if(count!=1){
+        	 mem=dtlong;
+        }
+        gettimeofday(&tv2,NULL);
     	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
     	dtlong=currenttime-previoustime;
     	if(count==1){
     	    		min=dtlong;
     	    		max=dtlong;
+    	    		mem=dtlong;
     	    	}
     	else{
     		if(dtlong<min){
@@ -230,7 +234,7 @@ int main(int argc, char *argv[])
     			max=dtlong;
     		}
     	}
-    	dtlong=dtlong/count;
+    	dtlong=(dtlong+mem)/2;
 
         if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
                    {
