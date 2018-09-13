@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
 	struct timeval tv,tv2;
 	float dt;
-	static unsigned long previoustime, currenttime,dtlong,count=0,min,max,mem;
+	static unsigned long previoustime, currenttime,dtlong,count=0,min,max,mem,media;
 	
     float ax, ay, az;
     float gx, gy, gz;
@@ -234,7 +234,7 @@ int main(int argc, char *argv[])
     			max=dtlong;
     		}
     	}
-    	dtlong=(dtlong+mem)/2;
+    	media=(dtlong+mem)/2;
 
         if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
                    {
@@ -247,6 +247,7 @@ int main(int argc, char *argv[])
         	dtlong=currenttime-previoustime;*/
         	printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
         	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtlong);
+        	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
         	printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
         	time_t rawtime;
         	struct tm * timeinfo;
@@ -325,7 +326,7 @@ int main(int argc, char *argv[])
                    }*/
 
 
-                   usleep(100000);
+                   usleep(1000000);
                }
 
            } else {
