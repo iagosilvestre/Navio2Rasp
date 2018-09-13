@@ -230,7 +230,7 @@ int main(int argc, char *argv[])
     			max=dtlong;
     		}
     	}
-
+    	dtlong=dtlong/count;
 
         if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
                    {
@@ -321,7 +321,7 @@ int main(int argc, char *argv[])
                    }*/
 
 
-                   usleep(500000);
+                   usleep(100000);
                }
 
            } else {
