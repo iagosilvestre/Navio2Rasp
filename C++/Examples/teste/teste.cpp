@@ -279,6 +279,28 @@ int main(int argc, char *argv[])
                     printf("Vertical Accuracy Estateimate: %.3lf m\n", pos_data[6]/1000);
                     printf("--------------------------------------------------------------------------------------------------\n");
                    } else {
+                	   printf("Numero da leitura: %lu \n", count);
+                	   printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
+                	   printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtlong);
+                	   printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
+                	   printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
+                	   time_t rawtime;
+                	   struct tm * timeinfo;
+
+                	   time ( &rawtime );
+                	   timeinfo = localtime ( &rawtime );
+                	   printf ( "Data e tempo local atual: %s", asctime (timeinfo) );
+                	   printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
+                	   printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
+                	   printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
+                	   printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
+                	   printf("-----------------------------------Leitura da IMU LSM9DS1-----------------------------------------");
+                	   printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax2, ay2, az2);
+                	   printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx2, gy2, gz2);
+                	   printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
+                	   printf("-----------------------------------Leitura do barometro-------------------------------------------");
+                	   printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
+                	           	                        temperatura, pressao);
                        // printf("Message not captured\n");
                        // use this to see, how often you get the right messages
                        // to increase the frequency you can turn off the undesired messages or tweak ublox settings
