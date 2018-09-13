@@ -225,8 +225,10 @@ int main(int argc, char *argv[])
     	    		min=dtlong;
     	    		max=dtlong;
     	    		mem=dtlong;
+    	    		media=dtlong;
     	    	}
     	else{
+    		media=(dtlong+media)/2;
     		if(dtlong<min){
     			min=dtlong;
     		}
@@ -234,7 +236,7 @@ int main(int argc, char *argv[])
     			max=dtlong;
     		}
     	}
-    	media=(dtlong+mem)/2;
+
 
         if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
                    {
