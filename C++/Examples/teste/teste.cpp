@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
 
         	time ( &rawtime );
         	timeinfo = localtime ( &rawtime );
-        	printf ( "Current local time and date: %s", asctime (timeinfo) );
+        	printf ( "Data e tempo local atual: %s", asctime (timeinfo) );
         	printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
         			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
         	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
