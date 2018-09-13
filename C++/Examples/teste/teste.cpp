@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
 	struct timeval tv,tv2;
 	float dt;
-	static unsigned long previoustime, currenttime,dtlong,count=0,min,max,mem,media;
+	static unsigned long previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0;
 	
     float ax, ay, az;
     float gx, gy, gz;
