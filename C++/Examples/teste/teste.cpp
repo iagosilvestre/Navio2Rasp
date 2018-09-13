@@ -351,7 +351,7 @@ int main(int argc, char *argv[])
                    }*/
 
 
-                   usleep(1000000);
+                   usleep(10000);
                }
 
            } else {
