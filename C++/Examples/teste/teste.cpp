@@ -247,6 +247,7 @@ int main(int argc, char *argv[])
         	/*gettimeofday(&tv2,NULL);
         	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
         	dtlong=currenttime-previoustime;*/
+        	printf("Numero da leitura: %lu \n", count);
         	printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
         	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtlong);
         	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
