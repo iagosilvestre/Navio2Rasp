@@ -69,7 +69,17 @@ void * acquireBarometerData(void * barom)
 
     pthread_exit(NULL);
 }
-
+void * acquireMPUData(void * mpu)
+{
+	MPU9250* imuMPU=(MPU9250*)mpu;
+	while(true){
+		imuMPU->update();
+		imuMPU->read_accelerometer(&ax, &ay, &az);
+		imuMPU->read_gyroscope(&gx, &gy, &gz);
+		imuMPU->read_magnetometer(&mx, &my, &mz);
+	}
+	pthread_exit(NULL);
+}
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
     if (sensor_name == "mpu") {
@@ -146,11 +156,11 @@ int main(int argc, char *argv[])
 	        return 0;
 	    }
 	mpu->initialize();
-		/*if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&mpu))
+		if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&mpu))
 		    {
 		        printf("Error: Failed to create mpu thread\n");
 		        return 0;
-		    }*/
+		    }
 	std::vector<double> pos_data;
 	Ublox gps;
 
