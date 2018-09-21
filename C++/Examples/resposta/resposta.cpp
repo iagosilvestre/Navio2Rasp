@@ -37,7 +37,9 @@ For print help:
 	    float ax, ay, az;
 	    float gx, gy, gz;
 	    float mx, my, mz;
-
+	    float ax2, ay2, az2;
+	    float gx2, gy2, gz2;
+	    float mx2, my2, mz2;
 
 using namespace std;
 
@@ -83,6 +85,18 @@ void * acquireMPUData(void * imuMPU)
 		mpu->read_accelerometer(&ax, &ay, &az);
 		mpu->read_gyroscope(&gx, &gy, &gz);
 		mpu->read_magnetometer(&mx, &my, &mz);
+	}
+	pthread_exit(NULL);
+}
+void * acquireLSMData(void * imuLSM)
+{
+	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
+	while(true){
+
+		lsm->update();
+		lsm->read_accelerometer(&ax2, &ay2, &az2);
+		lsm->read_gyroscope(&gx2, &gy2, &gz2);
+		lsm->read_magnetometer(&mx2, &my2, &mz2);
 	}
 	pthread_exit(NULL);
 }
@@ -149,12 +163,15 @@ int main(int argc, char *argv[])
 	auto led = get_led();
 	if (!led->initialize())
 	        return EXIT_FAILURE;
-    auto lsm = get_inertial_sensor("lsm");
+
 	MS5611 baro;
 	MPU9250 imuMPU;
+	LSM9DS1 imuLSM;
 
 	pthread_t baro_thread;
 	pthread_t MPU_thread;
+	pthread_t LSM_thread;
+
 	baro.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
 	    {
@@ -167,6 +184,13 @@ int main(int argc, char *argv[])
 		        printf("Error: Failed to create mpu thread\n");
 		        return 0;
 		    }
+
+	imuLSM.initialize();
+		if(pthread_create(&LSM_thread, NULL, acquireLSMData, (void *)&imuLSM))
+			{
+				printf("Error: Failed to create lsm thread\n");
+					return 0;
+		}
 	std::vector<double> pos_data;
 	Ublox gps;
 
@@ -175,28 +199,17 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;*/
 
 
-
-
-
-
-    if (!lsm->probe()) {
-        printf("Sensor not enabled\n");
-        return EXIT_FAILURE;
-    }
-
-    lsm->initialize();
-
 	struct timeval tv,tv2;
 	float dt;
 	static unsigned long previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0;
 	
     /*float ax, ay, az;
     float gx, gy, gz;
-    float mx, my, mz;*/
+    float mx, my, mz;
 
     float ax2, ay2, az2;
     float gx2, gy2, gz2;
-    float mx2, my2, mz2;
+    float mx2, my2, mz2;*/
 
     float temperatura,pressao;
 //-------------------------------------------------------------------------
@@ -221,10 +234,7 @@ int main(int argc, char *argv[])
 //----------------Leitura da IMU MPU ---------------------------------//
 
 //----------------Leitura da IMU LSM---------------------------------//
-        lsm->update();
-        lsm->read_accelerometer(&ax2, &ay2, &az2);
-        lsm->read_gyroscope(&gx2, &gy2, &gz2);
-        lsm->read_magnetometer(&mx2, &my2, &mz2);
+
 //----------------Leitura do barometro ---------------------------------//
 
 
