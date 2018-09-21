@@ -120,11 +120,11 @@ void * acquireLSMData(void * imuLSM)
 
 void * acquireLedData(void * led)
 {
-	Led_Navio2* LED=(MPU9250*)led;
+	Led_Navio2* luz=(MPU9250*)led;
 	while(true){
     	gettimeofday(&tv,NULL);
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
-    	LED->setColor(Colors::Red);
+    	luz->setColor(Colors::Red);
 		gettimeofday(&tv2,NULL);
 		currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
 		dtLED=currenttime-previoustime;
