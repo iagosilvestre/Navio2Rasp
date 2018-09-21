@@ -77,9 +77,9 @@ void * acquireBarometerData(void * barom)
 
         barometer->calculatePressureAndTemperature();
 
-        temperatura=barometer.getTemperature();
+        temperatura=barometer->getTemperature();
 
-        pressao=barometer.getPressure();
+        pressao=barometer->getPressure();
         //sleep(0.5);
     }
 
