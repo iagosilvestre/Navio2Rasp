@@ -45,6 +45,8 @@ For print help:
 		float dt;
 		unsigned long int previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0;
 
+	    float temperatura,pressao;
+
 using namespace std;
 
 std::unique_ptr <Led> get_led()
@@ -75,6 +77,9 @@ void * acquireBarometerData(void * barom)
 
         barometer->calculatePressureAndTemperature();
 
+        temperatura=barometer.getTemperature();
+
+        pressao=barometer.getPressure();
         //sleep(0.5);
     }
 
@@ -221,7 +226,7 @@ int main(int argc, char *argv[])
     float gx2, gy2, gz2;
     float mx2, my2, mz2;*/
 
-    float temperatura,pressao;
+
 //-------------------------------------------------------------------------
 
 
@@ -248,9 +253,7 @@ int main(int argc, char *argv[])
 //----------------Leitura do barometro ---------------------------------//
 
 
-        temperatura=baro.getTemperature();
 
-        pressao=baro.getPressure();
 //----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
         if(count!=1){
         	 mem=dtlong;
