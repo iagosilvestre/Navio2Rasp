@@ -41,9 +41,9 @@ For print help:
 	    float gx2, gy2, gz2;
 	    float mx2, my2, mz2;
 
-		struct timeval bar1,bar2,mpu1,mpu2,lsm1,lsm2,led1,led2;
+		struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2;
 		float dt;
-		unsigned long int previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0,dtLED=0;
+		unsigned long int previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0;
 
 	    float temperatura,pressao;
 
@@ -67,6 +67,7 @@ void * acquireBarometerData(void * barom)
 {
     MS5611* barometer = (MS5611*)barom;
     while (true) {
+    	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer->readPressure();
@@ -80,6 +81,8 @@ void * acquireBarometerData(void * barom)
         temperatura=barometer->getTemperature();
 
         pressao=barometer->getPressure();
+        gettimeofday(&baro2,NULL);
+        dtBaro=1000000 * baro1.tv_sec + baro1.tv_usec - (1000000 * baro2.tv_sec + baro2.tv_usec);
         //sleep(0.5);
     }
 
