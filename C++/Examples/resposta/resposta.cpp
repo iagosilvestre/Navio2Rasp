@@ -133,15 +133,24 @@ int main(int argc, char *argv[])
 	auto led = get_led();
 	if (!led->initialize())
 	        return EXIT_FAILURE;
-
+    auto mpu = get_inertial_sensor("mpu");
+    auto lsm = get_inertial_sensor("lsm");
 	MS5611 baro;
+	//MPU9250 mpu;
 	pthread_t baro_thread;
+	pthread_t MPU_thread;
 	baro.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
 	    {
 	        printf("Error: Failed to create barometer thread\n");
 	        return 0;
 	    }
+	mpu->initialize();
+		/*if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&mpu))
+		    {
+		        printf("Error: Failed to create mpu thread\n");
+		        return 0;
+		    }*/
 	std::vector<double> pos_data;
 	Ublox gps;
 
@@ -149,8 +158,7 @@ int main(int argc, char *argv[])
     if (sensor_name.empty())
         return EXIT_FAILURE;*/
 
-    auto sensor = get_inertial_sensor("mpu");
-    auto sensor2 = get_inertial_sensor("lsm");
+
 
 
     if (!sensor) {
@@ -162,8 +170,8 @@ int main(int argc, char *argv[])
         printf("Sensor not enabled\n");
         return EXIT_FAILURE;
     }
-    sensor->initialize();
-    sensor2->initialize();
+
+    lsm->initialize();
 
 	struct timeval tv,tv2;
 	float dt;
@@ -198,16 +206,16 @@ int main(int argc, char *argv[])
     	led->setColor(Colors::Green);
 
 //----------------Leitura da IMU MPU ---------------------------------//
-        sensor->update();
-        sensor->read_accelerometer(&ax, &ay, &az);
-        sensor->read_gyroscope(&gx, &gy, &gz);
-        sensor->read_magnetometer(&mx, &my, &mz);
+        mpu->update();
+        mpu->read_accelerometer(&ax, &ay, &az);
+        mpu->read_gyroscope(&gx, &gy, &gz);
+        mpu->read_magnetometer(&mx, &my, &mz);
 
 //----------------Leitura da IMU LSM---------------------------------//
-        sensor2->update();
-        sensor2->read_accelerometer(&ax2, &ay2, &az2);
-        sensor2->read_gyroscope(&gx2, &gy2, &gz2);
-        sensor2->read_magnetometer(&mx2, &my2, &mz2);
+        lsm->update();
+        lsm->read_accelerometer(&ax2, &ay2, &az2);
+        lsm->read_gyroscope(&gx2, &gy2, &gz2);
+        lsm->read_magnetometer(&mx2, &my2, &mz2);
 //----------------Leitura do barometro ---------------------------------//
 
 
