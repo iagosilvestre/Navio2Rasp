@@ -76,7 +76,7 @@ void * acquireBarometerData(void * barom)
 }
 void * acquireMPUData(void * imuMPU)
 {
-	MPU9250* imuMPU=(MPU9250*)mpu;
+	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(true){
 
 		//mpu->update();
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
 
 
 
-    if (!imuMPU->probe()) {
+    if (!imuMPU.probe()) {
         printf("Sensor not enabled\n");
         return EXIT_FAILURE;
     }
