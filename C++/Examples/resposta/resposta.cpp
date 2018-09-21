@@ -74,12 +74,13 @@ void * acquireBarometerData(void * barom)
 
     pthread_exit(NULL);
 }
-void * acquireMPUData(void * mpu)
+void * acquireMPUData(void * imuMPU)
 {
+	auto mpu = get_inertial_sensor("mpu");
 	//MPU9250* imuMPU=(MPU9250*)mpu;
 	while(true){
 
-		(MPU9250*)mpu->update();
+		mpu->update();
 		/*imuMPU->read_accelerometer(&ax, &ay, &az);
 		imuMPU->read_gyroscope(&gx, &gy, &gz);
 		imuMPU->read_magnetometer(&mx, &my, &mz);*/
@@ -149,10 +150,9 @@ int main(int argc, char *argv[])
 	auto led = get_led();
 	if (!led->initialize())
 	        return EXIT_FAILURE;
-    auto mpu = get_inertial_sensor("mpu");
     auto lsm = get_inertial_sensor("lsm");
 	MS5611 baro;
-	//MPU9250 mpu;
+	MPU9250 imuMPU;
 	pthread_t baro_thread;
 	pthread_t MPU_thread;
 	baro.initialize();
@@ -161,8 +161,8 @@ int main(int argc, char *argv[])
 	        printf("Error: Failed to create barometer thread\n");
 	        return 0;
 	    }
-	mpu->initialize();
-		if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&mpu))
+	imuMPU->initialize();
+		if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&imuMPU))
 		    {
 		        printf("Error: Failed to create mpu thread\n");
 		        return 0;
