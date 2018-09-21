@@ -247,8 +247,7 @@ int main(int argc, char *argv[])
     while(1) {
     	count++;
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
-    	gettimeofday(&tv,NULL);
-    	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+
 //----------------Escrita no PWM  ---------------------------------//
 
 //----------------Leitura da IMU MPU ---------------------------------//
@@ -263,8 +262,6 @@ int main(int argc, char *argv[])
         if(count!=1){
         	 mem=dtlong;
         }
-        gettimeofday(&tv2,NULL);
-    	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
     	dtlong=currenttime-previoustime + dtMPU + dtLSM + dtLED;
     	/*if(count==1){
     	    		min=dtlong;
