@@ -34,7 +34,9 @@ For print help:
 #define G_SI 9.80665
 #define PI   3.14159
 
-
+	    float ax, ay, az;
+	    float gx, gy, gz;
+	    float mx, my, mz;
 
 
 using namespace std;
@@ -74,11 +76,9 @@ void * acquireBarometerData(void * barom)
 }
 void * acquireMPUData(void * mpu)
 {
-	MPU9250* imuMPU=(MPU9250*)mpu;
+	//MPU9250* imuMPU=(MPU9250*)mpu;
 	while(true){/*
-	    float ax, ay, az;
-	    float gx, gy, gz;
-	    float mx, my, mz;
+
 		imuMPU->update();
 		imuMPU->read_accelerometer(&ax, &ay, &az);
 		imuMPU->read_gyroscope(&gx, &gy, &gz);
@@ -196,9 +196,7 @@ int main(int argc, char *argv[])
     /*float ax, ay, az;
     float gx, gy, gz;
     float mx, my, mz;*/
-    float ax, ay, az;
-    float gx, gy, gz;
-    float mx, my, mz;
+
     float ax2, ay2, az2;
     float gx2, gy2, gz2;
     float mx2, my2, mz2;
@@ -224,10 +222,6 @@ int main(int argc, char *argv[])
     	led->setColor(Colors::Green);
 
 //----------------Leitura da IMU MPU ---------------------------------//
-        mpu->update();
-        mpu->read_accelerometer(&ax, &ay, &az);
-        mpu->read_gyroscope(&gx, &gy, &gz);
-        mpu->read_magnetometer(&mx, &my, &mz);
 
 //----------------Leitura da IMU LSM---------------------------------//
         lsm->update();
