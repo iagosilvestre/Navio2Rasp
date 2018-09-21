@@ -122,16 +122,16 @@ void * acquireLedData(void * led)
 {
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(true){
-    	gettimeofday(&tv,NULL);
-    	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+    	//gettimeofday(&tv,NULL);
+    	//previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
     	if((count%2)==0){
     		diode->setColor(Colors::Red);
     	}
     	else
     		diode->setColor(Colors::Green);
-		gettimeofday(&tv2,NULL);
-		currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-		dtLED=currenttime-previoustime;
+		//gettimeofday(&tv2,NULL);
+		//currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
+		//dtLED=currenttime-previoustime;
 	}
 	pthread_exit(NULL);
 }
