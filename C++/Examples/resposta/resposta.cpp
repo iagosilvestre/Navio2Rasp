@@ -124,7 +124,11 @@ void * acquireLedData(void * led)
 	while(true){
     	gettimeofday(&tv,NULL);
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
-    	diode->setColor(Colors::Red);
+    	if((count%2)==0){
+    		diode->setColor(Colors::Red);
+    	}
+    	else
+    		diode->setColor(Colors::Green);
 		gettimeofday(&tv2,NULL);
 		currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
 		dtLED=currenttime-previoustime;
@@ -264,7 +268,7 @@ int main(int argc, char *argv[])
         }
         gettimeofday(&tv2,NULL);
     	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-    	dtlong=currenttime-previoustime + dtMPU + dtLSM;
+    	dtlong=currenttime-previoustime + dtMPU + dtLSM + dtLED;
     	/*if(count==1){
     	    		min=dtlong;
     	    		max=dtlong;
