@@ -161,12 +161,12 @@ int main(int argc, char *argv[])
 
 
 
-    if (!sensor) {
-        printf("Wrong sensor name. Select: mpu or lsm\n");
+
+    if (!mpu->probe()) {
+        printf("Sensor not enabled\n");
         return EXIT_FAILURE;
     }
-
-    if (!sensor->probe()) {
+    if (!lsm->probe()) {
         printf("Sensor not enabled\n");
         return EXIT_FAILURE;
     }
