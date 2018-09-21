@@ -80,9 +80,9 @@ void * acquireMPUData(void * imuMPU)
 	while(true){
 
 		mpu->update();
-		/*imuMPU->read_accelerometer(&ax, &ay, &az);
-		imuMPU->read_gyroscope(&gx, &gy, &gz);
-		imuMPU->read_magnetometer(&mx, &my, &mz);*/
+		mpu->read_accelerometer(&ax, &ay, &az);
+		mpu->read_gyroscope(&gx, &gy, &gz);
+		mpu->read_magnetometer(&mx, &my, &mz);
 	}
 	pthread_exit(NULL);
 }
