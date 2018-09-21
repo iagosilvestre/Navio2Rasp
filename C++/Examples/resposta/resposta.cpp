@@ -262,7 +262,7 @@ int main(int argc, char *argv[])
         if(count!=1){
         	 mem=dtlong;
         }
-    	dtlong=currenttime-previoustime + dtMPU + dtLSM + dtLED;
+    	dtlong= dtMPU + dtLSM + dtLED;
     	/*if(count==1){
     	    		min=dtlong;
     	    		max=dtlong;
