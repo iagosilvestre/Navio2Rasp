@@ -43,7 +43,7 @@ For print help:
 
 		struct timeval tv,tv2;
 		float dt;
-		unsigned long int previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0;
+		unsigned long int previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0,dtLED=0;
 
 	    float temperatura,pressao;
 
@@ -117,6 +117,20 @@ void * acquireLSMData(void * imuLSM)
 	}
 	pthread_exit(NULL);
 }
+
+void * acquireLedData(void * led)
+{
+	Led_Navio2* LED=(MPU9250*)led;
+	while(true){
+    	gettimeofday(&tv,NULL);
+    	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+    	LED->setColor(Colors::Red);
+		gettimeofday(&tv2,NULL);
+		currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
+		dtLED=currenttime-previoustime;
+	}
+	pthread_exit(NULL);
+}
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
     if (sensor_name == "mpu") {
@@ -177,10 +191,10 @@ int main(int argc, char *argv[])
 	if (check_apm()) {
 	        return 1;
 	    }
-	auto led = get_led();
+	/*auto led = get_led();
 	if (!led->initialize())
-	        return EXIT_FAILURE;
-
+	        return EXIT_FAILURE;*/
+	Led_Navio2 led;
 	MS5611 baro;
 	MPU9250 imuMPU;
 	LSM9DS1 imuLSM;
@@ -188,6 +202,7 @@ int main(int argc, char *argv[])
 	pthread_t baro_thread;
 	pthread_t MPU_thread;
 	pthread_t LSM_thread;
+	pthread_t led_thread;
 
 	baro.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
@@ -208,23 +223,14 @@ int main(int argc, char *argv[])
 				printf("Error: Failed to create lsm thread\n");
 					return 0;
 		}
+	led.initialize();
+	if(pthread_create(&led_thread, NULL, acquireLedData, (void *)&led))
+				{
+					printf("Error: Failed to create led thread\n");
+						return 0;
+			}
 	std::vector<double> pos_data;
 	Ublox gps;
-
-    /*auto sensor_name = get_sensor_name(argc, argv);
-    if (sensor_name.empty())
-        return EXIT_FAILURE;*/
-
-
-
-	
-    /*float ax, ay, az;
-    float gx, gy, gz;
-    float mx, my, mz;
-
-    float ax2, ay2, az2;
-    float gx2, gy2, gz2;
-    float mx2, my2, mz2;*/
 
 
 //-------------------------------------------------------------------------
@@ -243,8 +249,6 @@ int main(int argc, char *argv[])
     	gettimeofday(&tv,NULL);
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
 //----------------Escrita no PWM  ---------------------------------//
-
-    	led->setColor(Colors::Red);
 
 //----------------Leitura da IMU MPU ---------------------------------//
 
