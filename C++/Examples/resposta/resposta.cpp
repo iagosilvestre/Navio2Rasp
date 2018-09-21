@@ -290,7 +290,9 @@ int main(int argc, char *argv[])
         	printf("--------------------------------------------------------------------------------------------------\n");
         	printf("Numero da leitura: %lu \n", count);
         	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
-        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtlong);
+        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtMPU);
+        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtLSM);
+        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtLED);
         	//printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
         	//printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
         	time_t rawtime;
