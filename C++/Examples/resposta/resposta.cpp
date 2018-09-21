@@ -41,6 +41,10 @@ For print help:
 	    float gx2, gy2, gz2;
 	    float mx2, my2, mz2;
 
+		struct timeval tv,tv2;
+		float dt;
+		static unsigned long previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0;
+
 using namespace std;
 
 std::unique_ptr <Led> get_led()
@@ -80,11 +84,15 @@ void * acquireMPUData(void * imuMPU)
 {
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(true){
-
+    	gettimeofday(&tv,NULL);
+    	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
 		mpu->read_gyroscope(&gx, &gy, &gz);
 		mpu->read_magnetometer(&mx, &my, &mz);
+		gettimeofday(&tv2,NULL);
+		currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
+		dtMPU=currenttime-previoustime;
 	}
 	pthread_exit(NULL);
 }
@@ -92,11 +100,15 @@ void * acquireLSMData(void * imuLSM)
 {
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(true){
-
+		gettimeofday(&tv,NULL);
+		previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
 		lsm->read_gyroscope(&gx2, &gy2, &gz2);
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
+		gettimeofday(&tv2,NULL);
+		currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
+		dtLSM=currenttime-previoustime;
 	}
 	pthread_exit(NULL);
 }
@@ -199,9 +211,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;*/
 
 
-	struct timeval tv,tv2;
-	float dt;
-	static unsigned long previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0;
+
 	
     /*float ax, ay, az;
     float gx, gy, gz;
@@ -229,7 +239,7 @@ int main(int argc, char *argv[])
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
 //----------------Escrita no PWM  ---------------------------------//
 
-    	led->setColor(Colors::Green);
+    	led->setColor(Colors::Red);
 
 //----------------Leitura da IMU MPU ---------------------------------//
 
@@ -247,7 +257,7 @@ int main(int argc, char *argv[])
         }
         gettimeofday(&tv2,NULL);
     	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-    	dtlong=currenttime-previoustime;
+    	dtlong=currenttime-previoustime + dtMPU + dtLSM;
     	if(count==1){
     	    		min=dtlong;
     	    		max=dtlong;
