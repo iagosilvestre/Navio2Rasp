@@ -79,7 +79,7 @@ void * acquireMPUData(void * imuMPU)
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(true){
 
-		//mpu->update();
+		mpu->update();
 		/*imuMPU->read_accelerometer(&ax, &ay, &az);
 		imuMPU->read_gyroscope(&gx, &gy, &gz);
 		imuMPU->read_magnetometer(&mx, &my, &mz);*/
