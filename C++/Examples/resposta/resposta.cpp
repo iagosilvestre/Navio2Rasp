@@ -34,9 +34,7 @@ For print help:
 #define G_SI 9.80665
 #define PI   3.14159
 
-    float ax, ay, az;
-    float gx, gy, gz;
-    float mx, my, mz;
+
 
 
 using namespace std;
@@ -78,6 +76,9 @@ void * acquireMPUData(void * mpu)
 {
 	MPU9250* imuMPU=(MPU9250*)mpu;
 	while(true){
+	    float ax, ay, az;
+	    float gx, gy, gz;
+	    float mx, my, mz;
 		imuMPU->update();
 		imuMPU->read_accelerometer(&ax, &ay, &az);
 		imuMPU->read_gyroscope(&gx, &gy, &gz);
