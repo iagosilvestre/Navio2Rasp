@@ -41,7 +41,7 @@ For print help:
 	    float gx2, gy2, gz2;
 	    float mx2, my2, mz2;
 
-		struct timeval tv,tv2;
+		struct timeval bar1,bar2,mpu1,mpu2,lsm1,lsm2,led1,led2;
 		float dt;
 		unsigned long int previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0,dtLED=0;
 
@@ -89,15 +89,13 @@ void * acquireMPUData(void * imuMPU)
 {
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(true){
-    	gettimeofday(&tv,NULL);
-    	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+    	gettimeofday(&mpu1,NULL);
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
 		mpu->read_gyroscope(&gx, &gy, &gz);
 		mpu->read_magnetometer(&mx, &my, &mz);
-		gettimeofday(&tv2,NULL);
-		currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-		dtMPU=currenttime-previoustime;
+		gettimeofday(&mpu2,NULL);
+		dtMPU=1000000 * mpu1.tv_sec + mpu1.tv_usec - (1000000 * mpu2.tv_sec + mpu2.tv_usec);
 	}
 	pthread_exit(NULL);
 }
@@ -105,15 +103,13 @@ void * acquireLSMData(void * imuLSM)
 {
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(true){
-		gettimeofday(&tv,NULL);
-		previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+		gettimeofday(&lsm1,NULL);
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
 		lsm->read_gyroscope(&gx2, &gy2, &gz2);
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
-		gettimeofday(&tv2,NULL);
-		currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-		dtLSM=currenttime-previoustime;
+		gettimeofday(&lsm2,NULL);
+		dtLSM=1000000 * lsm1.tv_sec + lsm1.tv_usec - (1000000 * lsm2.tv_sec + lsm2.tv_usec);
 	}
 	pthread_exit(NULL);
 }
@@ -122,16 +118,14 @@ void * acquireLedData(void * led)
 {
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(true){
-    	//gettimeofday(&tv,NULL);
-    	//previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+		gettimeofday(&led1,NULL);
     	if((count%2)==0){
     		diode->setColor(Colors::Red);
     	}
     	else
     		diode->setColor(Colors::Green);
-		//gettimeofday(&tv2,NULL);
-		//currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-		//dtLED=currenttime-previoustime;
+		gettimeofday(&led2,NULL);
+		dtLED=1000000 * led1.tv_sec + led1.tv_usec - (1000000 * led2.tv_sec + led2.tv_usec);
 	}
 	pthread_exit(NULL);
 }
