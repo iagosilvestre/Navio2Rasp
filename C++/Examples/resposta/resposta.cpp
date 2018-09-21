@@ -34,6 +34,11 @@ For print help:
 #define G_SI 9.80665
 #define PI   3.14159
 
+    float ax, ay, az;
+    float gx, gy, gz;
+    float mx, my, mz;
+
+
 using namespace std;
 
 std::unique_ptr <Led> get_led()
@@ -187,9 +192,9 @@ int main(int argc, char *argv[])
 	float dt;
 	static unsigned long previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0;
 	
-    float ax, ay, az;
+    /*float ax, ay, az;
     float gx, gy, gz;
-    float mx, my, mz;
+    float mx, my, mz;*/
 
     float ax2, ay2, az2;
     float gx2, gy2, gz2;
