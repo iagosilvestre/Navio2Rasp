@@ -77,10 +77,10 @@ void * acquireBarometerData(void * barom)
 void * acquireMPUData(void * mpu)
 {
 	//MPU9250* imuMPU=(MPU9250*)mpu;
-	while(true){/*
+	while(true){
 
-		imuMPU->update();
-		imuMPU->read_accelerometer(&ax, &ay, &az);
+		mpu->update();
+		/*imuMPU->read_accelerometer(&ax, &ay, &az);
 		imuMPU->read_gyroscope(&gx, &gy, &gz);
 		imuMPU->read_magnetometer(&mx, &my, &mz);*/
 	}
