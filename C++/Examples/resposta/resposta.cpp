@@ -43,7 +43,7 @@ For print help:
 
 		struct timeval tv,tv2;
 		float dt;
-		unsigned long previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0;
+		unsigned long int previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0;
 
 using namespace std;
 
