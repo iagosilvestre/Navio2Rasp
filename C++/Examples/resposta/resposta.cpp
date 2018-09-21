@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
         gettimeofday(&tv2,NULL);
     	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
     	dtlong=currenttime-previoustime + dtMPU + dtLSM;
-    	if(count==1){
+    	/*if(count==1){
     	    		min=dtlong;
     	    		max=dtlong;
     	    		mem=dtlong;
@@ -274,7 +274,7 @@ int main(int argc, char *argv[])
     		if(dtlong>max){
     			max=dtlong;
     		}
-    	}
+    	}*/
 
 
         if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
@@ -283,9 +283,6 @@ int main(int argc, char *argv[])
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
         	printf("--------------------------------------------------------------------------------------------------\n");
-        	/*gettimeofday(&tv2,NULL);
-        	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
-        	dtlong=currenttime-previoustime;*/
         	printf("Numero da leitura: %lu \n", count);
         	printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
         	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtlong);
