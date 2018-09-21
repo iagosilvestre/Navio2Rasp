@@ -178,10 +178,7 @@ int main(int argc, char *argv[])
 
 
 
-    if (!imuMPU.probe()) {
-        printf("Sensor not enabled\n");
-        return EXIT_FAILURE;
-    }
+
     if (!lsm->probe()) {
         printf("Sensor not enabled\n");
         return EXIT_FAILURE;
