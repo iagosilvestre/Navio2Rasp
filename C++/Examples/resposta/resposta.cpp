@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
         	 mem=dtlong;
         }
     	dtlong= dtMPU + dtLSM + dtLED;
-    	/*if(count==1){
+    	if(count==1){
     	    		min=dtlong;
     	    		max=dtlong;
     	    		mem=dtlong;
@@ -280,7 +280,7 @@ int main(int argc, char *argv[])
     		if(dtlong>max){
     			max=dtlong;
     		}
-    	}*/
+    	}
 
 
         /*if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
@@ -291,10 +291,11 @@ int main(int argc, char *argv[])
         	printf("--------------------------------------------------------------------------------------------------\n");
         	printf("Numero da leitura: %lu \n", count);
         	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
-        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtBaro);
-        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtMPU);
-        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtLSM);
-        	printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtLED);
+        	printf("Duracao em microsegundos da leitura atual do barometro: %lu \n", dtBaro);
+        	printf("Duracao em microsegundos da leitura atual da IMU MPU: %lu \n", dtMPU);
+        	printf("Duracao em microsegundos da leitura atual da IMU LSM: %lu \n", dtLSM);
+        	printf("Duracao em microsegundos da escrita PWM no LED: %lu \n", dtLED);
+        	printf("Duracao em microsegundos da leitura atual MPU LSM e escrita LED: %lu \n", dtlong);
         	//printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
         	//printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
         	time_t rawtime;
