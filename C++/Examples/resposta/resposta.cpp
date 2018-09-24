@@ -403,7 +403,6 @@ int main(int argc, char *argv[])
                //}
 
            }
-            if(count==20000){
 
             printf("--------------------------------------------------------------------------------------------------\n");
                     	printf("Numero da leitura: %lu \n", count);
@@ -431,8 +430,7 @@ int main(int argc, char *argv[])
                     	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
                     	printf("-----------------------------------Leitura do barometro-------------------------------------------");
                     	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
-                    	                        temperatura, pressao);*
-            }
+                    	                        temperatura, pressao);
     pthread_exit(NULL);
            return 0;
        }
