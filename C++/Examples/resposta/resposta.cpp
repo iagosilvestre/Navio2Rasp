@@ -88,6 +88,7 @@ void * acquireBarometerData(void * barom)
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
+        	fprintf(f, "count;dtBaro\n");
         	fprintf(f, "%d;%lu\n", baroCount, dtBaro);
         	fclose(f);
         }
