@@ -68,7 +68,7 @@ void * acquireBarometerData(void * barom)
 	//unsigned long int previoustime=0, currenttime=0;
 	int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
-    while (true) {
+    while (count<=20000) {
     	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
@@ -105,7 +105,7 @@ void * acquireBarometerData(void * barom)
 void * acquireMPUData(void * imuMPU)
 {
 	MPU9250* mpu=(MPU9250*)imuMPU;
-	while(true){
+	while(count<=20000){
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
@@ -119,7 +119,7 @@ void * acquireMPUData(void * imuMPU)
 void * acquireLSMData(void * imuLSM)
 {
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
-	while(true){
+	while(count<=20000){
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
@@ -134,7 +134,7 @@ void * acquireLSMData(void * imuLSM)
 void * acquireLedData(void * led)
 {
 	Led_Navio2* diode=(Led_Navio2*)led;
-	while(true){
+	while(count<=20000){
 		gettimeofday(&led1,NULL);
     	if((count%2)==0){
     		diode->setColor(Colors::Red);
@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
             {
                 printf("Setting new rate: FAILED\n");
             }
-    while(count!=20000) {
+    while(count<=20000) {
     	count++;
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
 
