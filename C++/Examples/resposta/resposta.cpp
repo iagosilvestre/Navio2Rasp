@@ -430,7 +430,7 @@ int main(int argc, char *argv[])
                     	printf("-----------------------------------Leitura do barometro-------------------------------------------");
                     	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
                     	                        temperatura, pressao);*
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
            return 0;
        }
 }
