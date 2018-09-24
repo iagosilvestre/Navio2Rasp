@@ -43,7 +43,7 @@ For print help:
 
 		struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2;
 		float dt;
-		unsigned long int dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0;
+		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0;
 
 	    float temperatura,pressao;
 
@@ -189,7 +189,7 @@ std::string get_sensor_name(int argc, char *argv[])
 //=============================================================================
 int main(int argc, char *argv[])
 {
-
+	unsigned long int min=0,max=0,mem=0,media=0,sum=0;
 	if (check_apm()) {
 	        return 1;
 	    }
