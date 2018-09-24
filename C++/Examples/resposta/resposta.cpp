@@ -43,7 +43,7 @@ For print help:
 
 		struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2;
 		float dt;
-		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0;
+		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,countMax=500000;
 
 	    float temperatura,pressao;
 
@@ -68,7 +68,7 @@ void * acquireBarometerData(void * barom)
 	//unsigned long int previoustime=0, currenttime=0;
 	int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
-    while (count<=20000) {
+    while (count<=countMax) {
     	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
@@ -85,7 +85,7 @@ void * acquireBarometerData(void * barom)
 
         pressao=barometer->getPressure();
         gettimeofday(&baro2,NULL);
-        dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
+        dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-countMax;
         if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
         	fprintf(f, "count;dtBaro\n");
@@ -105,7 +105,7 @@ void * acquireBarometerData(void * barom)
 void * acquireMPUData(void * imuMPU)
 {
 	MPU9250* mpu=(MPU9250*)imuMPU;
-	while(count<=20000){
+	while(count<=countMax){
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
@@ -119,7 +119,7 @@ void * acquireMPUData(void * imuMPU)
 void * acquireLSMData(void * imuLSM)
 {
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
-	while(count<=20000){
+	while(count<=countMax){
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
@@ -134,7 +134,7 @@ void * acquireLSMData(void * imuLSM)
 void * acquireLedData(void * led)
 {
 	Led_Navio2* diode=(Led_Navio2*)led;
-	while(count<=20000){
+	while(count<=countMax){
 		gettimeofday(&led1,NULL);
     	if((count%2)==0){
     		diode->setColor(Colors::Red);
@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
             {
                 printf("Setting new rate: FAILED\n");
             }
-    while(count<=20000) {
+    while(count<=countMax) {
     	count++;
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
 
