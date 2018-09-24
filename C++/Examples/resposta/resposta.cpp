@@ -65,11 +65,10 @@ std::unique_ptr <Led> get_led()
 
 void * acquireBarometerData(void * barom)
 {
-	unsigned long int previoustime=0, currenttime=0;
+	//unsigned long int previoustime=0, currenttime=0;
     MS5611* barometer = (MS5611*)barom;
     while (true) {
     	gettimeofday(&baro1,NULL);
-    	previoustime=1000000 * baro1.tv_sec + baro1.tv_usec;
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer->readPressure();
@@ -84,8 +83,7 @@ void * acquireBarometerData(void * barom)
 
         pressao=barometer->getPressure();
         gettimeofday(&baro2,NULL);
-        currenttime=1000000 * baro2.tv_sec + baro2.tv_usec;
-        dtBaro=currenttime-previoustime-20000;
+        dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         //sleep(0.5);
     }
 
@@ -399,7 +397,7 @@ int main(int argc, char *argv[])
                    }*/
 
 
-                   usleep(10000);
+                   usleep(100000);
                //}
 
            }
