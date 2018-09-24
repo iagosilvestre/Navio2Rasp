@@ -288,7 +288,7 @@ int main(int argc, char *argv[])
                        // after desired message is successfully decoded, we can use the information stored in pos_data vector
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
-        	printf("--------------------------------------------------------------------------------------------------\n");
+        	/*printf("--------------------------------------------------------------------------------------------------\n");
         	printf("Numero da leitura: %lu \n", count);
         	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
         	printf("Duracao em microsegundos da leitura atual do barometro: %lu \n", dtBaro);
@@ -314,7 +314,7 @@ int main(int argc, char *argv[])
         	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
         	printf("-----------------------------------Leitura do barometro-------------------------------------------");
         	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
-        	                        temperatura, pressao);
+        	                        temperatura, pressao);*/
         	/*printf("-----------------------------------Leitura do GPS-------------------------------------------------");
         	        printf("\nGPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
                     printf("Longitude: %lf\n", pos_data[1]/10000000);
@@ -403,6 +403,33 @@ int main(int argc, char *argv[])
                //}
 
            }
+            printf("--------------------------------------------------------------------------------------------------\n");
+                    	printf("Numero da leitura: %lu \n", count);
+                    	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
+                    	printf("Duracao em microsegundos da leitura atual do barometro: %lu \n", dtBaro);
+                    	printf("Duracao em microsegundos da leitura atual da IMU MPU: %lu \n", dtMPU);
+                    	printf("Duracao em microsegundos da leitura atual da IMU LSM: %lu \n", dtLSM);
+                    	printf("Duracao em microsegundos da escrita PWM no LED: %lu \n", dtLED);
+                    	printf("Duracao em microsegundos da leitura atual MPU LSM e escrita LED: %lu \n", dtlong);
+                    	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
+                    	printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
+                    	time_t rawtime;
+                    	struct tm * timeinfo;
+
+                    	time ( &rawtime );
+                    	timeinfo = localtime ( &rawtime );
+                    	printf ( "Data e tempo local atual: %s", asctime (timeinfo) );
+                    	printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
+                    			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
+                    	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
+                    	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
+                    	printf("-----------------------------------Leitura da IMU LSM9DS1-----------------------------------------");
+                    	        printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax2, ay2, az2);
+                    	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx2, gy2, gz2);
+                    	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
+                    	printf("-----------------------------------Leitura do barometro-------------------------------------------");
+                    	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
+                    	                        temperatura, pressao);*
     pthread_exit(NULL);
            return 0;
        }
