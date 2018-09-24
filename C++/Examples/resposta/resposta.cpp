@@ -285,8 +285,8 @@ int main(int argc, char *argv[])
     	}*/
 
 
-        if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
-                   {
+        /*if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
+                   {*/
                        // after desired message is successfully decoded, we can use the information stored in pos_data vector
                        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
                        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
@@ -315,7 +315,7 @@ int main(int argc, char *argv[])
         	printf("-----------------------------------Leitura do barometro-------------------------------------------");
         	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
         	                        temperatura, pressao);
-        	printf("-----------------------------------Leitura do GPS-------------------------------------------------");
+        	/*printf("-----------------------------------Leitura do GPS-------------------------------------------------");
         	        printf("\nGPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
                     printf("Longitude: %lf\n", pos_data[1]/10000000);
                     printf("Latitude: %lf\n", pos_data[2]/10000000);
@@ -324,7 +324,7 @@ int main(int argc, char *argv[])
                     printf("Horizontal Accuracy Estateimate: %.3lf m\n", pos_data[5]/1000);
                     printf("Vertical Accuracy Estateimate: %.3lf m\n", pos_data[6]/1000);
                     printf("--------------------------------------------------------------------------------------------------\n");
-                   } /*else {
+                   } else {
                 	   printf("Numero da leitura: %lu \n", count);
                 	  // printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
                 	   printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtMPU);
@@ -400,14 +400,11 @@ int main(int argc, char *argv[])
 
 
                    usleep(10000);
-               }
-
-           } else {
-
-               printf("Ublox test not passed\nAbort program!\n");
+               //}
 
            }
     pthread_exit(NULL);
            return 0;
        }
+}
 
