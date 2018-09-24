@@ -85,7 +85,7 @@ void * acquireBarometerData(void * barom)
 
         pressao=barometer->getPressure();
         gettimeofday(&baro2,NULL);
-        dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-countMax;
+        dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
         	fprintf(f, "count;dtBaro\n");
