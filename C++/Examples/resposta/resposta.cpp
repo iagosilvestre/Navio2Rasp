@@ -85,7 +85,7 @@ void * acquireBarometerData(void * barom)
         pressao=barometer->getPressure();
         gettimeofday(&baro2,NULL);
         currenttime=1000000 * baro2.tv_sec + baro2.tv_usec;
-        dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)- (1000000 * baro1.tv_sec + baro1.tv_usec);
+        dtBaro=currenttime-previoustime-20000;
         //sleep(0.5);
     }
 
@@ -101,7 +101,7 @@ void * acquireMPUData(void * imuMPU)
 		mpu->read_gyroscope(&gx, &gy, &gz);
 		mpu->read_magnetometer(&mx, &my, &mz);
 		gettimeofday(&mpu2,NULL);
-		dtMPU=1000000 * mpu1.tv_sec + mpu1.tv_usec - (1000000 * mpu2.tv_sec + mpu2.tv_usec);
+		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 	}
 	pthread_exit(NULL);
 }
@@ -115,7 +115,7 @@ void * acquireLSMData(void * imuLSM)
 		lsm->read_gyroscope(&gx2, &gy2, &gz2);
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
 		gettimeofday(&lsm2,NULL);
-		dtLSM=1000000 * lsm1.tv_sec + lsm1.tv_usec - (1000000 * lsm2.tv_sec + lsm2.tv_usec);
+		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 	}
 	pthread_exit(NULL);
 }
@@ -131,7 +131,7 @@ void * acquireLedData(void * led)
     	else
     		diode->setColor(Colors::Green);
 		gettimeofday(&led2,NULL);
-		dtLED=1000000 * led1.tv_sec + led1.tv_usec - (1000000 * led2.tv_sec + led2.tv_usec);
+		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 	}
 	pthread_exit(NULL);
 }
