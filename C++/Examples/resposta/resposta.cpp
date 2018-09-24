@@ -43,7 +43,7 @@ For print help:
 
 		struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2;
 		float dt;
-		unsigned long int previoustime=0, currenttime=0,dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0;
+		unsigned long int dtlong=0,count=0,min=0,max=0,mem=0,media=0,sum=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0;
 
 	    float temperatura,pressao;
 
@@ -65,6 +65,7 @@ std::unique_ptr <Led> get_led()
 
 void * acquireBarometerData(void * barom)
 {
+	unsigned long int previoustime=0, currenttime=0;
     MS5611* barometer = (MS5611*)barom;
     while (true) {
     	gettimeofday(&baro1,NULL);
@@ -321,7 +322,7 @@ int main(int argc, char *argv[])
                     printf("Horizontal Accuracy Estateimate: %.3lf m\n", pos_data[5]/1000);
                     printf("Vertical Accuracy Estateimate: %.3lf m\n", pos_data[6]/1000);
                     printf("--------------------------------------------------------------------------------------------------\n");
-                   } else {
+                   } /*else {
                 	   printf("Numero da leitura: %lu \n", count);
                 	  // printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
                 	   printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtMPU);
@@ -350,7 +351,7 @@ int main(int argc, char *argv[])
                        // use this to see, how often you get the right messages
                        // to increase the frequency you can turn off the undesired messages or tweak ublox settings
                        // to increase internal receiver frequency
-                   }
+                   }*/
 
                    /*if (gps.decodeSingleMessage(Ublox::NAV_STATUS, pos_data) == 1)
                    {
