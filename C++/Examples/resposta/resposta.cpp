@@ -403,6 +403,8 @@ int main(int argc, char *argv[])
                //}
 
            }
+            if(count==20000){
+
             printf("--------------------------------------------------------------------------------------------------\n");
                     	printf("Numero da leitura: %lu \n", count);
                     	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
@@ -430,7 +432,8 @@ int main(int argc, char *argv[])
                     	printf("-----------------------------------Leitura do barometro-------------------------------------------");
                     	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
                     	                        temperatura, pressao);*
-    //pthread_exit(NULL);
+            }
+    pthread_exit(NULL);
            return 0;
        }
 }
