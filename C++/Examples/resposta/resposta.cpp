@@ -69,6 +69,7 @@ void * acquireBarometerData(void * barom)
     MS5611* barometer = (MS5611*)barom;
     while (true) {
     	gettimeofday(&baro1,NULL);
+    	previoustime=1000000 * baro1.tv_sec + baro1.tv_usec;
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer->readPressure();
@@ -83,7 +84,8 @@ void * acquireBarometerData(void * barom)
 
         pressao=barometer->getPressure();
         gettimeofday(&baro2,NULL);
-        dtBaro=1000000 * baro1.tv_sec + baro1.tv_usec - (1000000 * baro2.tv_sec + baro2.tv_usec);
+        currenttime=1000000 * baro2.tv_sec + baro2.tv_usec;
+        dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)- (1000000 * baro1.tv_sec + baro1.tv_usec);
         //sleep(0.5);
     }
 
