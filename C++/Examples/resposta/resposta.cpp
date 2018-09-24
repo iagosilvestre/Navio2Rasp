@@ -66,8 +66,10 @@ std::unique_ptr <Led> get_led()
 void * acquireBarometerData(void * barom)
 {
 	//unsigned long int previoustime=0, currenttime=0;
+	int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (true) {
+    	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
@@ -84,12 +86,12 @@ void * acquireBarometerData(void * barom)
         pressao=barometer->getPressure();
         gettimeofday(&baro2,NULL);
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
-        if(count==1){
+        if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
         	fprintf(f, "%d;%lu\n", count, dtBaro);
         	fclose(f);
         }
-        else if(count>1 & count<=20000){
+        else if(baroCount>1){
         	FILE *f = fopen("barometer.txt", "a");
         	fprintf(f, "%d;%lu\n", count, dtBaro);
         	fclose(f);
@@ -441,6 +443,9 @@ int main(int argc, char *argv[])
                     	printf("-----------------------------------Leitura do barometro-------------------------------------------");
                     	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
                     	                        temperatura, pressao);
+    pthread_exit(NULL);
+    pthread_exit(NULL);
+    pthread_exit(NULL);
     pthread_exit(NULL);
            return 0;
        }
