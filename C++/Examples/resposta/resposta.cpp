@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 	t1.join();
 	t2.join();
 	t3.join();
-	t4.join();
+	//t4.join();
 	/*pthread_t baro_thread;
 	pthread_t MPU_thread;
 	pthread_t LSM_thread;
