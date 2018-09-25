@@ -105,15 +105,14 @@ void * acquireBarometerData(void * barom)
 void * acquireMPUData(void * imuMPU)
 {
 	int mpuCount=0;
-	//MPU9250* mpu=(MPU9250*)imuMPU;
-	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
+	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
-		lsm->update();
-		lsm->read_accelerometer(&ax, &ay, &az);
-		lsm->read_gyroscope(&gx, &gy, &gz);
-		lsm->read_magnetometer(&mx, &my, &mz);
+		mpu->update();
+		mpu->read_accelerometer(&ax, &ay, &az);
+		mpu->read_gyroscope(&gx, &gy, &gz);
+		mpu->read_magnetometer(&mx, &my, &mz);
 		gettimeofday(&mpu2,NULL);
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		if(mpuCount==1){
@@ -133,15 +132,14 @@ void * acquireMPUData(void * imuMPU)
 void * acquireLSMData(void * imuLSM)
 {
 	int lsmCount=0;
-	MPU9250* mpu=(MPU9250*)imuMPU;
-	//LSM9DS1* lsm=(LSM9DS1*)imuLSM;
+	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
-		mpu->update();
-		mpu->read_accelerometer(&ax2, &ay2, &az2);
-		mpu->read_gyroscope(&gx2, &gy2, &gz2);
-		mpu->read_magnetometer(&mx2, &my2, &mz2);
+		lsm->update();
+		lsm->read_accelerometer(&ax2, &ay2, &az2);
+		lsm->read_gyroscope(&gx2, &gy2, &gz2);
+		lsm->read_magnetometer(&mx2, &my2, &mz2);
 		gettimeofday(&lsm2,NULL);
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 		if(lsmCount==1){
