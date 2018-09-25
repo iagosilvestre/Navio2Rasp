@@ -198,18 +198,20 @@ int main(int argc, char *argv[])
     	led->setColor(Colors::Green);
 
 //----------------Leitura da IMU MPU ---------------------------------//
-    	gettimeofday(&tv,NULL);
+
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
         sensor->read_magnetometer(&mx, &my, &mz);
-        gettimeofday(&tv2,NULL);
+
 
 //----------------Leitura da IMU LSM---------------------------------//
+        gettimeofday(&tv,NULL);
         sensor2->update();
         sensor2->read_accelerometer(&ax2, &ay2, &az2);
         sensor2->read_gyroscope(&gx2, &gy2, &gz2);
         sensor2->read_magnetometer(&mx2, &my2, &mz2);
+        gettimeofday(&tv2,NULL);
 //----------------Leitura do barometro ---------------------------------//
 
 
