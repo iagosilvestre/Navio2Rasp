@@ -105,7 +105,8 @@ void * acquireBarometerData(void * barom)
 void * acquireMPUData(void * imuMPU)
 {
 	int mpuCount=0;
-	MPU9250* mpu=(MPU9250*)imuMPU;
+	//MPU9250* mpu=(MPU9250*)imuMPU;
+	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
@@ -132,7 +133,8 @@ void * acquireMPUData(void * imuMPU)
 void * acquireLSMData(void * imuLSM)
 {
 	int lsmCount=0;
-	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
+	MPU9250* mpu=(MPU9250*)imuMPU;
+	//LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
