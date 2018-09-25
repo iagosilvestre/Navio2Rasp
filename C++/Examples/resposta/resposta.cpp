@@ -248,15 +248,13 @@ int main(int argc, char *argv[])
 	if (check_apm()) {
 	        return 1;
 	    }
-	/*auto led = get_led();
-	if (!led->initialize())
-	        return EXIT_FAILURE;*/
+
 	Led_Navio2 led;
 	MS5611 baro;
 	MPU9250 imuMPU;
 	LSM9DS1 imuLSM;
 
-	std::cout << "Spawning 4 threads...\n";
+	/*std::cout << "Spawning 4 threads...\n";
 	std::thread t1 (acquireBarometerData,(void *)&baro);
 	std::thread t2 (acquireLSMData,(void *)&imuLSM);
 	std::thread t3 (acquireMPUData,(void *)&imuMPU);
@@ -265,8 +263,8 @@ int main(int argc, char *argv[])
 	t1.join();
 	t2.join();
 	t3.join();
-	//t4.join();
-	/*pthread_t baro_thread;
+	//t4.join();*/
+	pthread_t baro_thread;
 	pthread_t MPU_thread;
 	pthread_t LSM_thread;
 	pthread_t led_thread;
@@ -294,21 +292,8 @@ int main(int argc, char *argv[])
 				{
 					printf("Error: Failed to create led thread\n");
 						return 0;
-			}*/
-	std::vector<double> pos_data;
-	Ublox gps;
+				}
 
-
-//-------------------------------------------------------------------------
-
-
-    if(gps.testConnection())
-        {
-            printf("Ublox test OK\n");
-            if (!gps.configureSolutionRate(1000))
-            {
-                printf("Setting new rate: FAILED\n");
-            }
     while(count<countMax) {
     	count++;
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
