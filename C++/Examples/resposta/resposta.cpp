@@ -92,7 +92,7 @@ void * acquireBarometerData(void * barom)
         if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
         	fprintf(f, "dtBaro\n");
-        	fprintf(f, "%lu\n", baroCount, dtBaro);
+        	fprintf(f, "%lu\n",dtBaro);
         	fclose(f);
         }
         else if(baroCount>1){
