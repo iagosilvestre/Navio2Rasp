@@ -43,7 +43,7 @@ For print help:
 
 		struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2;
 		float dt;
-		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,countMax=2000;
+		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,countMax=500;
 
 	    float temperatura,pressao;
 
