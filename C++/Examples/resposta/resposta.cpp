@@ -121,7 +121,7 @@ void * acquireMPUData(void * imuMPU)
 		        	fprintf(f, "%lu\n",dtMPU);
 		        	fclose(f);
 		        }
-		        else if(mpuCount>1 & mpuCount<5000){
+		        else if(mpuCount>1){
 		        	FILE *f = fopen("mpu.txt", "a");
 		        	fprintf(f, "%lu\n",dtMPU);
 		        	fclose(f);
@@ -148,7 +148,7 @@ void * acquireLSMData(void * imuLSM)
 				fprintf(f, "%lu\n", dtLSM);
 				fclose(f);
 			}
-		else if(lsmCount>1 & lsmCount<5000){
+		else if(lsmCount>1){
 			FILE *f = fopen("lsm.txt", "a");
 			fprintf(f, "%lu\n",dtLSM);
 			fclose(f);
