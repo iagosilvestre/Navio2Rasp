@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
     	//gettimeofday(&tv,NULL);
 
 //----------------Escrita no PWM  ---------------------------------//
-
+    	 gettimeofday(&tv,NULL);
     	led->setColor(Colors::Green);
 
 //----------------Leitura da IMU MPU ---------------------------------//
@@ -214,7 +214,7 @@ int main(int argc, char *argv[])
 
 //----------------Leitura do barometro ---------------------------------//
 
-        gettimeofday(&tv,NULL);
+
         temperatura=baro.getTemperature();
 
         pressao=baro.getPressure();
