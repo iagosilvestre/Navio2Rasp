@@ -30,6 +30,7 @@ For print help:
 #include <Navio2/LSM9DS1.h>
 #include <Common/Util.h>
 #include <pthread.h>
+#include <thread.h>
 
 #define G_SI 9.80665
 #define PI   3.14159
@@ -253,7 +254,15 @@ int main(int argc, char *argv[])
 	MPU9250 imuMPU;
 	LSM9DS1 imuLSM;
 
-	pthread_t baro_thread;
+	std::cout << "Spawning 3 threads...\n";
+	std::thread t1 (acquireBarometerData,&baro);
+	std::thread t2 (acquireLSMData,&imuLSM);
+	std::thread t3 (acquireMPUData,&imuMPU);
+	std::cout << "Done spawning threads. Now waiting for them to join:\n";
+	t1.join();
+	t2.join();
+	t3.join();
+	/*pthread_t baro_thread;
 	pthread_t MPU_thread;
 	pthread_t LSM_thread;
 	pthread_t led_thread;
@@ -281,7 +290,7 @@ int main(int argc, char *argv[])
 				{
 					printf("Error: Failed to create led thread\n");
 						return 0;
-			}
+			}*/
 	std::vector<double> pos_data;
 	Ublox gps;
 
@@ -332,124 +341,6 @@ int main(int argc, char *argv[])
     			max=dtlong;
     		}
     	}
-
-
-        /*if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
-                   {*/
-                       // after desired message is successfully decoded, we can use the information stored in pos_data vector
-                       // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
-                       // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
-        	/*printf("--------------------------------------------------------------------------------------------------\n");
-        	printf("Numero da leitura: %lu \n", count);
-        	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
-        	printf("Duracao em microsegundos da leitura atual do barometro: %lu \n", dtBaro);
-        	printf("Duracao em microsegundos da leitura atual da IMU MPU: %lu \n", dtMPU);
-        	printf("Duracao em microsegundos da leitura atual da IMU LSM: %lu \n", dtLSM);
-        	printf("Duracao em microsegundos da escrita PWM no LED: %lu \n", dtLED);
-        	printf("Duracao em microsegundos da leitura atual MPU LSM e escrita LED: %lu \n", dtlong);
-        	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
-        	printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
-        	time_t rawtime;
-        	struct tm * timeinfo;
-
-        	time ( &rawtime );
-        	timeinfo = localtime ( &rawtime );
-        	printf ( "Data e tempo local atual: %s", asctime (timeinfo) );
-        	printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
-        			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
-        	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
-        	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
-        	printf("-----------------------------------Leitura da IMU LSM9DS1-----------------------------------------");
-        	        printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax2, ay2, az2);
-        	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx2, gy2, gz2);
-        	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
-        	printf("-----------------------------------Leitura do barometro-------------------------------------------");
-        	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
-        	                        temperatura, pressao);*/
-        	/*printf("-----------------------------------Leitura do GPS-------------------------------------------------");
-        	        printf("\nGPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
-                    printf("Longitude: %lf\n", pos_data[1]/10000000);
-                    printf("Latitude: %lf\n", pos_data[2]/10000000);
-                    printf("Height above Ellipsoid: %.3lf m\n", pos_data[3]/1000);
-                    printf("Height above mean sea level: %.3lf m\n", pos_data[4]/1000);
-                    printf("Horizontal Accuracy Estateimate: %.3lf m\n", pos_data[5]/1000);
-                    printf("Vertical Accuracy Estateimate: %.3lf m\n", pos_data[6]/1000);
-                    printf("--------------------------------------------------------------------------------------------------\n");
-                   } else {
-                	   printf("Numero da leitura: %lu \n", count);
-                	  // printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
-                	   printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtMPU);
-                	   printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtLSM);
-                	   printf("Duracao em microsegundos da leitura dos sensores: %lu \n", dtLED);
-                	   //printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
-                	   //printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
-                	   time_t rawtime;
-                	   struct tm * timeinfo;
-
-                	   time ( &rawtime );
-                	   timeinfo = localtime ( &rawtime );
-                	   printf ( "Data e tempo local atual: %s", asctime (timeinfo) );
-                	   printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
-                	   printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
-                	   printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
-                	   printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
-                	   printf("-----------------------------------Leitura da IMU LSM9DS1-----------------------------------------");
-                	   printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax2, ay2, az2);
-                	   printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx2, gy2, gz2);
-                	   printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
-                	   printf("-----------------------------------Leitura do barometro-------------------------------------------");
-                	   printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
-                	           	                        temperatura, pressao);
-                       // printf("Message not captured\n");
-                       // use this to see, how often you get the right messages
-                       // to increase the frequency you can turn off the undesired messages or tweak ublox settings
-                       // to increase internal receiver frequency
-                   }*/
-
-                   /*if (gps.decodeSingleMessage(Ublox::NAV_STATUS, pos_data) == 1)
-                   {
-                       printf("Current GPS status:\n");
-                       printf("gpsFixOk: %d\n", ((int)pos_data[1] & 0x01));
-
-                       printf("gps Fix status: ");
-                       switch((int)pos_data[0]){
-                           case 0x00:
-                               printf("no fix\n");
-                               break;
-
-                           case 0x01:
-                               printf("dead reckoning only\n");
-                               break;
-
-                           case 0x02:
-                               printf("2D-fix\n");
-                               break;
-
-                           case 0x03:
-                               printf("3D-fix\n");
-                               break;
-
-                           case 0x04:
-                               printf("GPS + dead reckoning combined\n");
-                               break;
-
-                           case 0x05:
-                               printf("Time only fix\n");
-                               break;
-
-                           default:
-                               printf("Reserved value. Current state unknown\n");
-                               break;
-
-                       }
-
-                       printf("\n");
-
-                   } else {
-                       // printf("Status Message not captured\n");
-                   }*/
-
-
                    usleep(100000);
                //}
 
