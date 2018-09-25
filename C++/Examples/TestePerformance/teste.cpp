@@ -191,17 +191,19 @@ int main(int argc, char *argv[])
     while(1) {
     	count++;
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
-    	gettimeofday(&tv,NULL);
+    	//gettimeofday(&tv,NULL);
     	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
 //----------------Escrita no PWM  ---------------------------------//
 
     	led->setColor(Colors::Green);
 
 //----------------Leitura da IMU MPU ---------------------------------//
+    	gettimeofday(&tv,NULL);
         sensor->update();
         sensor->read_accelerometer(&ax, &ay, &az);
         sensor->read_gyroscope(&gx, &gy, &gz);
         sensor->read_magnetometer(&mx, &my, &mz);
+        gettimeofday(&tv2,NULL);
 
 //----------------Leitura da IMU LSM---------------------------------//
         sensor2->update();
@@ -218,7 +220,7 @@ int main(int argc, char *argv[])
         if(count!=1){
         	 mem=dtlong;
         }
-        gettimeofday(&tv2,NULL);
+        //gettimeofday(&tv2,NULL);
     	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
     	dtlong=currenttime-previoustime;
     	if(count==1){

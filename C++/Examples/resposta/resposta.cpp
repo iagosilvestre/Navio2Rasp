@@ -264,19 +264,18 @@ int main(int argc, char *argv[])
 	        printf("Error: Failed to create barometer thread\n");
 	        return 0;
 	    }
+	imuLSM.initialize();
+			if(pthread_create(&LSM_thread, NULL, acquireLSMData, (void *)&imuLSM))
+				{
+					printf("Error: Failed to create lsm thread\n");
+						return 0;
+			}
 	imuMPU.initialize();
 		if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&imuMPU))
 		    {
 		        printf("Error: Failed to create mpu thread\n");
 		        return 0;
 		    }
-
-	imuLSM.initialize();
-		if(pthread_create(&LSM_thread, NULL, acquireLSMData, (void *)&imuLSM))
-			{
-				printf("Error: Failed to create lsm thread\n");
-					return 0;
-		}
 	led.initialize();
 	if(pthread_create(&led_thread, NULL, acquireLedData, (void *)&led))
 				{
