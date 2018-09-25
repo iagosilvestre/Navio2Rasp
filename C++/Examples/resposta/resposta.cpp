@@ -118,10 +118,10 @@ void * acquireMPUData(void * imuMPU)
 		if(mpuCount==1){
 		        	FILE *f = fopen("mpu.txt", "w");
 		        	fprintf(f, "dtMPU\n");
-		        	fprintf(f, "%lu\n", mpuCount, dtMPU);
+		        	fprintf(f, "%lu\n",dtMPU);
 		        	fclose(f);
 		        }
-		        else if(mpuCount>1 & mpuCount<=5000){
+		        else if(mpuCount>1 & mpuCount<5000){
 		        	FILE *f = fopen("mpu.txt", "a");
 		        	fprintf(f, "%lu\n",dtMPU);
 		        	fclose(f);
@@ -131,6 +131,7 @@ void * acquireMPUData(void * imuMPU)
 }
 void * acquireLSMData(void * imuLSM)
 {
+	int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
 		gettimeofday(&lsm1,NULL);
@@ -140,12 +141,24 @@ void * acquireLSMData(void * imuLSM)
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
 		gettimeofday(&lsm2,NULL);
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
+		if(lsmCount==1){
+				FILE *f = fopen("lsm.txt", "w");
+				fprintf(f, "dtLSM\n");
+				fprintf(f, "%lu\n", dtLSM);
+				fclose(f);
+			}
+		else if(lsmCount>1 & lsmCount<5000){
+			FILE *f = fopen("lsm.txt", "a");
+			fprintf(f, "%lu\n",dtLSM);
+			fclose(f);
+		}
 	}
 	pthread_exit(NULL);
 }
 
 void * acquireLedData(void * led)
 {
+	int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
 		gettimeofday(&led1,NULL);
@@ -156,6 +169,17 @@ void * acquireLedData(void * led)
     		diode->setColor(Colors::Green);
 		gettimeofday(&led2,NULL);
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
+		if(ledCount==1){
+			  FILE *f = fopen("led.txt", "w");
+			  fprintf(f, "dtLED\n");
+			  fprintf(f, "%lu\n", dtLED);
+			  fclose(f);
+				}
+		else if(ledCount>1 & ledCount<5000){
+			FILE *f = fopen("led.txt", "a");
+			fprintf(f, "%lu\n",dtLED);
+			fclose(f);
+		}
 	}
 	pthread_exit(NULL);
 }
