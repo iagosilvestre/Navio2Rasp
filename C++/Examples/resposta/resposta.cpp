@@ -30,7 +30,9 @@ For print help:
 #include <Navio2/LSM9DS1.h>
 #include <Common/Util.h>
 #include <pthread.h>
-#include <thread.h>
+#include <iostream>       // std::cout
+#include <thread>         // std::thread, std::this_thread::sleep_for
+#include <chrono>
 
 #define G_SI 9.80665
 #define PI   3.14159
