@@ -337,7 +337,7 @@ int main(int argc, char *argv[])
     	printf("Numero da leitura: %lu \n", count);
     	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
 
-    	usleep(50000);
+    	usleep(5000);
 
            }
 
