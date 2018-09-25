@@ -338,6 +338,7 @@ int main(int argc, char *argv[])
     	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
 
                //}
+    	usleep(100000);
 
            }
 
