@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
     	count++;
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
     	//gettimeofday(&tv,NULL);
-    	previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
+
 //----------------Escrita no PWM  ---------------------------------//
 
     	led->setColor(Colors::Green);
@@ -221,6 +221,7 @@ int main(int argc, char *argv[])
         	 mem=dtlong;
         }
         //gettimeofday(&tv2,NULL);
+        previoustime = 1000000 * tv.tv_sec + tv.tv_usec;
     	currenttime = 1000000 * tv2.tv_sec + tv2.tv_usec;
     	dtlong=currenttime-previoustime;
     	if(count==1){
