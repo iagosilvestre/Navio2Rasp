@@ -104,8 +104,10 @@ void * acquireBarometerData(void * barom)
 }
 void * acquireMPUData(void * imuMPU)
 {
+	int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
+		mpuCount++;
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
@@ -113,6 +115,17 @@ void * acquireMPUData(void * imuMPU)
 		mpu->read_magnetometer(&mx, &my, &mz);
 		gettimeofday(&mpu2,NULL);
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
+		if(mpuCount==1){
+		        	FILE *f = fopen("mpu.txt", "w");
+		        	fprintf(f, "count;dtMPU\n");
+		        	fprintf(f, "%d;%lu\n", mpuCount, dtMPU);
+		        	fclose(f);
+		        }
+		        else if(mpuCount>1){
+		        	FILE *f = fopen("mpu.txt", "a");
+		        	fprintf(f, "%d;%lu\n", mpuCount, dtMPU);
+		        	fclose(f);
+		        }
 	}
 	pthread_exit(NULL);
 }
