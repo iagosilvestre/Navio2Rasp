@@ -260,7 +260,7 @@ int main(int argc, char *argv[])
 	std::thread t1 (acquireBarometerData,&baro);
 	std::thread t2 (acquireLSMData,&imuLSM);
 	std::thread t3 (acquireMPUData,&imuMPU);
-	std::thread t4 (acquireLedData,&led);
+	//std::thread t4 (acquireLedData,&led);
 	std::cout << "Done spawning threads. Now waiting for them to join:\n";
 	t1.join();
 	t2.join();
