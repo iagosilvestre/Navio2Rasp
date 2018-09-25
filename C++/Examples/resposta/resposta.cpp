@@ -91,13 +91,13 @@ void * acquireBarometerData(void * barom)
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
-        	fprintf(f, "dtBaro\n");
-        	fprintf(f, "%lu\n",dtBaro);
+        	fprintf(f, "count;dtBaro\n");
+        	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
         }
         else if(baroCount>1){
         	FILE *f = fopen("barometer.txt", "a");
-        	fprintf(f, "%lu\n",dtBaro);
+        	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
         }
         //sleep(0.5);
@@ -120,13 +120,13 @@ void * acquireMPUData(void * imuMPU)
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		if(mpuCount==1){
 		        	FILE *f = fopen("mpu.txt", "w");
-		        	fprintf(f, "dtMPU\n");
-		        	fprintf(f, "%lu\n",dtMPU);
+		        	fprintf(f, "count;dtMPU\n");
+		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
 		        	fclose(f);
 		        }
 		        else if(mpuCount>1){
 		        	FILE *f = fopen("mpu.txt", "a");
-		        	fprintf(f, "%lu\n",dtMPU);
+		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
 		        	fclose(f);
 		        }
 	}
@@ -147,13 +147,13 @@ void * acquireLSMData(void * imuLSM)
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 		if(lsmCount==1){
 				FILE *f = fopen("lsm.txt", "w");
-				fprintf(f, "dtLSM\n");
-				fprintf(f, "%lu\n", dtLSM);
+				fprintf(f, "count;dtLSM\n");
+				fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
 				fclose(f);
 			}
 		else if(lsmCount>1){
 			FILE *f = fopen("lsm.txt", "a");
-			fprintf(f, "%lu\n",dtLSM);
+			fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
 			fclose(f);
 		}
 	}
@@ -176,13 +176,13 @@ void * acquireLedData(void * led)
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		if(ledCount==1){
 			  FILE *f = fopen("led.txt", "w");
-			  fprintf(f, "dtLED\n");
-			  fprintf(f, "%lu\n", dtLED);
+			  fprintf(f, "count;dtLED\n");
+			  fprintf(f, "%d;%lu\n",ledCount,dtLED);
 			  fclose(f);
 				}
 		else if(ledCount>1 & ledCount<5000){
 			FILE *f = fopen("led.txt", "a");
-			fprintf(f, "%lu\n",dtLED);
+			fprintf(f, "%d;%lu\n",ledCount,dtLED);
 			fclose(f);
 		}
 	}
