@@ -292,7 +292,7 @@ int main(int argc, char *argv[])
 				{
 					printf("Error: Failed to create led thread\n");
 						return 0;
-				}
+			}
 
     while(count<countMax) {
     	count++;
@@ -368,5 +368,4 @@ int main(int argc, char *argv[])
     pthread_exit(NULL);
            return 0;
        }
-}
 
