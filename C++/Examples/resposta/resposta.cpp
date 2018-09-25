@@ -167,7 +167,7 @@ void * acquireLedData(void * led)
 	while(count<countMax){
 		ledCount++;
 		gettimeofday(&led1,NULL);
-    	if((count%2)==0){
+    	if((ledCount%2)==0){
     		diode->setColor(Colors::Red);
     		gettimeofday(&led2,NULL);
     		usleep(200000);
