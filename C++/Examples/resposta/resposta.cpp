@@ -88,13 +88,13 @@ void * acquireBarometerData(void * barom)
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
-        	fprintf(f, "count;dtBaro\n");
-        	fprintf(f, "%d;%lu\n", baroCount, dtBaro);
+        	fprintf(f, "dtBaro\n");
+        	fprintf(f, "%lu\n", baroCount, dtBaro);
         	fclose(f);
         }
         else if(baroCount>1){
         	FILE *f = fopen("barometer.txt", "a");
-        	fprintf(f, "%d;%lu\n", baroCount, dtBaro);
+        	fprintf(f, "%lu\n",dtBaro);
         	fclose(f);
         }
         //sleep(0.5);
@@ -117,13 +117,13 @@ void * acquireMPUData(void * imuMPU)
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		if(mpuCount==1){
 		        	FILE *f = fopen("mpu.txt", "w");
-		        	fprintf(f, "count;dtMPU\n");
-		        	fprintf(f, "%d;%lu\n", mpuCount, dtMPU);
+		        	fprintf(f, "dtMPU\n");
+		        	fprintf(f, "%lu\n", mpuCount, dtMPU);
 		        	fclose(f);
 		        }
-		        else if(mpuCount>1){
+		        else if(mpuCount>1 & mpuCount<=5000){
 		        	FILE *f = fopen("mpu.txt", "a");
-		        	fprintf(f, "%d;%lu\n", mpuCount, dtMPU);
+		        	fprintf(f, "%lu\n",dtMPU);
 		        	fclose(f);
 		        }
 	}
