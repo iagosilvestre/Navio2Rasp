@@ -169,12 +169,14 @@ void * acquireLedData(void * led)
 		gettimeofday(&led1,NULL);
     	if((count%2)==0){
     		diode->setColor(Colors::Red);
+    		gettimeofday(&led2,NULL);
     		usleep(200000);
     	}
-    	else
+    	else{
     		diode->setColor(Colors::Green);
+    		gettimeofday(&led2,NULL);
     		usleep(200000);
-		gettimeofday(&led2,NULL);
+    	}
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		if(ledCount==1){
 			  FILE *f = fopen("led.txt", "w");
