@@ -294,7 +294,8 @@ int main(int argc, char *argv[])
 						return 0;
 			}
 
-    while(count<countMax) {
+    //while(count<countMax) {
+    while(true){
     	count++;
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
 
@@ -346,6 +347,7 @@ int main(int argc, char *argv[])
                     	printf("Duracao em microsegundos da escrita PWM no LED: %lu \n", dtLED);
                     	printf("Duracao em microsegundos da leitura atual MPU LSM e escrita LED: %lu \n", dtlong);
                     	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
+                    	printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
                     	printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
                     	time_t rawtime;
                     	struct tm * timeinfo;
