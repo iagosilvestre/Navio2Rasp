@@ -134,6 +134,7 @@ void * acquireLSMData(void * imuLSM)
 	int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
+		lsmcount++;
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
@@ -161,6 +162,7 @@ void * acquireLedData(void * led)
 	int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
+		ledcount++;
 		gettimeofday(&led1,NULL);
     	if((count%2)==0){
     		diode->setColor(Colors::Red);
