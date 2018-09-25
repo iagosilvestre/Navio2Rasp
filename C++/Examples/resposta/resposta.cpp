@@ -100,7 +100,7 @@ void * acquireBarometerData(void * barom)
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
         }
-        usleep(50000);
+        //usleep(50000);
     }
 
     pthread_exit(NULL);
@@ -129,7 +129,7 @@ void * acquireMPUData(void * imuMPU)
 		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
 		        	fclose(f);
 		        }
-		usleep(50000);
+		//usleep(50000);
 	}
 	pthread_exit(NULL);
 }
@@ -157,7 +157,7 @@ void * acquireLSMData(void * imuLSM)
 			fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
 			fclose(f);
 		}
-		usleep(50000);
+		//usleep(50000);
 	}
 	pthread_exit(NULL);
 }
