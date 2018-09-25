@@ -69,7 +69,7 @@ std::unique_ptr <Led> get_led()
 void * acquireBarometerData(void * barom)
 {
 	//unsigned long int previoustime=0, currenttime=0;
-	int baroCount=0;
+	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
     	baroCount++;
@@ -100,14 +100,14 @@ void * acquireBarometerData(void * barom)
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
         }
-        //sleep(0.5);
+        usleep(50000);
     }
 
     pthread_exit(NULL);
 }
 void * acquireMPUData(void * imuMPU)
 {
-	int mpuCount=0;
+	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
 		mpuCount++;
@@ -129,12 +129,13 @@ void * acquireMPUData(void * imuMPU)
 		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
 		        	fclose(f);
 		        }
+		usleep(50000);
 	}
 	pthread_exit(NULL);
 }
 void * acquireLSMData(void * imuLSM)
 {
-	int lsmCount=0;
+	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
 		lsmCount++;
@@ -156,27 +157,25 @@ void * acquireLSMData(void * imuLSM)
 			fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
 			fclose(f);
 		}
+		usleep(50000);
 	}
 	pthread_exit(NULL);
 }
 
 void * acquireLedData(void * led)
 {
-	int ledCount=0;
+	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
 		ledCount++;
 		gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
     		diode->setColor(Colors::Red);
-    		gettimeofday(&led2,NULL);
-    		usleep(200000);
     	}
     	else{
     		diode->setColor(Colors::Green);
-    		gettimeofday(&led2,NULL);
-    		usleep(200000);
     	}
+    	gettimeofday(&led2,NULL);
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		if(ledCount==1){
 			  FILE *f = fopen("led.txt", "w");
@@ -189,6 +188,7 @@ void * acquireLedData(void * led)
 			fprintf(f, "%d;%lu\n",ledCount,dtLED);
 			fclose(f);
 		}
+		usleep(200000);
 	}
 	pthread_exit(NULL);
 }
