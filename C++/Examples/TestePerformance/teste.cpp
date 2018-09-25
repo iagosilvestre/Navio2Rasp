@@ -206,18 +206,19 @@ int main(int argc, char *argv[])
 
 
 //----------------Leitura da IMU LSM---------------------------------//
-        gettimeofday(&tv,NULL);
+
         sensor2->update();
         sensor2->read_accelerometer(&ax2, &ay2, &az2);
         sensor2->read_gyroscope(&gx2, &gy2, &gz2);
         sensor2->read_magnetometer(&mx2, &my2, &mz2);
-        gettimeofday(&tv2,NULL);
+
 //----------------Leitura do barometro ---------------------------------//
 
-
+        gettimeofday(&tv,NULL);
         temperatura=baro.getTemperature();
 
         pressao=baro.getPressure();
+        gettimeofday(&tv2,NULL);
 //----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
         if(count!=1){
         	 mem=dtlong;
