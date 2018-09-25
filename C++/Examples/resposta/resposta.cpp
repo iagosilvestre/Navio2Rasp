@@ -43,7 +43,7 @@ For print help:
 
 		struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2;
 		float dt;
-		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,countMax=10000;
+		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,countMax=1000;
 
 	    float temperatura,pressao;
 
@@ -121,7 +121,7 @@ void * acquireMPUData(void * imuMPU)
 		        	fprintf(f, "%lu\n",dtMPU);
 		        	fclose(f);
 		        }
-		        else if(mpuCount>1){
+		        else if(mpuCount>1 & mpuCount<5000){
 		        	FILE *f = fopen("mpu.txt", "a");
 		        	fprintf(f, "%lu\n",dtMPU);
 		        	fclose(f);
@@ -148,7 +148,7 @@ void * acquireLSMData(void * imuLSM)
 				fprintf(f, "%lu\n", dtLSM);
 				fclose(f);
 			}
-		else if(lsmCount>1){
+		else if(lsmCount>1 & lsmCount<5000){
 			FILE *f = fopen("lsm.txt", "a");
 			fprintf(f, "%lu\n",dtLSM);
 			fclose(f);
@@ -278,11 +278,11 @@ int main(int argc, char *argv[])
 					return 0;
 		}
 	led.initialize();
-	/*if(pthread_create(&led_thread, NULL, acquireLedData, (void *)&led))
+	if(pthread_create(&led_thread, NULL, acquireLedData, (void *)&led))
 				{
 					printf("Error: Failed to create led thread\n");
 						return 0;
-			}*/
+			}
 	std::vector<double> pos_data;
 	Ublox gps;
 
