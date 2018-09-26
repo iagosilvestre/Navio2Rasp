@@ -277,6 +277,9 @@ int main(int argc, char *argv[])
 	std::thread t3 (acquireMPUData,(void *)&imuMPU);
 	//std::thread t4 (acquireLedData,&led);
 	std::cout << "Done spawning threads. Now waiting for them to join:\n";
+	t1.join();
+	t2.join();
+	t3.join();
 	//t4.join();*/
 	/*pthread_t baro_thread;
 	pthread_t MPU_thread;
@@ -312,9 +315,6 @@ int main(int argc, char *argv[])
 
     	count++;
     	gettimeofday(&tot1,NULL);
-    	t1.join();
-    	t2.join();
-    	t3.join();
     	gettimeofday(&tot2,NULL);
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
 
