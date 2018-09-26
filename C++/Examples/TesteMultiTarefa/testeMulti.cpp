@@ -49,7 +49,7 @@ For print help:
 	    int swBaro=0,swMPU=0,swLSM=0,swLed=0;
 	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=5000;
+		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=500;
 
 	    float temperatura,pressao;
 
@@ -275,16 +275,6 @@ int main(int argc, char *argv[])
 	MPU9250 imuMPU;
 	LSM9DS1 imuLSM;
 
-	/*std::cout << "Spawning 4 threads...\n";
-	std::thread t1 (acquireBarometerData,(void *)&baro);
-	std::thread t2 (acquireLSMData,(void *)&imuLSM);
-	std::thread t3 (acquireMPUData,(void *)&imuMPU);
-	//std::thread t4 (acquireLedData,&led);
-	std::cout << "Done spawning threads. Now waiting for them to join:\n";
-	t1.join();
-	t2.join();
-	t3.join();
-	//t4.join();*/
 	mtxBaro.lock();
 	mtxMPU.lock();
 	mtxLSM.lock();
@@ -346,20 +336,16 @@ int main(int argc, char *argv[])
 
 
 //----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
-        if(count!=1){
-        	 mem=dtlong;
-        }
     	dtlong= dtMPU + dtLSM + dtLED;
-    	if(count==5){
+    	if(count==1){
     	    		min=dtTot;
     	    		max=dtTot;
-    	    		mem=dtTot;
     	    		media=dtTot;
     	    		sum=dtTot;
     	    	}
-    	else if(count>5){
+    	else{
     		sum=sum+dtTot;
-    		media=sum/(count-4);
+    		media=sum/(count);
     		if(dtTot<min){
     			min=dtTot;
     		}
