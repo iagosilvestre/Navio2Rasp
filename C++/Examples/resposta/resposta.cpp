@@ -105,7 +105,7 @@ void * acquireBarometerData(void * barom)
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
         }
-        mtxBaro.unlock();
+       // mtxBaro.unlock();
         //usleep(5000);
     }
 
@@ -137,7 +137,7 @@ void * acquireMPUData(void * imuMPU)
 		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
 		        	fclose(f);
 		        }
-		mtxMPU.unlock();
+		//mtxMPU.unlock();
 		//usleep(5000);
 	}
 	pthread_exit(NULL);
@@ -168,7 +168,7 @@ void * acquireLSMData(void * imuLSM)
 			fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
 			fclose(f);
 		}
-		mtxLSM.unlock();
+		//mtxLSM.unlock();
 		//usleep(5000);
 	}
 	pthread_exit(NULL);
@@ -202,7 +202,7 @@ void * acquireLedData(void * led)
 			fprintf(f, "%d;%lu\n",ledCount,dtLED);
 			fclose(f);
 		}
-		mtxLed.unlock();
+		//mtxLed.unlock();
 		//usleep(200000);
 
 	}
