@@ -328,8 +328,8 @@ int main(int argc, char *argv[])
     	mtxLed.unlock();
     	gettimeofday(&tot1,NULL);
     	while((swBaro & swMPU & swLSM & swLed)!=1){
+    		gettimeofday(&tot2,NULL);
     	}
-    	gettimeofday(&tot2,NULL);
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
     	mtxBaro.lock();
     	mtxMPU.lock();
