@@ -106,7 +106,7 @@ void * acquireBarometerData(void * barom)
         	fclose(f);
         }
         mtxBaro.unlock();
-        usleep(5000);
+        //usleep(5000);
     }
 
     pthread_exit(NULL);
@@ -138,7 +138,7 @@ void * acquireMPUData(void * imuMPU)
 		        	fclose(f);
 		        }
 		mtxMPU.unlock();
-		usleep(5000);
+		//usleep(5000);
 	}
 	pthread_exit(NULL);
 }
@@ -169,7 +169,7 @@ void * acquireLSMData(void * imuLSM)
 			fclose(f);
 		}
 		mtxLSM.unlock();
-		usleep(5000);
+		//usleep(5000);
 	}
 	pthread_exit(NULL);
 }
@@ -203,7 +203,7 @@ void * acquireLedData(void * led)
 			fclose(f);
 		}
 		mtxLed.unlock();
-		usleep(200000);
+		//usleep(200000);
 
 	}
 
@@ -327,7 +327,7 @@ int main(int argc, char *argv[])
     	mtxLSM.unlock();
     	mtxLed.unlock();
     	gettimeofday(&tot1,NULL);
-    	while((swBaro & swMPU & swLSM & swLed)!=1){
+    	while((swMPU & swLSM & swLed)!=1){
     		gettimeofday(&tot2,NULL);
     	}
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
