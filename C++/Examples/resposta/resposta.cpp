@@ -351,20 +351,20 @@ int main(int argc, char *argv[])
         }
     	dtlong= dtMPU + dtLSM + dtLED;
     	if(count==1){
-    	    		min=dtlong;
-    	    		max=dtlong;
-    	    		mem=dtlong;
-    	    		media=dtlong;
-    	    		sum=dtlong;
+    	    		min=dtTot;
+    	    		max=dtTot;
+    	    		mem=dtTot;
+    	    		media=dtTot;
+    	    		sum=dtTot;
     	    	}
     	else{
-    		sum=sum+dtlong;
+    		sum=sum+dtTot;
     		media=sum/count;
-    		if(dtlong<min){
-    			min=dtlong;
+    		if(dtTot<min){
+    			min=dtTot;
     		}
-    		if(dtlong>max){
-    			max=dtlong;
+    		if(dtTot>max){
+    			max=dtTot;
     		}
     	}
     	printf("Numero da leitura: %lu \n", count);
