@@ -287,31 +287,36 @@ int main(int argc, char *argv[])
 	pthread_t led_thread;
 
 	baro.initialize();
-	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
-	    {
-	        printf("Error: Failed to create barometer thread\n");
-	        return 0;
-	    }
+
 	imuLSM.initialize();
-			if(pthread_create(&LSM_thread, NULL, acquireLSMData, (void *)&imuLSM))
-				{
-					printf("Error: Failed to create lsm thread\n");
-						return 0;
-			}
+
 	imuMPU.initialize();
-		if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&imuMPU))
-		    {
-		        printf("Error: Failed to create mpu thread\n");
-		        return 0;
-		    }
+
 	led.initialize();
-	if(pthread_create(&led_thread, NULL, acquireLedData, (void *)&led))
-				{
-					printf("Error: Failed to create led thread\n");
-						return 0;
-			}
+
 
     while(count<countMax) {
+    	if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
+    		    {
+    		        printf("Error: Failed to create barometer thread\n");
+    		        return 0;
+    		    }
+    	if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&imuMPU))
+    			    {
+    			        printf("Error: Failed to create mpu thread\n");
+    			        return 0;
+    			    }
+    	if(pthread_create(&LSM_thread, NULL, acquireLSMData, (void *)&imuLSM))
+    					{
+    						printf("Error: Failed to create lsm thread\n");
+    							return 0;
+    				}
+    	if(pthread_create(&led_thread, NULL, acquireLedData, (void *)&led))
+    					{
+    						printf("Error: Failed to create led thread\n");
+    							return 0;
+    				}
+
 
     	count++;
     	gettimeofday(&tot1,NULL);
