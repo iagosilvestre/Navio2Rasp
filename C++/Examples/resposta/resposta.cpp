@@ -328,8 +328,8 @@ int main(int argc, char *argv[])
     	mtxLed.unlock();
     	gettimeofday(&tot1,NULL);
     	while((swMPU & swLSM & swLed)!=1){
-    		gettimeofday(&tot2,NULL);
     	}
+    	gettimeofday(&tot2,NULL);
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
 
 
@@ -370,6 +370,17 @@ int main(int argc, char *argv[])
     	printf("Numero da leitura: %lu \n", count);
     	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
     	printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
+    	if(count==1){
+			FILE *f = fopen("dtTot.txt", "w");
+			fprintf(f, "count;dtTot\n");
+			fprintf(f, "%d;%lu\n",count,dtTot);
+			fclose(f);
+		}
+		else if(count>1){
+			FILE *f = fopen("dtTot.txt", "a");
+			fprintf(f, "%d;%lu\n",count,dtTot);
+			fclose(f);
+		}
     	swBaro=0;
     	swMPU=0;
     	swLSM=0;
