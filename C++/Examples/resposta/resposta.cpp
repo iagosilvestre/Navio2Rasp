@@ -321,7 +321,7 @@ int main(int argc, char *argv[])
     	while(swBaro==1 || swMPU==1 || swLSM==1 || swLed==1){
     	}
     	gettimeofday(&tot2,NULL);
-    	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec-20000;
+    	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec;
 
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
 
