@@ -47,7 +47,7 @@ For print help:
 		int swBaro=0,swMPU=0,swLSM=0,swLed=0;
 	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=5000;
+		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=500;
 
 	    float temperatura,pressao;
 
@@ -361,7 +361,7 @@ int main(int argc, char *argv[])
     	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
     	printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
 
-    	//usleep(5000);
+    	usleep(5000);
 
            }
 
