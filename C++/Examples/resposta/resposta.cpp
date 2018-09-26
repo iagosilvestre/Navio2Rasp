@@ -33,6 +33,7 @@ For print help:
 #include <iostream>       // std::cout
 #include <thread>         // std::thread, std::this_thread::sleep_for
 #include <chrono>
+#include <mutex>
 
 #define G_SI 9.80665
 #define PI   3.14159
@@ -44,7 +45,8 @@ For print help:
 	    float gx2, gy2, gz2;
 	    float mx2, my2, mz2;
 
-		int swBaro=0,swMPU=0,swLSM=0,swLed=0;
+	    std::mutex mtxBaro,mtxMPU,mtxLSM,mtxLed;
+	    int swBaro=0,swMPU=0,swLSM=0,swLed=0;
 	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
 		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=500;
@@ -73,7 +75,7 @@ void * acquireBarometerData(void * barom)
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
-    	if(swBaro==0){
+    	mtxBaro.lock();
     	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
@@ -103,8 +105,8 @@ void * acquireBarometerData(void * barom)
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
         }
+        mtxBaro.unlock();
         usleep(5000);
-    }
     }
 
     pthread_exit(NULL);
@@ -114,7 +116,7 @@ void * acquireMPUData(void * imuMPU)
 	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
-		if(swMPU==0){
+		mtxMPU.lock();
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
@@ -135,8 +137,8 @@ void * acquireMPUData(void * imuMPU)
 		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
 		        	fclose(f);
 		        }
+		mtxMPU.unlock();
 		usleep(5000);
-	}
 	}
 	pthread_exit(NULL);
 }
@@ -145,7 +147,7 @@ void * acquireLSMData(void * imuLSM)
 	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
-		if(swLSM==0){
+		mtxLSM.lock();
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
@@ -166,8 +168,8 @@ void * acquireLSMData(void * imuLSM)
 			fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
 			fclose(f);
 		}
+		mtxLSM.unlock();
 		usleep(5000);
-	}
 	}
 	pthread_exit(NULL);
 }
@@ -177,7 +179,7 @@ void * acquireLedData(void * led)
 	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
-		if(swLed==0){
+		mtxLed.lock();
 		ledCount++;
 		gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
@@ -200,8 +202,9 @@ void * acquireLedData(void * led)
 			fprintf(f, "%d;%lu\n",ledCount,dtLED);
 			fclose(f);
 		}
+		mtxLed.unlock();
 		usleep(200000);
-	}
+
 	}
 
 	pthread_exit(NULL);
@@ -282,6 +285,11 @@ int main(int argc, char *argv[])
 	t2.join();
 	t3.join();
 	//t4.join();*/
+	mtxBaro.lock();
+	mtxMPU.lock();
+	mtxLSM.lock();
+	mtxLed.lock();
+
 	pthread_t baro_thread;
 	pthread_t MPU_thread;
 	pthread_t LSM_thread;
@@ -314,15 +322,20 @@ int main(int argc, char *argv[])
 
     while(count<countMax) {
     	count++;
-    	swBaro=0;
-    	swMPU=0;
-    	swLSM=0;
-    	swLed=0;
+    	mtxBaro.unlock();
+    	mtxMPU.unlock();
+    	mtxLSM.unlock();
+    	mtxLed.unlock();
     	gettimeofday(&tot1,NULL);
     	while((swBaro & swMPU & swLSM & swLed)!=1){
     	}
     	gettimeofday(&tot2,NULL);
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
+    	mtxBaro.lock();
+    	mtxMPU.lock();
+    	mtxLSM.lock();
+    	mtxLed.lock();
+
 
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
 
@@ -341,7 +354,7 @@ int main(int argc, char *argv[])
         	 mem=dtlong;
         }
     	dtlong= dtMPU + dtLSM + dtLED;
-    	if(count==2){
+    	if(count==1){
     	    		min=dtlong;
     	    		max=dtlong;
     	    		mem=dtlong;
@@ -361,7 +374,10 @@ int main(int argc, char *argv[])
     	printf("Numero da leitura: %lu \n", count);
     	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
     	printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
-
+    	swBaro=0;
+    	swMPU=0;
+    	swLSM=0;
+    	swLed=0;
     	usleep(1000000);
 
            }
