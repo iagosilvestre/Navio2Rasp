@@ -329,6 +329,7 @@ int main(int argc, char *argv[])
     	gettimeofday(&tot1,NULL);
     	while((swMPU & swLSM & swLed)!=1){
     		gettimeofday(&tot2,NULL);
+    		printf("Numero da leitura: %lu \n", count);
     	}
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
     	mtxBaro.lock();
