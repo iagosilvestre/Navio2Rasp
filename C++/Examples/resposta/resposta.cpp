@@ -350,16 +350,16 @@ int main(int argc, char *argv[])
         	 mem=dtlong;
         }
     	dtlong= dtMPU + dtLSM + dtLED;
-    	if(count==1){
+    	if(count==5){
     	    		min=dtTot;
     	    		max=dtTot;
     	    		mem=dtTot;
     	    		media=dtTot;
     	    		sum=dtTot;
     	    	}
-    	else{
+    	else if(count>5){
     		sum=sum+dtTot;
-    		media=sum/count;
+    		media=sum/(count-4);
     		if(dtTot<min){
     			min=dtTot;
     		}
