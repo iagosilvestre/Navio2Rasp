@@ -72,7 +72,7 @@ void * acquireBarometerData(void * barom)
 	//unsigned long int previoustime=0, currenttime=0;
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
-    while (count<countMax) {
+    //while (count<countMax) {
     	//if(swBaro==1){
     	baroCount++;
     	gettimeofday(&baro1,NULL);
@@ -104,7 +104,7 @@ void * acquireBarometerData(void * barom)
         	fclose(f);
         }
         usleep(5000);
-    }
+   // }
 //    }
 
     pthread_exit(NULL);
@@ -113,7 +113,7 @@ void * acquireMPUData(void * imuMPU)
 {
 	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
-	while(count<countMax){
+	//while(count<countMax){
 		//if(swMPU==1){
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
@@ -136,7 +136,7 @@ void * acquireMPUData(void * imuMPU)
 		        	fclose(f);
 		        }
 		usleep(5000);
-	}
+	//}
 	//}
 	pthread_exit(NULL);
 }
@@ -144,7 +144,7 @@ void * acquireLSMData(void * imuLSM)
 {
 	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
-	while(count<countMax){
+	//while(count<countMax){
 		//if(swLSM==1){
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
@@ -167,7 +167,7 @@ void * acquireLSMData(void * imuLSM)
 			fclose(f);
 		}
 		usleep(5000);
-	}
+	//}
 	//}
 	pthread_exit(NULL);
 }
@@ -176,7 +176,7 @@ void * acquireLedData(void * led)
 {
 	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
-	while(count<countMax){
+	//while(count<countMax){
 		//if(swLed==1){
 		ledCount++;
 		gettimeofday(&led1,NULL);
@@ -201,7 +201,7 @@ void * acquireLedData(void * led)
 			fclose(f);
 		}
 		usleep(200000);
-	}
+	//}
 	//}
 	pthread_exit(NULL);
 }
@@ -271,17 +271,14 @@ int main(int argc, char *argv[])
 	MPU9250 imuMPU;
 	LSM9DS1 imuLSM;
 
-	/*std::cout << "Spawning 4 threads...\n";
+	std::cout << "Spawning 4 threads...\n";
 	std::thread t1 (acquireBarometerData,(void *)&baro);
 	std::thread t2 (acquireLSMData,(void *)&imuLSM);
 	std::thread t3 (acquireMPUData,(void *)&imuMPU);
 	//std::thread t4 (acquireLedData,&led);
 	std::cout << "Done spawning threads. Now waiting for them to join:\n";
-	t1.join();
-	t2.join();
-	t3.join();
 	//t4.join();*/
-	pthread_t baro_thread;
+	/*pthread_t baro_thread;
 	pthread_t MPU_thread;
 	pthread_t LSM_thread;
 	pthread_t led_thread;
@@ -309,17 +306,15 @@ int main(int argc, char *argv[])
 				{
 					printf("Error: Failed to create led thread\n");
 						return 0;
-			}
+			}*/
 
     while(count<countMax) {
+
     	count++;
-    	swBaro=1;
-    	swMPU=1;
-    	swLSM=1;
-    	swLed=1;
     	gettimeofday(&tot1,NULL);
-    	while(swBaro==1 || swMPU==1 || swLSM==1 || swLed==1){
-    	}
+    	t1.join();
+    	t2.join();
+    	t3.join();
     	gettimeofday(&tot2,NULL);
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
 
