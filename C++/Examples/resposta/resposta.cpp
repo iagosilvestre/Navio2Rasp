@@ -73,7 +73,6 @@ void * acquireBarometerData(void * barom)
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
-    	//if(swBaro==1){
     	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
@@ -91,7 +90,7 @@ void * acquireBarometerData(void * barom)
         pressao=barometer->getPressure();
         gettimeofday(&baro2,NULL);
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
-        swBaro=0;
+        swBaro=1;
         if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
         	fprintf(f, "count;dtBaro\n");
@@ -105,7 +104,6 @@ void * acquireBarometerData(void * barom)
         }
         usleep(5000);
     }
-//    }
 
     pthread_exit(NULL);
 }
@@ -114,7 +112,6 @@ void * acquireMPUData(void * imuMPU)
 	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
-		//if(swMPU==1){
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
@@ -123,7 +120,7 @@ void * acquireMPUData(void * imuMPU)
 		mpu->read_magnetometer(&mx, &my, &mz);
 		gettimeofday(&mpu2,NULL);
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
-		swMPU=0;
+		swMPU=1;
 		if(mpuCount==1){
 		        	FILE *f = fopen("mpu.txt", "w");
 		        	fprintf(f, "count;dtMPU\n");
@@ -137,7 +134,6 @@ void * acquireMPUData(void * imuMPU)
 		        }
 		usleep(5000);
 	}
-	//}
 	pthread_exit(NULL);
 }
 void * acquireLSMData(void * imuLSM)
@@ -145,7 +141,6 @@ void * acquireLSMData(void * imuLSM)
 	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
-		//if(swLSM==1){
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
@@ -154,7 +149,7 @@ void * acquireLSMData(void * imuLSM)
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
 		gettimeofday(&lsm2,NULL);
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
-		swLSM=0;
+		swLSM=1;
 		if(lsmCount==1){
 				FILE *f = fopen("lsm.txt", "w");
 				fprintf(f, "count;dtLSM\n");
@@ -168,7 +163,6 @@ void * acquireLSMData(void * imuLSM)
 		}
 		usleep(5000);
 	}
-	//}
 	pthread_exit(NULL);
 }
 
@@ -177,7 +171,6 @@ void * acquireLedData(void * led)
 	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
-		//if(swLed==1){
 		ledCount++;
 		gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
@@ -188,7 +181,7 @@ void * acquireLedData(void * led)
     	}
     	gettimeofday(&led2,NULL);
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
-		swLed=0;
+		swLed=1;
 		if(ledCount==1){
 			  FILE *f = fopen("led.txt", "w");
 			  fprintf(f, "count;dtLED\n");
@@ -202,7 +195,7 @@ void * acquireLedData(void * led)
 		}
 		usleep(200000);
 	}
-	//}
+
 	pthread_exit(NULL);
 }
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
@@ -313,11 +306,10 @@ int main(int argc, char *argv[])
 
     while(count<countMax) {
     	count++;
-    	swBaro=1;
-    	swMPU=1;
-    	swLSM=1;
-    	swLed=1;
     	gettimeofday(&tot1,NULL);
+    	while((swBaro & swMPU & swLSM & swLed)!=1){
+
+    	}
     	gettimeofday(&tot2,NULL);
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
 
@@ -359,7 +351,7 @@ int main(int argc, char *argv[])
     	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
     	printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
 
-    	usleep(5000);
+    	usleep(1000000);
 
            }
 
