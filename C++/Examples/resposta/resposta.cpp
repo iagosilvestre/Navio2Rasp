@@ -73,7 +73,7 @@ void * acquireBarometerData(void * barom)
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
-    	if(swBaro==1){
+    	//if(swBaro==1){
     	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
@@ -105,7 +105,7 @@ void * acquireBarometerData(void * barom)
         }
         usleep(5000);
     }
-    }
+//    }
 
     pthread_exit(NULL);
 }
@@ -114,7 +114,7 @@ void * acquireMPUData(void * imuMPU)
 	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
-		if(swMPU==1){
+		//if(swMPU==1){
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
@@ -137,7 +137,7 @@ void * acquireMPUData(void * imuMPU)
 		        }
 		usleep(5000);
 	}
-	}
+	//}
 	pthread_exit(NULL);
 }
 void * acquireLSMData(void * imuLSM)
@@ -145,7 +145,7 @@ void * acquireLSMData(void * imuLSM)
 	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
-		if(swLSM==1){
+		//if(swLSM==1){
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
@@ -168,7 +168,7 @@ void * acquireLSMData(void * imuLSM)
 		}
 		usleep(5000);
 	}
-	}
+	//}
 	pthread_exit(NULL);
 }
 
@@ -177,7 +177,7 @@ void * acquireLedData(void * led)
 	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
-		if(swLed==1){
+		//if(swLed==1){
 		ledCount++;
 		gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
@@ -202,7 +202,7 @@ void * acquireLedData(void * led)
 		}
 		usleep(200000);
 	}
-	}
+	//}
 	pthread_exit(NULL);
 }
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
