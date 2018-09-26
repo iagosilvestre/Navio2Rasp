@@ -350,7 +350,10 @@ int main(int argc, char *argv[])
     	printf("Numero da leitura: %lu \n", count);
     	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
     	printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
-
+    	swBaro=0;
+    	swMPU=0;
+    	swLSM=0;
+    	swLed=0;
     	usleep(1000000);
 
            }
