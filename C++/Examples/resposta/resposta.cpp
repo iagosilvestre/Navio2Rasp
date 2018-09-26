@@ -320,7 +320,7 @@ int main(int argc, char *argv[])
     	swLed=0;
     	gettimeofday(&tot1,NULL);
     	while((swBaro & swMPU & swLSM & swLed)!=1){
-
+    		printf("Numero da leitura: %lu \n", count);
     	}
     	gettimeofday(&tot2,NULL);
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
