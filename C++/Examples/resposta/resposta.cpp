@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
 	MPU9250 imuMPU;
 	LSM9DS1 imuLSM;
 
-	std::cout << "Spawning 4 threads...\n";
+	/*std::cout << "Spawning 4 threads...\n";
 	std::thread t1 (acquireBarometerData,(void *)&baro);
 	std::thread t2 (acquireLSMData,(void *)&imuLSM);
 	std::thread t3 (acquireMPUData,(void *)&imuMPU);
@@ -279,9 +279,9 @@ int main(int argc, char *argv[])
 	std::cout << "Done spawning threads. Now waiting for them to join:\n";
 	t1.join();
 	t2.join();
-	t3.join();
+	t3.join();*/
 	//t4.join();*/
-	/*pthread_t baro_thread;
+	pthread_t baro_thread;
 	pthread_t MPU_thread;
 	pthread_t LSM_thread;
 	pthread_t led_thread;
@@ -309,7 +309,7 @@ int main(int argc, char *argv[])
 				{
 					printf("Error: Failed to create led thread\n");
 						return 0;
-			}*/
+			}
 
     while(count<countMax) {
 
