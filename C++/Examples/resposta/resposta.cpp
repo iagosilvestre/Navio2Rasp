@@ -103,7 +103,7 @@ void * acquireBarometerData(void * barom)
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
         }
-        //usleep(5000);
+        usleep(5000);
     }
     }
 
@@ -135,7 +135,7 @@ void * acquireMPUData(void * imuMPU)
 		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
 		        	fclose(f);
 		        }
-		//usleep(5000);
+		usleep(5000);
 	}
 	}
 	pthread_exit(NULL);
@@ -166,7 +166,7 @@ void * acquireLSMData(void * imuLSM)
 			fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
 			fclose(f);
 		}
-		//usleep(5000);
+		usleep(5000);
 	}
 	}
 	pthread_exit(NULL);
@@ -200,7 +200,7 @@ void * acquireLedData(void * led)
 			fprintf(f, "%d;%lu\n",ledCount,dtLED);
 			fclose(f);
 		}
-		//usleep(200000);
+		usleep(200000);
 	}
 	}
 	pthread_exit(NULL);
@@ -321,7 +321,7 @@ int main(int argc, char *argv[])
     	while(swBaro==1 || swMPU==1 || swLSM==1 || swLed==1){
     	}
     	gettimeofday(&tot2,NULL);
-    	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec;
+    	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
 
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
 
