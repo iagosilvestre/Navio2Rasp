@@ -73,7 +73,7 @@ void * acquireBarometerData(void * barom)
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
-    	if(swBaro=0){
+    	if(swBaro==0){
     	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
@@ -114,7 +114,7 @@ void * acquireMPUData(void * imuMPU)
 	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
-		if(swMPU=0){
+		if(swMPU==0){
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
@@ -145,7 +145,7 @@ void * acquireLSMData(void * imuLSM)
 	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
-		if(swLSM=0){
+		if(swLSM==0){
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
@@ -177,7 +177,7 @@ void * acquireLedData(void * led)
 	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
-		if(swLed=0){
+		if(swLed==0){
 		ledCount++;
 		gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
