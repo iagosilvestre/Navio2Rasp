@@ -324,7 +324,7 @@ int main(int argc, char *argv[])
     		printf("Numero da leitura: %d \n", swMPU);
     		printf("Numero da leitura: %d \n", swLSM);
     		printf("Numero da leitura: %d \n", swLed);
-    		usleep(1000000)
+    		usleep(1000000);
     	}
     	gettimeofday(&tot2,NULL);
     	dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
