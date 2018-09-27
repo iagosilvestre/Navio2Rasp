@@ -316,68 +316,64 @@ int main(int argc, char *argv[])
 			fprintf(f, "%d;%lu\n",count,dtTot);
 			fclose(f);
 		}*/
-    	swBaro=0;
-    	swMPU=0;
-    	swLSM=0;
-    	swLed=0;
     	usleep(10000);
 
     }
-	FILE *f = fopen("barometer.txt", "w");
-	fprintf(f, "count;dtBaro\n");
-	fclose(f);
+	FILE *fBaro = fopen("barometer.txt", "w");
+	fprintf(fBaro, "count;dtBaro\n");
+	fclose(fBaro);
 	for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it){
 		auxCount++;
-		FILE *f = fopen("barometer.txt", "a");
-		fprintf(f, "%d;%lu\n",auxCount,*it);
-		fclose(f);
+		FILE *fBaro = fopen("barometer.txt", "a");
+		fprintf(fBaro, "%d;%lu\n",auxCount,*it);
+		fclose(fBaro);
 	}
 
 
 	auxCount=0;
-	FILE *f = fopen("mpu.txt", "w");
-	fprintf(f, "count;dtMPU\n");
-	fclose(f);
+	FILE *fMPU = fopen("mpu.txt", "w");
+	fprintf(fMPU, "count;dtMPU\n");
+	fclose(fMPU);
 	for (std::vector<int>::iterator it = mpuData.begin() ; it != mpuData.end(); ++it){
 		auxCount++;
-		FILE *f = fopen("mpu.txt", "a");
-		fprintf(f, "%d;%lu\n",auxCount,*it);
-		fclose(f);
+		FILE *fMPU = fopen("mpu.txt", "a");
+		fprintf(fMPU, "%d;%lu\n",auxCount,*it);
+		fclose(fMPU);
 	}
 
 
 	auxCount=0;
-	FILE *f = fopen("lsm.txt", "w");
-	fprintf(f, "count;dtLSM\n");
-	fclose(f);
+	FILE *fLSM = fopen("lsm.txt", "w");
+	fprintf(fLSM, "count;dtLSM\n");
+	fclose(fLSM);
 	for (std::vector<int>::iterator it = lsmData.begin() ; it != lsmData.end(); ++it){
 		auxCount++;
-		FILE *f = fopen("lsm.txt", "a");
-		fprintf(f, "%d;%lu\n",auxCount,*it);
-		fclose(f);
+		FILE *fLSM = fopen("lsm.txt", "a");
+		fprintf(fLSM, "%d;%lu\n",auxCount,*it);
+		fclose(fLSM);
 	}
 
 
 	auxCount=0;
-	FILE *f = fopen("led.txt", "w");
-	fprintf(f, "count;dtLed\n");
-	fclose(f);
+	FILE *fLed = fopen("led.txt", "w");
+	fprintf(fLed, "count;dtLed\n");
+	fclose(fLed);
 	for (std::vector<int>::iterator it = ledData.begin() ; it != ledData.end(); ++it){
 		auxCount++;
-		FILE *f = fopen("led.txt", "a");
-		fprintf(f, "%d;%lu\n",auxCount,*it);
-		fclose(f);
+		FILE *fLed = fopen("led.txt", "a");
+		fprintf(fLed, "%d;%lu\n",auxCount,*it);
+		fclose(fLed);
 	}
 
 	auxCount=0;
-		FILE *f = fopen("dtTot.txt", "w");
-		fprintf(f, "count;dtTot\n");
-		fclose(f);
+		FILE *fTot = fopen("dtTot.txt", "w");
+		fprintf(fTot, "count;dtTot\n");
+		fclose(fTot);
 		for (std::vector<int>::iterator it = totData.begin() ; it != totData.end(); ++it){
 			auxCount++;
-			FILE *f = fopen("dtTot.txt", "a");
-			fprintf(f, "%d;%lu\n",auxCount,*it);
-			fclose(f);
+			FILE *fTot = fopen("dtTot.txt", "a");
+			fprintf(fTot, "%d;%lu\n",auxCount,*it);
+			fclose(fTot);
 		}
 
             printf("--------------------------------------------------------------------------------------------------\n");
