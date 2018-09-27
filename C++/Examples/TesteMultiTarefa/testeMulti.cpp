@@ -52,6 +52,9 @@ For print help:
 
 	    float temperatura,pressao;
 		std::vector<int> baroData;
+		std::vector<int> mpuData;
+		std::vector<int> lsmData;
+		std::vector<int> ledData;
 
 using namespace std;
 
@@ -86,17 +89,7 @@ void * acquireBarometerData(void * barom)
         gettimeofday(&baro2,NULL);
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         baroData.push_back(dtBaro);
-        if(baroCount==1){
-        	FILE *f = fopen("barometer.txt", "w");
-        	fprintf(f, "count;dtBaro\n");
-        	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
-        	fclose(f);
-        }
-        else if(baroCount>1){
-        	FILE *f = fopen("barometer.txt", "a");
-        	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
-        	fclose(f);
-        }
+
        // mtxBaro.unlock();
         //usleep(5000);
     }
@@ -116,19 +109,9 @@ void * acquireMPUData(void * imuMPU)
 		mpu->read_magnetometer(&mx, &my, &mz);
 		gettimeofday(&mpu2,NULL);
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
-		/*if(mpuCount==1){
-		        	FILE *f = fopen("mpu.txt", "w");
-		        	fprintf(f, "count;dtMPU\n");
-		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
-		        	fclose(f);
-		        }
-		        else if(mpuCount>1){
-		        	FILE *f = fopen("mpu.txt", "a");
-		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
-		        	fclose(f);
-		        }*/
+		mpuData.push_back(dtMPU);
 		//mtxMPU.unlock();
-		//usleep(5000);
+		usleep(5000);
 	}
 	pthread_exit(NULL);
 }
@@ -145,19 +128,8 @@ void * acquireLSMData(void * imuLSM)
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
 		gettimeofday(&lsm2,NULL);
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
-		/*if(lsmCount==1){
-				FILE *f = fopen("lsm.txt", "w");
-				fprintf(f, "count;dtLSM\n");
-				fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
-				fclose(f);
-			}
-		else if(lsmCount>1){
-			FILE *f = fopen("lsm.txt", "a");
-			fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
-			fclose(f);
-		}*/
-		//mtxLSM.unlock();
-		//usleep(5000);
+		lsmData.push_back(dtLSM);
+		usleep(5000);
 	}
 	pthread_exit(NULL);
 }
@@ -177,20 +149,8 @@ void * acquireLedData(void * led)
     	}
     	gettimeofday(&led2,NULL);
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
-		/*if(ledCount==1){
-			  FILE *f = fopen("led.txt", "w");
-			  fprintf(f, "count;dtLED\n");
-			  fprintf(f, "%d;%lu\n",ledCount,dtLED);
-			  fclose(f);
-				}
-		else if(ledCount>1 & ledCount<5000){
-			FILE *f = fopen("led.txt", "a");
-			fprintf(f, "%d;%lu\n",ledCount,dtLED);
-			fclose(f);
-		}*/
-		//mtxLed.unlock();
-		//usleep(200000);
-
+		ledData.push_back(dtLED);
+		usleep(500000);
 	}
 
 	pthread_exit(NULL);
