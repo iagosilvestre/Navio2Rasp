@@ -312,11 +312,11 @@ int main(int argc, char *argv[])
 
     while(count<countMax) {
     	count++;
+    	gettimeofday(&tot1,NULL);
     	mtxBaro.unlock();
     	mtxMPU.unlock();
     	mtxLSM.unlock();
     	mtxLed.unlock();
-    	gettimeofday(&tot1,NULL);
     	while((swMPU & swLSM & swLed)!=1){
     	}
     	gettimeofday(&tot2,NULL);
@@ -371,7 +371,7 @@ int main(int argc, char *argv[])
     	swMPU=0;
     	swLSM=0;
     	swLed=0;
-    	usleep(500000);
+    	usleep(50000);
 
            }
 
