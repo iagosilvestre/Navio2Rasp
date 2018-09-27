@@ -31,12 +31,13 @@ For print help:
 #include <pthread.h>
 #include <iostream>
 #include <vector>
-//#include <mutex>
+#include <mutex>
 // std::cout
 // std::thread, std::this_thread::sleep_for
 
 
-
+#define G_SI 9.80665
+#define PI   3.14159
 
 	    float ax, ay, az;
 	    float gx, gy, gz;
@@ -49,6 +50,8 @@ For print help:
 		float dt;
 		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=5000;
 
+		std::mutex mtxBaro,mtxMPU,mtxLSM,mtxLed;
+		int swBaro=0,swMPU=0,swLSM=0,swLed=0;
 
 	    float temperatura,pressao;
 		std::vector<int> baroData;
@@ -72,6 +75,7 @@ void * acquireBarometerData(void * barom)
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
+    	mtxBaro.lock();
     	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
@@ -90,7 +94,7 @@ void * acquireBarometerData(void * barom)
         gettimeofday(&baro2,NULL);
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         baroData.push_back(dtBaro);
-
+        swBaro=1;
         //usleep(5000);
     }
 
@@ -101,6 +105,7 @@ void * acquireMPUData(void * imuMPU)
 	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
+		mtxMPU.lock();
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
@@ -110,7 +115,8 @@ void * acquireMPUData(void * imuMPU)
 		gettimeofday(&mpu2,NULL);
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		mpuData.push_back(dtMPU);
-		usleep(5000);
+		swMPU=1;
+		//usleep(5000);
 	}
 	pthread_exit(NULL);
 }
@@ -119,6 +125,7 @@ void * acquireLSMData(void * imuLSM)
 	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
+		mtxLSM.lock();
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
@@ -128,7 +135,8 @@ void * acquireLSMData(void * imuLSM)
 		gettimeofday(&lsm2,NULL);
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 		lsmData.push_back(dtLSM);
-		usleep(5000);
+		swLSM=1;
+		//usleep(5000);
 	}
 	pthread_exit(NULL);
 }
@@ -138,6 +146,7 @@ void * acquireLedData(void * led)
 	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
+		mtxLed.lock();
 		ledCount++;
 		gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
@@ -149,7 +158,8 @@ void * acquireLedData(void * led)
     	gettimeofday(&led2,NULL);
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		ledData.push_back(dtLED);
-		usleep(500000);
+		swLed=1;
+		//usleep(100000);
 	}
 
 	pthread_exit(NULL);
@@ -225,6 +235,11 @@ int main(int argc, char *argv[])
 	pthread_t LSM_thread;
 	pthread_t led_thread;
 
+	mtxBaro.lock();
+	mtxMPU.lock();
+	mtxLSM.lock();
+	mtxLed.lock();
+
 	baro.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
 	    {
@@ -252,7 +267,15 @@ int main(int argc, char *argv[])
 
     while(count<countMax) {
     	count++;
-
+		mtxBaro.unlock();
+		mtxMPU.unlock();
+		mtxLSM.unlock();
+		mtxLed.unlock();
+		gettimeofday(&tot1,NULL);
+		while((swMPU & swLSM & swLed)!=1){
+		}
+		gettimeofday(&tot2,NULL);
+		dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
 
 
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
@@ -268,9 +291,9 @@ int main(int argc, char *argv[])
 
 
 //----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
-    	dtTot= dtMPU + dtLSM + dtLED;
+    	//dtTot= dtMPU + dtLSM + dtLED;
     	totData.push_back(dtTot);
-    	/*if(count==1){
+    	if(count==1){
     	    		min=dtTot;
     	    		max=dtTot;
     	    		media=dtTot;
@@ -285,7 +308,7 @@ int main(int argc, char *argv[])
     		if(dtTot>max){
     			max=dtTot;
     		}
-    	}*/
+    	}
 
     	//printf("Numero da leitura: %lu \n", count);
     	//printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
@@ -301,7 +324,11 @@ int main(int argc, char *argv[])
 			fprintf(f, "%d;%lu\n",count,dtTot);
 			fclose(f);
 		}*/
-    	usleep(10000);
+		swBaro=0;
+		swMPU=0;
+		swLSM=0;
+		swLed=0;
+    	usleep(50000);
 
     }
 	FILE *fBaro = fopen("barometer.txt", "w");
