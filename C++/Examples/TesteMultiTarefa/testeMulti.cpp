@@ -29,7 +29,9 @@ For print help:
 #include <Navio2/LSM9DS1.h>
 #include <Common/Util.h>
 #include <pthread.h>
-#include <iostream>       // std::cout
+#include <iostream>
+#include <vector>
+// std::cout
 // std::thread, std::this_thread::sleep_for
 
 
@@ -46,7 +48,7 @@ For print help:
 	    int swBaro=0,swMPU=0,swLSM=0,swLed=0;
 	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=5000;
+		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=10;
 
 	    float temperatura,pressao;
 
@@ -61,6 +63,7 @@ std::unique_ptr <Led> get_led()
 
 void * acquireBarometerData(void * barom)
 {
+	std::vector<int> baroData;
 	//unsigned long int previoustime=0, currenttime=0;
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
@@ -82,6 +85,7 @@ void * acquireBarometerData(void * barom)
         pressao=barometer->getPressure();
         gettimeofday(&baro2,NULL);
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
+        baroData.push_back(dtBaro);
         /*if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
         	fprintf(f, "count;dtBaro\n");
@@ -321,9 +325,13 @@ int main(int argc, char *argv[])
     			max=dtTot;
     		}
     	}
-    	printf("Numero da leitura: %lu \n", count);
-    	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
-    	printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
+    	std::cout << "myvector contains:";
+    	  for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+    	    std::cout << ' ' << *it;
+    	  std::cout << '\n';
+    	//printf("Numero da leitura: %lu \n", count);
+    	//printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
+    	//printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
     	/*if(count==1){
 			FILE *f = fopen("dtTot.txt", "w");
 			fprintf(f, "count;dtTot\n");
@@ -339,7 +347,7 @@ int main(int argc, char *argv[])
     	swMPU=0;
     	swLSM=0;
     	swLed=0;
-    	usleep(100000);
+    	usleep(1000000);
 
            }
 
