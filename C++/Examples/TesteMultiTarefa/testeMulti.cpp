@@ -69,10 +69,8 @@ std::unique_ptr <Led> get_led()
 void * acquireBarometerData(void * barom)
 {
 	//unsigned long int previoustime=0, currenttime=0;
-	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
-    	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
@@ -98,10 +96,8 @@ void * acquireBarometerData(void * barom)
 }
 void * acquireMPUData(void * imuMPU)
 {
-	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
-		mpuCount++;
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
@@ -116,10 +112,8 @@ void * acquireMPUData(void * imuMPU)
 }
 void * acquireLSMData(void * imuLSM)
 {
-	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
-		lsmCount++;
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
@@ -135,10 +129,8 @@ void * acquireLSMData(void * imuLSM)
 
 void * acquireLedData(void * led)
 {
-	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
-		ledCount++;
 		gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
     		diode->setColor(Colors::Red);
