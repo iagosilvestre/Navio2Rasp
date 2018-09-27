@@ -325,6 +325,7 @@ int main(int argc, char *argv[])
     }
 	FILE *f = fopen("barometer.txt", "w");
 	fprintf(f, "count;dtBaro\n");
+	fclose(f);
 	for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it){
 		auxCount++;
 		FILE *f = fopen("barometer.txt", "a");
@@ -336,6 +337,7 @@ int main(int argc, char *argv[])
 	auxCount=0;
 	FILE *f = fopen("mpu.txt", "w");
 	fprintf(f, "count;dtMPU\n");
+	fclose(f);
 	for (std::vector<int>::iterator it = mpuData.begin() ; it != mpuData.end(); ++it){
 		auxCount++;
 		FILE *f = fopen("mpu.txt", "a");
@@ -347,6 +349,7 @@ int main(int argc, char *argv[])
 	auxCount=0;
 	FILE *f = fopen("lsm.txt", "w");
 	fprintf(f, "count;dtLSM\n");
+	fclose(f);
 	for (std::vector<int>::iterator it = lsmData.begin() ; it != lsmData.end(); ++it){
 		auxCount++;
 		FILE *f = fopen("lsm.txt", "a");
@@ -358,6 +361,7 @@ int main(int argc, char *argv[])
 	auxCount=0;
 	FILE *f = fopen("led.txt", "w");
 	fprintf(f, "count;dtLed\n");
+	fclose(f);
 	for (std::vector<int>::iterator it = ledData.begin() ; it != ledData.end(); ++it){
 		auxCount++;
 		FILE *f = fopen("led.txt", "a");
@@ -368,6 +372,7 @@ int main(int argc, char *argv[])
 	auxCount=0;
 		FILE *f = fopen("dtTot.txt", "w");
 		fprintf(f, "count;dtTot\n");
+		fclose(f);
 		for (std::vector<int>::iterator it = totData.begin() ; it != totData.end(); ++it){
 			auxCount++;
 			FILE *f = fopen("dtTot.txt", "a");
