@@ -94,7 +94,7 @@ void * acquireBarometerData(void * barom)
         gettimeofday(&baro2,NULL);
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         swBaro=1;
-        if(baroCount==1){
+        /*if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
         	fprintf(f, "count;dtBaro\n");
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
@@ -104,7 +104,7 @@ void * acquireBarometerData(void * barom)
         	FILE *f = fopen("barometer.txt", "a");
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
-        }
+        }*/
        // mtxBaro.unlock();
         //usleep(5000);
     }
@@ -126,7 +126,7 @@ void * acquireMPUData(void * imuMPU)
 		gettimeofday(&mpu2,NULL);
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		swMPU=1;
-		if(mpuCount==1){
+		/*if(mpuCount==1){
 		        	FILE *f = fopen("mpu.txt", "w");
 		        	fprintf(f, "count;dtMPU\n");
 		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
@@ -136,7 +136,7 @@ void * acquireMPUData(void * imuMPU)
 		        	FILE *f = fopen("mpu.txt", "a");
 		        	fprintf(f, "%d;%lu\n",mpuCount,dtMPU);
 		        	fclose(f);
-		        }
+		        }*/
 		//mtxMPU.unlock();
 		//usleep(5000);
 	}
@@ -157,7 +157,7 @@ void * acquireLSMData(void * imuLSM)
 		gettimeofday(&lsm2,NULL);
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 		swLSM=1;
-		if(lsmCount==1){
+		/*if(lsmCount==1){
 				FILE *f = fopen("lsm.txt", "w");
 				fprintf(f, "count;dtLSM\n");
 				fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
@@ -167,7 +167,7 @@ void * acquireLSMData(void * imuLSM)
 			FILE *f = fopen("lsm.txt", "a");
 			fprintf(f, "%d;%lu\n",lsmCount,dtLSM);
 			fclose(f);
-		}
+		}*/
 		//mtxLSM.unlock();
 		//usleep(5000);
 	}
@@ -191,7 +191,7 @@ void * acquireLedData(void * led)
     	gettimeofday(&led2,NULL);
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		swLed=1;
-		if(ledCount==1){
+		/*if(ledCount==1){
 			  FILE *f = fopen("led.txt", "w");
 			  fprintf(f, "count;dtLED\n");
 			  fprintf(f, "%d;%lu\n",ledCount,dtLED);
@@ -201,7 +201,7 @@ void * acquireLedData(void * led)
 			FILE *f = fopen("led.txt", "a");
 			fprintf(f, "%d;%lu\n",ledCount,dtLED);
 			fclose(f);
-		}
+		}*/
 		//mtxLed.unlock();
 		//usleep(200000);
 
