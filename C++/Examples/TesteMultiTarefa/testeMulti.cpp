@@ -348,9 +348,9 @@ int main(int argc, char *argv[])
     			max=dtTot;
     		}
     	}
-    	//printf("Numero da leitura: %lu \n", count);
-    	//printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
-    	//printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
+    	printf("Numero da leitura: %lu \n", count);
+    	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
+    	printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
     	/*if(count==1){
 			FILE *f = fopen("dtTot.txt", "w");
 			fprintf(f, "count;dtTot\n");
@@ -366,7 +366,7 @@ int main(int argc, char *argv[])
     	swMPU=0;
     	swLSM=0;
     	swLed=0;
-    	usleep(10000);
+    	usleep(100000);
 
            }
 
