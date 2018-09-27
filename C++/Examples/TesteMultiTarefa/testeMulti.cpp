@@ -314,7 +314,7 @@ int main(int argc, char *argv[])
 	    		  			fprintf(f, "%d;%lu\n",it,*it);
 	    		  			fclose(f);
 	    		  		}
-	    		  		else if(itt>1){
+	    		  		else if(it>1){
 	    		  			FILE *f = fopen("barometer.txt", "a");
 	    		  			fprintf(f, "%d;%lu\n",it,*it);
 	    		  			fclose(f);
