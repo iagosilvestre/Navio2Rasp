@@ -370,7 +370,7 @@ int main(int argc, char *argv[])
     	swMPU=0;
     	swLSM=0;
     	swLed=0;
-    	usleep(100000);
+    	usleep(500000);
 
            }
 
