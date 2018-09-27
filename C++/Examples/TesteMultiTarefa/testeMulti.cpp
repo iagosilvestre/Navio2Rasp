@@ -312,7 +312,7 @@ int main(int argc, char *argv[])
 
     while(count<countMax) {
     	count++;
-    	mtxBaro.unlock();
+    	//mtxBaro.unlock();
     	mtxMPU.unlock();
     	mtxLSM.unlock();
     	mtxLed.unlock();
