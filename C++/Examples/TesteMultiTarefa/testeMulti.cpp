@@ -48,7 +48,7 @@ For print help:
 
 	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=500;
+		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=5000;
 
 		std::mutex mtxBaro,mtxMPU,mtxLSM,mtxLed;
 		int swBaro=0,swMPU=0,swLSM=0,swLed=0;
@@ -310,9 +310,9 @@ int main(int argc, char *argv[])
     		}
     	}
 
-    	printf("Numero da leitura: %lu \n", count);
-    	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
-    	printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
+    	//printf("Numero da leitura: %lu \n", count);
+    	//printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
+    	//printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
     	/*if(count==1){
 			FILE *f = fopen("dtTot.txt", "w");
 			fprintf(f, "count;dtTot\n");
