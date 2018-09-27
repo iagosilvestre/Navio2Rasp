@@ -48,7 +48,7 @@ For print help:
 
 	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=10;
+		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=500;
 
 		std::mutex mtxBaro,mtxMPU,mtxLSM,mtxLed;
 		int swBaro=0,swMPU=0,swLSM=0,swLed=0;
@@ -116,7 +116,7 @@ void * acquireMPUData(void * imuMPU)
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		mpuData.push_back(dtMPU);
 		swMPU=1;
-		usleep(5000);
+		//usleep(5000);
 	}
 	pthread_exit(NULL);
 }
@@ -136,7 +136,7 @@ void * acquireLSMData(void * imuLSM)
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 		lsmData.push_back(dtLSM);
 		swLSM=1;
-		usleep(5000);
+		//usleep(5000);
 	}
 	pthread_exit(NULL);
 }
@@ -159,7 +159,7 @@ void * acquireLedData(void * led)
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		ledData.push_back(dtLED);
 		swLed=1;
-		usleep(500000);
+		//usleep(100000);
 	}
 
 	pthread_exit(NULL);
@@ -328,7 +328,7 @@ int main(int argc, char *argv[])
 		swMPU=0;
 		swLSM=0;
 		swLed=0;
-    	usleep(1000000);
+    	usleep(50000);
 
     }
 	FILE *fBaro = fopen("barometer.txt", "w");
