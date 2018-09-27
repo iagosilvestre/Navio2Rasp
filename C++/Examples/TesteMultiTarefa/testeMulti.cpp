@@ -311,6 +311,10 @@ int main(int argc, char *argv[])
 						return 0;
 			}
 	count++;
+	mtxBaro.unlock();
+	    	mtxMPU.unlock();
+	    	mtxLSM.unlock();
+	    	mtxLed.unlock();
     	gettimeofday(&tot1,NULL);
     	while((swMPU & swLSM & swLed)!=1){
     	}
