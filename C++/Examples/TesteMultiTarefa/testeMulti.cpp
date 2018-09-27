@@ -31,6 +31,7 @@ For print help:
 #include <pthread.h>
 #include <iostream>
 #include <vector>
+//#include <mutex>
 // std::cout
 // std::thread, std::this_thread::sleep_for
 
@@ -45,16 +46,18 @@ For print help:
 	    float gx2, gy2, gz2;
 	    float mx2, my2, mz2;
 
-	    int swBaro=0,swMPU=0,swLSM=0,swLed=0;
 	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=10;
+		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=5000;
+
+		//std::mutex mtxBaro,mtxMPU,mtxLSM,mtxLed;
 
 	    float temperatura,pressao;
 		std::vector<int> baroData;
 		std::vector<int> mpuData;
 		std::vector<int> lsmData;
 		std::vector<int> ledData;
+		std::vector<int> totData;
 
 using namespace std;
 
@@ -90,7 +93,6 @@ void * acquireBarometerData(void * barom)
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         baroData.push_back(dtBaro);
 
-       // mtxBaro.unlock();
         //usleep(5000);
     }
 
@@ -110,7 +112,6 @@ void * acquireMPUData(void * imuMPU)
 		gettimeofday(&mpu2,NULL);
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		mpuData.push_back(dtMPU);
-		//mtxMPU.unlock();
 		usleep(5000);
 	}
 	pthread_exit(NULL);
@@ -226,6 +227,11 @@ int main(int argc, char *argv[])
 	pthread_t LSM_thread;
 	pthread_t led_thread;
 
+	/*mtxBaro.lock();
+	mtxMPU.lock();
+	mtxLSM.lock();
+	mtxLed.lock();*/
+
 	baro.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
 	    {
@@ -253,6 +259,15 @@ int main(int argc, char *argv[])
 
     while(count<countMax) {
     	count++;
+		/*mtxBaro.unlock();
+		mtxMPU.unlock();
+		mtxLSM.unlock();
+		mtxLed.unlock();
+		gettimeofday(&tot1,NULL);
+		while((swMPU & swLSM & swLed)!=1){
+		}
+		gettimeofday(&tot2,NULL);
+		dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;*/
 
 
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
@@ -269,6 +284,7 @@ int main(int argc, char *argv[])
 
 //----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
     	dtTot= dtMPU + dtLSM + dtLED;
+    	totData.push_back(dtTot);
     	if(count==1){
     	    		min=dtTot;
     	    		max=dtTot;
@@ -310,11 +326,54 @@ int main(int argc, char *argv[])
 	FILE *f = fopen("barometer.txt", "w");
 	fprintf(f, "count;dtBaro\n");
 	for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it){
-
-	FILE *f = fopen("barometer.txt", "a");
-	fprintf(f, "%d;%lu\n",it,*it);
-	fclose(f);
+		auxCount++;
+		FILE *f = fopen("barometer.txt", "a");
+		fprintf(f, "%d;%lu\n",auxCount,*it);
+		fclose(f);
 	}
+
+
+	auxCount=0;
+	FILE *f = fopen("mpu.txt", "w");
+	fprintf(f, "count;dtMPU\n");
+	for (std::vector<int>::iterator it = mpuData.begin() ; it != mpuData.end(); ++it){
+		auxCount++;
+		FILE *f = fopen("mpu.txt", "a");
+		fprintf(f, "%d;%lu\n",auxCount,*it);
+		fclose(f);
+	}
+
+
+	auxCount=0;
+	FILE *f = fopen("lsm.txt", "w");
+	fprintf(f, "count;dtLSM\n");
+	for (std::vector<int>::iterator it = lsmData.begin() ; it != lsmData.end(); ++it){
+		auxCount++;
+		FILE *f = fopen("lsm.txt", "a");
+		fprintf(f, "%d;%lu\n",auxCount,*it);
+		fclose(f);
+	}
+
+
+	auxCount=0;
+	FILE *f = fopen("led.txt", "w");
+	fprintf(f, "count;dtLed\n");
+	for (std::vector<int>::iterator it = ledData.begin() ; it != ledData.end(); ++it){
+		auxCount++;
+		FILE *f = fopen("led.txt", "a");
+		fprintf(f, "%d;%lu\n",auxCount,*it);
+		fclose(f);
+	}
+
+	auxCount=0;
+		FILE *f = fopen("dtTot.txt", "w");
+		fprintf(f, "count;dtTot\n");
+		for (std::vector<int>::iterator it = totData.begin() ; it != totData.end(); ++it){
+			auxCount++;
+			FILE *f = fopen("dtTot.txt", "a");
+			fprintf(f, "%d;%lu\n",auxCount,*it);
+			fclose(f);
+		}
 
             printf("--------------------------------------------------------------------------------------------------\n");
                     	printf("Numero da leitura: %lu \n", count);
