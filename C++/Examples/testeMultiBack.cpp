@@ -50,8 +50,7 @@ For print help:
 		float dt;
 		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=5000;
 
-		std::mutex mtxBaro,mtxMPU,mtxLSM,mtxLed;
-		int swBaro=0,swMPU=0,swLSM=0,swLed=0;
+		//std::mutex mtxBaro,mtxMPU,mtxLSM,mtxLed;
 
 	    float temperatura,pressao;
 		std::vector<int> baroData;
@@ -94,7 +93,7 @@ void * acquireBarometerData(void * barom)
         gettimeofday(&baro2,NULL);
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         baroData.push_back(dtBaro);
-        swBaro=1;
+
         //usleep(5000);
     }
 
@@ -115,7 +114,6 @@ void * acquireMPUData(void * imuMPU)
 		gettimeofday(&mpu2,NULL);
 		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		mpuData.push_back(dtMPU);
-		swMPU=1;
 		usleep(5000);
 	}
 	pthread_exit(NULL);
@@ -135,7 +133,6 @@ void * acquireLSMData(void * imuLSM)
 		gettimeofday(&lsm2,NULL);
 		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 		lsmData.push_back(dtLSM);
-		swLSM=1;
 		usleep(5000);
 	}
 	pthread_exit(NULL);
@@ -158,7 +155,6 @@ void * acquireLedData(void * led)
     	gettimeofday(&led2,NULL);
 		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		ledData.push_back(dtLED);
-		swLed=1;
 		usleep(500000);
 	}
 
@@ -324,10 +320,6 @@ int main(int argc, char *argv[])
 			fprintf(f, "%d;%lu\n",count,dtTot);
 			fclose(f);
 		}*/
-		swBaro=0;
-		swMPU=0;
-		swLSM=0;
-		swLed=0;
     	usleep(10000);
 
     }
