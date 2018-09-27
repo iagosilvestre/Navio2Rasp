@@ -48,7 +48,7 @@ For print help:
 
 	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=50;
+		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=10;
 
 		std::mutex mtxBaro,mtxMPU,mtxLSM,mtxLed;
 		int swBaro=0,swMPU=0,swLSM=0,swLed=0;
@@ -328,7 +328,7 @@ int main(int argc, char *argv[])
 		swMPU=0;
 		swLSM=0;
 		swLed=0;
-    	usleep(10000);
+    	usleep(1000000);
 
     }
 	FILE *fBaro = fopen("barometer.txt", "w");
