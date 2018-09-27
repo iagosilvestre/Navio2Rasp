@@ -307,10 +307,12 @@ int main(int argc, char *argv[])
     	usleep(10000);
 
            }
-	std::cout << "myvector contains:";
-	    	  for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it)
-	    	    std::cout << ' ' << *it;
-	    	  std::cout << '\n';
+	    	  for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it){
+	    		  FILE *f = fopen("dtTot.txt", "a");
+	    		  			fprintf(f, "%d;%lu\n",it,*it);
+	    		  			fclose(f);
+	    	  }
+
             printf("--------------------------------------------------------------------------------------------------\n");
                     	printf("Numero da leitura: %lu \n", count);
                     	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
