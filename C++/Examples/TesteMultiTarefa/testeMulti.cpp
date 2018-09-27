@@ -74,7 +74,6 @@ void * acquireBarometerData(void * barom)
 	//unsigned long int previoustime=0, currenttime=0;
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
-    while (count<countMax) {
     	mtxBaro.lock();
     	baroCount++;
     	gettimeofday(&baro1,NULL);
@@ -107,7 +106,6 @@ void * acquireBarometerData(void * barom)
         }*/
        // mtxBaro.unlock();
         //usleep(5000);
-    }
 
     pthread_exit(NULL);
 }
@@ -115,7 +113,6 @@ void * acquireMPUData(void * imuMPU)
 {
 	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
-	while(count<countMax){
 		mtxMPU.lock();
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
@@ -139,14 +136,12 @@ void * acquireMPUData(void * imuMPU)
 		        }*/
 		//mtxMPU.unlock();
 		//usleep(5000);
-	}
 	pthread_exit(NULL);
 }
 void * acquireLSMData(void * imuLSM)
 {
 	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
-	while(count<countMax){
 		mtxLSM.lock();
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
@@ -170,7 +165,6 @@ void * acquireLSMData(void * imuLSM)
 		}*/
 		//mtxLSM.unlock();
 		//usleep(5000);
-	}
 	pthread_exit(NULL);
 }
 
@@ -178,7 +172,6 @@ void * acquireLedData(void * led)
 {
 	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
-	while(count<countMax){
 		mtxLed.lock();
 		ledCount++;
 		gettimeofday(&led1,NULL);
@@ -205,7 +198,6 @@ void * acquireLedData(void * led)
 		//mtxLed.unlock();
 		//usleep(200000);
 
-	}
 
 	pthread_exit(NULL);
 }
@@ -286,36 +278,39 @@ int main(int argc, char *argv[])
 	pthread_t led_thread;
 
 	baro.initialize();
-	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
+	led.initialize();
+	imuLSM.initialize();
+	imuMPU.initialize();
+
+
+
+
+
+    while(count<countMax) {
+    	 if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
 	    {
 	        printf("Error: Failed to create barometer thread\n");
 	        return 0;
 	    }
-	imuLSM.initialize();
+
 			if(pthread_create(&LSM_thread, NULL, acquireLSMData, (void *)&imuLSM))
 				{
 					printf("Error: Failed to create lsm thread\n");
 						return 0;
 			}
-	imuMPU.initialize();
+
 		if(pthread_create(&MPU_thread, NULL, acquireMPUData, (void *)&imuMPU))
 		    {
 		        printf("Error: Failed to create mpu thread\n");
 		        return 0;
 		    }
-	led.initialize();
+
 	if(pthread_create(&led_thread, NULL, acquireLedData, (void *)&led))
 				{
 					printf("Error: Failed to create led thread\n");
 						return 0;
 			}
-
-    while(count<countMax) {
-    	count++;
-    	//mtxBaro.unlock();
-    	mtxMPU.unlock();
-    	mtxLSM.unlock();
-    	mtxLed.unlock();
+	count++;
     	gettimeofday(&tot1,NULL);
     	while((swMPU & swLSM & swLed)!=1){
     	}
