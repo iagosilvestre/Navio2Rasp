@@ -52,6 +52,7 @@ For print help:
 
 	    float temperatura,pressao;
 		std::vector<int> baroData;
+
 using namespace std;
 
 std::unique_ptr <Led> get_led()
@@ -324,10 +325,7 @@ int main(int argc, char *argv[])
     			max=dtTot;
     		}
     	}
-    	std::cout << "myvector contains:";
-    	  for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it)
-    	    std::cout << ' ' << *it;
-    	  std::cout << '\n';
+
     	//printf("Numero da leitura: %lu \n", count);
     	//printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
     	//printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
@@ -346,10 +344,13 @@ int main(int argc, char *argv[])
     	swMPU=0;
     	swLSM=0;
     	swLed=0;
-    	usleep(1000000);
+    	usleep(10000);
 
            }
-
+	std::cout << "myvector contains:";
+	    	  for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it)
+	    	    std::cout << ' ' << *it;
+	    	  std::cout << '\n';
             printf("--------------------------------------------------------------------------------------------------\n");
                     	printf("Numero da leitura: %lu \n", count);
                     	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
