@@ -326,7 +326,7 @@ int main(int argc, char *argv[])
     		}
     	}
     	std::cout << "myvector contains:";
-    	  for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+    	  for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it)
     	    std::cout << ' ' << *it;
     	  std::cout << '\n';
     	//printf("Numero da leitura: %lu \n", count);
