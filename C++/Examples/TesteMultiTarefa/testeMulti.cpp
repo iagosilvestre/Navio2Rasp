@@ -86,7 +86,7 @@ void * acquireBarometerData(void * barom)
         gettimeofday(&baro2,NULL);
         dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         baroData.push_back(dtBaro);
-        /*if(baroCount==1){
+        if(baroCount==1){
         	FILE *f = fopen("barometer.txt", "w");
         	fprintf(f, "count;dtBaro\n");
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
@@ -96,7 +96,7 @@ void * acquireBarometerData(void * barom)
         	FILE *f = fopen("barometer.txt", "a");
         	fprintf(f, "%d;%lu\n",baroCount,dtBaro);
         	fclose(f);
-        }*/
+        }
        // mtxBaro.unlock();
         //usleep(5000);
     }
