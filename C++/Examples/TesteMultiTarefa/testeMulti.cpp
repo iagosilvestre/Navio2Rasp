@@ -54,15 +54,8 @@ using namespace std;
 
 std::unique_ptr <Led> get_led()
 {
-    if (get_navio_version() == NAVIO2)
-    {
         auto ptr = std::unique_ptr <Led>{ new Led_Navio2() };
         return ptr;
-    } else
-    {
-        auto ptr = std::unique_ptr <Led>{ new Led_Navio() };
-        return ptr;
-    }
 }
 
 
