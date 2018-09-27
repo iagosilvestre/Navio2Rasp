@@ -31,7 +31,7 @@ For print help:
 #include <pthread.h>
 #include <iostream>
 #include <vector>
-//#include <mutex>
+#include <mutex>
 // std::cout
 // std::thread, std::this_thread::sleep_for
 
@@ -74,6 +74,7 @@ void * acquireBarometerData(void * barom)
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
+    	mtxBaro.lock();
     	baroCount++;
     	gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
@@ -103,6 +104,7 @@ void * acquireMPUData(void * imuMPU)
 	unsigned long int mpuCount=0;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
+		mtxMPU.lock();
 		mpuCount++;
     	gettimeofday(&mpu1,NULL);
 		mpu->update();
@@ -121,6 +123,7 @@ void * acquireLSMData(void * imuLSM)
 	unsigned long int lsmCount=0;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
+		mtxLSM.lock();
 		lsmCount++;
 		gettimeofday(&lsm1,NULL);
 		lsm->update();
@@ -140,6 +143,7 @@ void * acquireLedData(void * led)
 	unsigned long int ledCount=0;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
+		mtxLed.lock();
 		ledCount++;
 		gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
@@ -227,10 +231,10 @@ int main(int argc, char *argv[])
 	pthread_t LSM_thread;
 	pthread_t led_thread;
 
-	/*mtxBaro.lock();
+	mtxBaro.lock();
 	mtxMPU.lock();
 	mtxLSM.lock();
-	mtxLed.lock();*/
+	mtxLed.lock();
 
 	baro.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
@@ -259,7 +263,7 @@ int main(int argc, char *argv[])
 
     while(count<countMax) {
     	count++;
-		/*mtxBaro.unlock();
+		mtxBaro.unlock();
 		mtxMPU.unlock();
 		mtxLSM.unlock();
 		mtxLed.unlock();
@@ -267,7 +271,7 @@ int main(int argc, char *argv[])
 		while((swMPU & swLSM & swLed)!=1){
 		}
 		gettimeofday(&tot2,NULL);
-		dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;*/
+		dtTot=(1000000 * tot2.tv_sec + tot2.tv_usec)-1000000 * tot1.tv_sec - tot1.tv_usec ;
 
 
 //----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
@@ -283,7 +287,7 @@ int main(int argc, char *argv[])
 
 
 //----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
-    	dtTot= dtMPU + dtLSM + dtLED;
+    	//dtTot= dtMPU + dtLSM + dtLED;
     	totData.push_back(dtTot);
     	if(count==1){
     	    		min=dtTot;
