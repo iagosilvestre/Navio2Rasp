@@ -306,11 +306,19 @@ int main(int argc, char *argv[])
     	swLed=0;
     	usleep(10000);
 
-           }
+    }
 	    	  for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it){
-	    		  FILE *f = fopen("dtTot.txt", "a");
+	    		  	  if(it==1){
+	    		  			FILE *f = fopen("barometer.txt", "w");
+	    		  			fprintf(f, "count;dtBaro\n");
 	    		  			fprintf(f, "%d;%lu\n",it,*it);
 	    		  			fclose(f);
+	    		  		}
+	    		  		else if(itt>1){
+	    		  			FILE *f = fopen("barometer.txt", "a");
+	    		  			fprintf(f, "%d;%lu\n",it,*it);
+	    		  			fclose(f);
+	    		  		}
 	    	  }
 
             printf("--------------------------------------------------------------------------------------------------\n");
