@@ -51,7 +51,7 @@ For print help:
 		unsigned long int dtlong=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=10;
 
 	    float temperatura,pressao;
-
+		std::vector<int> baroData;
 using namespace std;
 
 std::unique_ptr <Led> get_led()
@@ -63,7 +63,6 @@ std::unique_ptr <Led> get_led()
 
 void * acquireBarometerData(void * barom)
 {
-	std::vector<int> baroData;
 	//unsigned long int previoustime=0, currenttime=0;
 	unsigned long int baroCount=0;
     MS5611* barometer = (MS5611*)barom;
