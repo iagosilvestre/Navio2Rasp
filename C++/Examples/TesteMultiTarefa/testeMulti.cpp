@@ -47,7 +47,7 @@ For print help:
 
 	    struct timespec baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,auxCount=0,ledCount=0,count=0,countMax=25000;
+		unsigned long int dtlong=0,auxCount=0,ledCount=0,count=0,countMax=500;
 		double dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0;
 
 
