@@ -47,7 +47,8 @@ For print help:
 
 	    struct timespec baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,auxCount=0,ledCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=25000;
+		unsigned long int dtlong=0,auxCount=0,ledCount=0,count=0,countMax=25000;
+		double dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0;
 
 
 	    float temperatura,pressao;
@@ -90,6 +91,7 @@ void * acquireBarometerData(void * barom)
         clock_gettime(CLOCK_MONOTONIC, &baro2);
         dtBaro = (baro2.tv_sec - baro1.tv_sec);
         dtBaro += (baro2.tv_nsec - baro1.tv_nsec) / 1000000000.0;
+        printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtBaro);
         //dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         baroData.push_back(dtBaro);
 
