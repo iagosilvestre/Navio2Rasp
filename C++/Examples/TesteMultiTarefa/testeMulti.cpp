@@ -92,7 +92,7 @@ void * acquireBarometerData(void * barom)
 		timersub(&t1, &t0, &dt);
         //gettimeofday(&baro2,NULL);
         //dtBaro=(1000000 * baro2.tv_sec + baro2.tv_nsec)-1000000 * baro1.tv_sec - baro1.tv_nsec-20000;
-        //printf("Duracao atual em microsegundos da leitura dos sensores: %d \n", dt.tv_usec);
+        printf("Duracao atual em microsegundos da leitura dos sensores: %d \n", dt.tv_usec);
         baroData.push_back(dt.tv_usec);
 
         //usleep(5000);
