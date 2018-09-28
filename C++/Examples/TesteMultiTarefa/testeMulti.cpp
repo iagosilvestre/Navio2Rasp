@@ -74,7 +74,6 @@ void * acquireBarometerData(void * barom)
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
     	gettimeofday(&t0, NULL);
-    	//gettimeofday(&baro1,NULL);
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer->readPressure();
@@ -90,9 +89,6 @@ void * acquireBarometerData(void * barom)
         pressao=barometer->getPressure();
         gettimeofday(&t1, NULL);
 		timersub(&t1, &t0, &dt);
-        //gettimeofday(&baro2,NULL);
-        //dtBaro=(1000000 * baro2.tv_sec + baro2.tv_nsec)-1000000 * baro1.tv_sec - baro1.tv_nsec-20000;
-        //printf("Duracao atual em microsegundos da leitura dos sensores: %d \n", dt.tv_usec);
         baroData.push_back(dt.tv_usec-20000);
 
         //usleep(5000);
@@ -106,15 +102,12 @@ void * acquireMPUData(void * imuMPU)
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
 		gettimeofday(&t0, NULL);
-    	//gettimeofday(&mpu1,NULL);
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
 		mpu->read_gyroscope(&gx, &gy, &gz);
 		mpu->read_magnetometer(&mx, &my, &mz);
 		gettimeofday(&t1, NULL);
 		timersub(&t1, &t0, &dt);
-		//gettimeofday(&mpu2,NULL);
-		//dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		mpuData.push_back(dt.tv_usec);
 		usleep(5000);
 	}
@@ -126,15 +119,12 @@ void * acquireLSMData(void * imuLSM)
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
 		gettimeofday(&t0, NULL);
-		//gettimeofday(&lsm1,NULL);
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
 		lsm->read_gyroscope(&gx2, &gy2, &gz2);
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
 		gettimeofday(&t1, NULL);
 		timersub(&t1, &t0, &dt);
-		//gettimeofday(&lsm2,NULL);
-		//dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 		lsmData.push_back(dt.tv_usec);
 		usleep(5000);
 	}
@@ -148,7 +138,6 @@ void * acquireLedData(void * led)
 	while(count<countMax){
 		gettimeofday(&t0, NULL);
 		ledCount++;
-		//gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
     		diode->setColor(Colors::Red);
     	}
@@ -157,8 +146,6 @@ void * acquireLedData(void * led)
     	}
     	gettimeofday(&t1, NULL);
 		timersub(&t1, &t0, &dt);
-    	//gettimeofday(&led2,NULL);
-		//dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		ledData.push_back(dt.tv_usec);
 		usleep(500000);
 	}
@@ -263,55 +250,7 @@ int main(int argc, char *argv[])
 
     while(count<countMax) {
     	count++;
-
-
-
-//----------------Obtencao do tempo antes da leitura dos sensores---------------------------------//
-
-//----------------Escrita no PWM  ---------------------------------//
-
-//----------------Leitura da IMU MPU ---------------------------------//
-
-//----------------Leitura da IMU LSM---------------------------------//
-
-//----------------Leitura do barometro ---------------------------------//
-
-
-
-//----------------Obtencao do tempo apos leitura dos dados ---------------------------------//
-    	dtTot= dtMPU + dtLSM + dtLED;
-    	totData.push_back(dtTot);
-    	/*if(count==1){
-    	    		min=dtTot;
-    	    		max=dtTot;
-    	    		media=dtTot;
-    	    		sum=dtTot;
-    	    	}
-    	else{
-    		sum=sum+dtTot;
-    		media=sum/(count);
-    		if(dtTot<min){
-    			min=dtTot;
-    		}
-    		if(dtTot>max){
-    			max=dtTot;
-    		}
-    	}*/
-
-    	//printf("Numero da leitura: %lu \n", count);
-    	//printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
-    	//printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtTot);
-    	/*if(count==1){
-			FILE *f = fopen("dtTot.txt", "w");
-			fprintf(f, "count;dtTot\n");
-			fprintf(f, "%d;%lu\n",count,dtTot);
-			fclose(f);
-		}
-		else if(count>1){
-			FILE *f = fopen("dtTot.txt", "a");
-			fprintf(f, "%d;%lu\n",count,dtTot);
-			fclose(f);
-		}*/
+//----------------Obtencao da leitura dos sensores---------------------------------//
     	usleep(10000);
 
     }
@@ -372,38 +311,27 @@ int main(int argc, char *argv[])
 			fclose(fTot);
 		}
 
-            printf("--------------------------------------------------------------------------------------------------\n");
-                    	printf("Numero da leitura: %lu \n", count);
-                    	//printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
-                    	printf("Duracao em microsegundos da leitura atual do barometro: %lu \n", dtBaro);
-                    	printf("Duracao em microsegundos da leitura atual da IMU MPU: %lu \n", dtMPU);
-                    	printf("Duracao em microsegundos da leitura atual da IMU LSM: %lu \n", dtLSM);
-                    	printf("Duracao em microsegundos da escrita PWM no LED: %lu \n", dtLED);
-                    	printf("Duracao em microsegundos da leitura atual MPU LSM e escrita LED: %lu \n", dtlong);
-                    	printf("Duracao media em microsegundos da leitura dos sensores: %lu \n", media);
-                    	printf("Duracao minima microsegundos da leitura dos sensores: %lu \n", min);
-                    	printf("Duracao maxima microsegundos da leitura dos sensores: %lu \n", max);
-                    	time_t rawtime;
-                    	struct tm * timeinfo;
+		time_t rawtime;
+		struct tm * timeinfo;
 
-                    	time ( &rawtime );
-                    	timeinfo = localtime ( &rawtime );
-                    	printf ( "Data e tempo local atual: %s", asctime (timeinfo) );
-                    	printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
-                    			printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
-                    	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
-                    	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
-                    	printf("-----------------------------------Leitura da IMU LSM9DS1-----------------------------------------");
-                    	        printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax2, ay2, az2);
-                    	        printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx2, gy2, gz2);
-                    	        printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
-                    	printf("-----------------------------------Leitura do barometro-------------------------------------------");
-                    	printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
-                    	                        temperatura, pressao);
-    pthread_exit(NULL);
-    pthread_exit(NULL);
-    pthread_exit(NULL);
-    pthread_exit(NULL);
+		time ( &rawtime );
+		timeinfo = localtime ( &rawtime );
+		printf ( "Data e tempo local atual: %s", asctime (timeinfo) );
+		printf("-----------------------------------Leitura da IMU MPU9250-----------------------------------------");
+				printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax, ay, az);
+				printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx, gy, gz);
+				printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx, my, mz);
+		printf("-----------------------------------Leitura da IMU LSM9DS1-----------------------------------------");
+				printf("\n\nAcc: %+7.3f %+7.3f %+7.3f  ", ax2, ay2, az2);
+				printf("Gyr: %+8.3f %+8.3f %+8.3f  ", gx2, gy2, gz2);
+				printf("Mag: %+7.3f %+7.3f %+7.3f\n", mx2, my2, mz2);
+		printf("-----------------------------------Leitura do barometro-------------------------------------------");
+		printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
+								temperatura, pressao);
+		pthread_exit(NULL);
+		pthread_exit(NULL);
+		pthread_exit(NULL);
+		pthread_exit(NULL);
            return 0;
        }
 
