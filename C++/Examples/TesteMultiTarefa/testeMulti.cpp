@@ -69,11 +69,12 @@ std::unique_ptr <Led> get_led()
 
 void * acquireBarometerData(void * barom)
 {
+	struct timeval t0, t1, dt;
 	//unsigned long int previoustime=0, currenttime=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
+    	gettimeofday(&t0, NULL);
     	//gettimeofday(&baro1,NULL);
-    	clock_gettime(CLOCK_MONOTONIC, &baro1);
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer->readPressure();
@@ -87,14 +88,12 @@ void * acquireBarometerData(void * barom)
         temperatura=barometer->getTemperature();
 
         pressao=barometer->getPressure();
+        gettimeofday(&t1, NULL);
+		timersub(&t1, &t0, &dt);
         //gettimeofday(&baro2,NULL);
-        clock_gettime(CLOCK_MONOTONIC, &baro2);
-        dtBaro = (baro2.tv_sec - baro1.tv_sec);
-        dtBaro += (baro2.tv_nsec - baro1.tv_nsec) / 1000000000.0;
         //dtBaro=(1000000 * baro2.tv_sec + baro2.tv_nsec)-1000000 * baro1.tv_sec - baro1.tv_nsec-20000;
-        dtBaro=dtBaro/1000;
-        printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtBaro);
-        baroData.push_back(dtBaro);
+        printf("Duracao atual em microsegundos da leitura dos sensores: %d \n", dt.tv_usec);
+        baroData.push_back(dt.tv_usec);
 
         //usleep(5000);
     }
