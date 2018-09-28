@@ -47,7 +47,7 @@ For print help:
 
 	    struct timespec baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
-		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=25000;
+		unsigned long int dtlong=0,auxCount=0,ledCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=25000;
 
 
 	    float temperatura,pressao;
@@ -143,6 +143,7 @@ void * acquireLedData(void * led)
 {
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
+		ledCount++;
 		clock_gettime(CLOCK_MONOTONIC, &led1);
 		//gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
