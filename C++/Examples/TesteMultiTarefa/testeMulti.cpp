@@ -89,9 +89,9 @@ void * acquireBarometerData(void * barom)
         pressao=barometer->getPressure();
         //gettimeofday(&baro2,NULL);
         clock_gettime(CLOCK_MONOTONIC, &baro2);
-        //dtBaro = (baro2.tv_sec - baro1.tv_sec);
-        //dtBaro += (baro2.tv_nsec - baro1.tv_nsec) / 1000000000.0;
-        dtBaro=(1000000000 * baro2.tv_sec + baro2.tv_nsec)-1000000000 * baro1.tv_sec - baro1.tv_nsec-20000000;
+        dtBaro = (baro2.tv_sec - baro1.tv_sec);
+        dtBaro += (baro2.tv_nsec - baro1.tv_nsec) / 1000000000.0;
+        //dtBaro=(1000000 * baro2.tv_sec + baro2.tv_nsec)-1000000 * baro1.tv_sec - baro1.tv_nsec-20000;
         dtBaro=dtBaro/1000;
         printf("Duracao atual em microsegundos da leitura dos sensores: %lu \n", dtBaro);
         baroData.push_back(dtBaro);
