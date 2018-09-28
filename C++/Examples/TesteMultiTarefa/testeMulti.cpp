@@ -102,40 +102,40 @@ void * acquireBarometerData(void * barom)
 }
 void * acquireMPUData(void * imuMPU)
 {
+	struct timeval t0, t1, dt;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
+		gettimeofday(&t0, NULL);
     	//gettimeofday(&mpu1,NULL);
-		clock_gettime(CLOCK_MONOTONIC, &mpu1);
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
 		mpu->read_gyroscope(&gx, &gy, &gz);
 		mpu->read_magnetometer(&mx, &my, &mz);
-		clock_gettime(CLOCK_MONOTONIC, &mpu2);
-		dtMPU = (mpu2.tv_sec - mpu1.tv_sec);
-		dtMPU += (mpu2.tv_nsec - mpu1.tv_nsec) / 1000000000.0;
+		gettimeofday(&t1, NULL);
+		timersub(&t1, &t0, &dt);
 		//gettimeofday(&mpu2,NULL);
 		//dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
-		mpuData.push_back(dtMPU);
+		mpuData.push_back(dt.tv_usec);
 		usleep(5000);
 	}
 	pthread_exit(NULL);
 }
 void * acquireLSMData(void * imuLSM)
 {
+	struct timeval t0, t1, dt;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
-		clock_gettime(CLOCK_MONOTONIC, &lsm1);
+		gettimeofday(&t0, NULL);
 		//gettimeofday(&lsm1,NULL);
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
 		lsm->read_gyroscope(&gx2, &gy2, &gz2);
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
-		clock_gettime(CLOCK_MONOTONIC, &lsm2);
-		dtLSM = (lsm2.tv_sec - lsm1.tv_sec);
-		dtLSM += (lsm2.tv_nsec - lsm1.tv_nsec) / 1000000000.0;
+		gettimeofday(&t1, NULL);
+		timersub(&t1, &t0, &dt);
 		//gettimeofday(&lsm2,NULL);
 		//dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
-		lsmData.push_back(dtLSM);
+		lsmData.push_back(dt.tv_usec);
 		usleep(5000);
 	}
 	pthread_exit(NULL);
@@ -143,10 +143,11 @@ void * acquireLSMData(void * imuLSM)
 
 void * acquireLedData(void * led)
 {
+	struct timeval t0, t1, dt;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
+		gettimeofday(&t0, NULL);
 		ledCount++;
-		clock_gettime(CLOCK_MONOTONIC, &led1);
 		//gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
     		diode->setColor(Colors::Red);
@@ -154,12 +155,11 @@ void * acquireLedData(void * led)
     	else{
     		diode->setColor(Colors::Green);
     	}
-    	clock_gettime(CLOCK_MONOTONIC, &led2);
-    	dtLED = (led2.tv_sec - led1.tv_sec);
-		dtLED += (led2.tv_nsec - led1.tv_nsec) / 1000000000.0;
+    	gettimeofday(&t1, NULL);
+		timersub(&t1, &t0, &dt);
     	//gettimeofday(&led2,NULL);
 		//dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
-		ledData.push_back(dtLED);
+		ledData.push_back(dt.tv_usec);
 		usleep(500000);
 	}
 
