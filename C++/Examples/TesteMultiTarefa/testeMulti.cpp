@@ -45,7 +45,7 @@ For print help:
 	    float gx2, gy2, gz2;
 	    float mx2, my2, mz2;
 
-	    struct timeval baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
+	    struct timespec baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
 		unsigned long int dtlong=0,auxCount=0,count=0,dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0,countMax=25000;
 
@@ -71,7 +71,8 @@ void * acquireBarometerData(void * barom)
 	//unsigned long int previoustime=0, currenttime=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
-    	gettimeofday(&baro1,NULL);
+    	//gettimeofday(&baro1,NULL);
+    	clock_gettime(CLOCK_MONOTONIC, &baro1);
         barometer->refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer->readPressure();
@@ -85,8 +86,11 @@ void * acquireBarometerData(void * barom)
         temperatura=barometer->getTemperature();
 
         pressao=barometer->getPressure();
-        gettimeofday(&baro2,NULL);
-        dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
+        //gettimeofday(&baro2,NULL);
+        clock_gettime(CLOCK_MONOTONIC, &baro2);
+        dtBaro = (baro2.tv_sec - baro1.tv_sec);
+        dtBaro += (baro2.tv_nsec - baro1.tv_nsec) / 1000000000.0;
+        //dtBaro=(1000000 * baro2.tv_sec + baro2.tv_usec)-1000000 * baro1.tv_sec - baro1.tv_usec-20000;
         baroData.push_back(dtBaro);
 
         //usleep(5000);
@@ -98,13 +102,17 @@ void * acquireMPUData(void * imuMPU)
 {
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
-    	gettimeofday(&mpu1,NULL);
+    	//gettimeofday(&mpu1,NULL);
+		clock_gettime(CLOCK_MONOTONIC, &mpu1);
 		mpu->update();
 		mpu->read_accelerometer(&ax, &ay, &az);
 		mpu->read_gyroscope(&gx, &gy, &gz);
 		mpu->read_magnetometer(&mx, &my, &mz);
-		gettimeofday(&mpu2,NULL);
-		dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
+		clock_gettime(CLOCK_MONOTONIC, &mpu2);
+		dtMPU = (mpu2.tv_sec - mpu1.tv_sec);
+		dtMPU += (mpu2.tv_nsec - mpu1.tv_nsec) / 1000000000.0;
+		//gettimeofday(&mpu2,NULL);
+		//dtMPU=(1000000 * mpu2.tv_sec + mpu2.tv_usec)-1000000 * mpu1.tv_sec - mpu1.tv_usec ;
 		mpuData.push_back(dtMPU);
 		usleep(5000);
 	}
@@ -114,13 +122,17 @@ void * acquireLSMData(void * imuLSM)
 {
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
-		gettimeofday(&lsm1,NULL);
+		clock_gettime(CLOCK_MONOTONIC, &lsm1);
+		//gettimeofday(&lsm1,NULL);
 		lsm->update();
 		lsm->read_accelerometer(&ax2, &ay2, &az2);
 		lsm->read_gyroscope(&gx2, &gy2, &gz2);
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
-		gettimeofday(&lsm2,NULL);
-		dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
+		clock_gettime(CLOCK_MONOTONIC, &lsm2);
+		dtLSM = (lsm2.tv_sec - lsm1.tv_sec);
+		dtLSM += (lsm2.tv_nsec - lsm1.tv_nsec) / 1000000000.0;
+		//gettimeofday(&lsm2,NULL);
+		//dtLSM=(1000000 * lsm2.tv_sec + lsm2.tv_usec)-1000000 * lsm1.tv_sec - lsm1.tv_usec ;
 		lsmData.push_back(dtLSM);
 		usleep(5000);
 	}
@@ -131,15 +143,19 @@ void * acquireLedData(void * led)
 {
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
-		gettimeofday(&led1,NULL);
+		clock_gettime(CLOCK_MONOTONIC, &led1);
+		//gettimeofday(&led1,NULL);
     	if((ledCount%2)==0){
     		diode->setColor(Colors::Red);
     	}
     	else{
     		diode->setColor(Colors::Green);
     	}
-    	gettimeofday(&led2,NULL);
-		dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
+    	clock_gettime(CLOCK_MONOTONIC, &led2);
+    	dtLED = (led2.tv_sec - led1.tv_sec);
+		dtLED += (led2.tv_nsec - led1.tv_nsec) / 1000000000.0;
+    	//gettimeofday(&led2,NULL);
+		//dtLED=(1000000 * led2.tv_sec + led2.tv_usec)-1000000 * led1.tv_sec - led1.tv_usec ;
 		ledData.push_back(dtLED);
 		usleep(500000);
 	}
