@@ -1,5 +1,11 @@
 #include <Common/MS5611.h>
+<<<<<<< HEAD
 #include "Common/I2Cdev.h"
+=======
+#include <Common/MS5611.cpp>
+#include "Common/I2Cdev.h"
+#include "Common/I2Cdev.cpp"
+>>>>>>> f13d3353faa32a4aed6f5967585bf394231cc479
 #include <Common/Util.h>
 #include <Common/Util.cpp>
 #include <unistd.h>
