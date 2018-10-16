@@ -44,10 +44,10 @@ THE SOFTWARE.
 #ifndef _I2Cdev_H_
 #define _I2Cdev_H_
 
-#define RASPBERRY_PI_I2C    "/dev/i2c-1"
+#define TORADEX_I2C    "/dev/i2c-3"
 #define BANANA_PI_I2C       "/dev/i2c-2"
 
-#define I2CDEV              RASPBERRY_PI_I2C                 
+#define I2CDEV              TORADEX_I2C
 
 #ifndef TRUE
 #define TRUE	(1==1)
