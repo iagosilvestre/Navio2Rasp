@@ -33,7 +33,7 @@ int main()
     struct timeval t0, t1, dt;
     barometer.initialize();
 
-    while (count<5000) {
+    while (count<500) {
     	gettimeofday(&t0, NULL);
         barometer.refreshPressure();
         usleep(10000); // Waiting for pressure data ready
@@ -55,12 +55,12 @@ int main()
         count++;
         usleep(10000);
     }
-	FILE *fBaro = fopen("barometer.txt", "w");
+	FILE *fBaro = fopen("barometerS.txt", "w");
 	fprintf(fBaro, "count;dtBaro\n");
 	fclose(fBaro);
 	for (std::vector<int>::iterator it = baroData.begin() ; it != baroData.end(); ++it){
 		auxCount++;
-		FILE *fBaro = fopen("barometer.txt", "a");
+		FILE *fBaro = fopen("barometerS.txt", "a");
 		fprintf(fBaro, "%d;%d\n",auxCount,*it);
 		fclose(fBaro);
 	}
