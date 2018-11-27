@@ -37,7 +37,7 @@ For print help:
 // std::cout
 // std::thread, std::this_thread::sleep_for
 
-
+void * storeData(void *);
 
 
 	    float ax, ay, az;
@@ -176,7 +176,7 @@ void * acquireLedData(void * led)
 
 	pthread_exit(NULL);
 }
-void * storeData(void * ){
+void * storeData(void *unused ){
 	cpu_set_t my_set;        /* Define your cpu_set bit mask. */
 		CPU_ZERO(&my_set);       /* Initialize it all to 0, i.e. no CPUs selected. */
 		CPU_SET(3, &my_set);     /* set the bit that represents core 7. */
@@ -375,6 +375,7 @@ int main(int argc, char *argv[])
 		printf("-----------------------------------Leitura do barometro-------------------------------------------");
 		printf("\nTemperatura(C): %f Pressao (milibar): %f\n",
 								temperatura, pressao);
+		pthread_exit(NULL);
 		pthread_exit(NULL);
 		pthread_exit(NULL);
 		pthread_exit(NULL);
