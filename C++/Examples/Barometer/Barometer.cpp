@@ -15,7 +15,6 @@ make
 #include <Common/Util.cpp>
 #include <unistd.h>
 #include <stdio.h>
-
 #include <string>
 #include <memory>
 #include <stdint.h>
