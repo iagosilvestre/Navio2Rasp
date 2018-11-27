@@ -143,7 +143,7 @@ void * acquireLSMData(void * imuLSM)
 		lsm->read_gyroscope(&gx2, &gy2, &gz2);
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
 		gettimeofday(&t1, NULL);
-		timersub(&t1, &t0, &dtSM);
+		timersub(&t1, &t0, &dtLSM);
 		//lsmData.push_back(dt.tv_usec);
 		usleep(5000);
 	}
@@ -188,6 +188,7 @@ void * storeData(void * ){
 			lsmData.push_back(dtLSM.tv_usec);
 			ledData.push_back(dtLED.tv_usec);
 		}
+		pthread_exit(NULL);
 }
 
 
@@ -288,7 +289,7 @@ int main(int argc, char *argv[])
 						return 0;
 			}
 
-	if(pthread_create(&store_data_thread, NULL, storeData, (void *)))
+	if(pthread_create(&store_data_thread, NULL, storeData, NULL))
 					{
 						printf("Error: Failed to create data thread\n");
 							return 0;
