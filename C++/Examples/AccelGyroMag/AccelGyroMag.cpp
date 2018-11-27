@@ -18,8 +18,12 @@ For print help:
 */
 
 #include "Common/MPU9250.h"
+#include "Common/MPU9250.cpp"
+#include "Common/InertialSendor.h"
 #include "Navio2/LSM9DS1.h"
+#include "Navio2/LSM9DS1.cpp"
 #include "Common/Util.h"
+#include <Common/Util.cpp>
 #include <unistd.h>
 #include <string>
 #include <memory>
@@ -86,11 +90,11 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    auto sensor_name = get_sensor_name(argc, argv);
+    /*auto sensor_name = get_sensor_name(argc, argv);
     if (sensor_name.empty())
-        return EXIT_FAILURE;
+        return EXIT_FAILURE;*/
 
-    auto sensor = get_inertial_sensor(sensor_name);
+    auto sensor = get_inertial_sensor("mpu");
 
     if (!sensor) {
         printf("Wrong sensor name. Select: mpu or lsm\n");

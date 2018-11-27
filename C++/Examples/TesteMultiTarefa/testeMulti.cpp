@@ -16,6 +16,8 @@ Sensors names: mpu is MPU9250, lsm is LSM9DS1.
 For print help:
 ./AccelGyroMag -h
 */
+#define _GNU_SOURCE
+#include <sched.h>
 #include <Navio2/Led_Navio2.h>
 //#include <Common/Ublox.h>
 #include <Common/MS5611.h>
