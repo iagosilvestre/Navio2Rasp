@@ -123,7 +123,7 @@ void * acquireMPUData(void * imuMPU)
 		gettimeofday(&t1, NULL);
 		timersub(&t1, &t0, &dtMPU);
 		//mpuData.push_back(dt.tv_usec);
-		usleep(5000);
+		usleep(500);
 	}
 	pthread_exit(NULL);
 }
@@ -145,7 +145,7 @@ void * acquireLSMData(void * imuLSM)
 		gettimeofday(&t1, NULL);
 		timersub(&t1, &t0, &dtLSM);
 		//lsmData.push_back(dt.tv_usec);
-		usleep(5000);
+		usleep(500);
 	}
 	pthread_exit(NULL);
 }
