@@ -47,10 +47,11 @@ For print help:
 	    float gx2, gy2, gz2;
 	    float mx2, my2, mz2;
 
-	    struct timespec baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
+	    struct timeval dtBARO,dtMPU,dtLED,dtLSM;
+	    //struct timespec baro1,baro2,mpu1,mpu2,lsm1,lsm2,led1,led2,tot1,tot2;
 		float dt;
 		unsigned long int dtlong=0,auxCount=0,ledCount=0,count=0,countMax=25000;
-		double dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0;
+		//double dtMPU=0,dtLSM=0,dtLED=0,dtBaro=0,dtTot=0;
 
 
 	    float temperatura,pressao;
@@ -71,7 +72,13 @@ std::unique_ptr <Led> get_led()
 
 void * acquireBarometerData(void * barom)
 {
-	struct timeval t0, t1, dt;
+	cpu_set_t my_set;        /* Define your cpu_set bit mask. */
+	CPU_ZERO(&my_set);       /* Initialize it all to 0, i.e. no CPUs selected. */
+	CPU_SET(0, &my_set);     /* set the bit that represents core 7. */
+	sched_setaffinity(0, sizeof(cpu_set_t), &my_set);
+	printf("Barometer sched_getcpu = %d\n", sched_getcpu());
+
+	struct timeval t0, t1;
 	//unsigned long int previoustime=0, currenttime=0;
     MS5611* barometer = (MS5611*)barom;
     while (count<countMax) {
@@ -90,8 +97,8 @@ void * acquireBarometerData(void * barom)
 
         pressao=barometer->getPressure();
         gettimeofday(&t1, NULL);
-		timersub(&t1, &t0, &dt);
-        baroData.push_back(dt.tv_usec-20000);
+		timersub(&t1, &t0, &dtBARO);
+       // baroData.push_back(dt.tv_usec-20000);
 
         //usleep(5000);
     }
@@ -100,7 +107,12 @@ void * acquireBarometerData(void * barom)
 }
 void * acquireMPUData(void * imuMPU)
 {
-	struct timeval t0, t1, dt;
+	cpu_set_t my_set;        /* Define your cpu_set bit mask. */
+	CPU_ZERO(&my_set);       /* Initialize it all to 0, i.e. no CPUs selected. */
+	CPU_SET(1, &my_set);     /* set the bit that represents core 7. */
+	sched_setaffinity(0, sizeof(cpu_set_t), &my_set);
+	printf("MPU sched_getcpu = %d\n", sched_getcpu());
+	struct timeval t0, t1;
 	MPU9250* mpu=(MPU9250*)imuMPU;
 	while(count<countMax){
 		gettimeofday(&t0, NULL);
@@ -109,15 +121,20 @@ void * acquireMPUData(void * imuMPU)
 		mpu->read_gyroscope(&gx, &gy, &gz);
 		mpu->read_magnetometer(&mx, &my, &mz);
 		gettimeofday(&t1, NULL);
-		timersub(&t1, &t0, &dt);
-		mpuData.push_back(dt.tv_usec);
+		timersub(&t1, &t0, &dtMPU);
+		//mpuData.push_back(dt.tv_usec);
 		usleep(5000);
 	}
 	pthread_exit(NULL);
 }
 void * acquireLSMData(void * imuLSM)
 {
-	struct timeval t0, t1, dt;
+	cpu_set_t my_set;        /* Define your cpu_set bit mask. */
+	CPU_ZERO(&my_set);       /* Initialize it all to 0, i.e. no CPUs selected. */
+	CPU_SET(2, &my_set);     /* set the bit that represents core 7. */
+	sched_setaffinity(0, sizeof(cpu_set_t), &my_set);
+	printf("LSM sched_getcpu = %d\n", sched_getcpu());
+	struct timeval t0, t1;
 	LSM9DS1* lsm=(LSM9DS1*)imuLSM;
 	while(count<countMax){
 		gettimeofday(&t0, NULL);
@@ -126,8 +143,8 @@ void * acquireLSMData(void * imuLSM)
 		lsm->read_gyroscope(&gx2, &gy2, &gz2);
 		lsm->read_magnetometer(&mx2, &my2, &mz2);
 		gettimeofday(&t1, NULL);
-		timersub(&t1, &t0, &dt);
-		lsmData.push_back(dt.tv_usec);
+		timersub(&t1, &t0, &dtSM);
+		//lsmData.push_back(dt.tv_usec);
 		usleep(5000);
 	}
 	pthread_exit(NULL);
@@ -135,7 +152,12 @@ void * acquireLSMData(void * imuLSM)
 
 void * acquireLedData(void * led)
 {
-	struct timeval t0, t1, dt;
+	cpu_set_t my_set;        /* Define your cpu_set bit mask. */
+	CPU_ZERO(&my_set);       /* Initialize it all to 0, i.e. no CPUs selected. */
+	CPU_SET(0, &my_set);     /* set the bit that represents core 7. */
+	sched_setaffinity(0, sizeof(cpu_set_t), &my_set);
+	printf("LED sched_getcpu = %d\n", sched_getcpu());
+	struct timeval t0, t1;
 	Led_Navio2* diode=(Led_Navio2*)led;
 	while(count<countMax){
 		gettimeofday(&t0, NULL);
@@ -147,13 +169,28 @@ void * acquireLedData(void * led)
     		diode->setColor(Colors::Green);
     	}
     	gettimeofday(&t1, NULL);
-		timersub(&t1, &t0, &dt);
-		ledData.push_back(dt.tv_usec);
+		timersub(&t1, &t0, &dtLED);
+		//ledData.push_back(dt.tv_usec);
 		usleep(500000);
 	}
 
 	pthread_exit(NULL);
 }
+void * storeData(void * ){
+	cpu_set_t my_set;        /* Define your cpu_set bit mask. */
+		CPU_ZERO(&my_set);       /* Initialize it all to 0, i.e. no CPUs selected. */
+		CPU_SET(3, &my_set);     /* set the bit that represents core 7. */
+		sched_setaffinity(0, sizeof(cpu_set_t), &my_set);
+		printf("DATA sched_getcpu = %d\n", sched_getcpu());
+		while(count<countMax){
+			baroData.push_back(dtBARO.tv_usec-20000);
+			mpuData.push_back(dtMPU.tv_usec);
+			lsmData.push_back(dtLSM.tv_usec);
+			ledData.push_back(dtLED.tv_usec);
+		}
+}
+
+
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
     if (sensor_name == "mpu") {
@@ -224,6 +261,7 @@ int main(int argc, char *argv[])
 	pthread_t MPU_thread;
 	pthread_t LSM_thread;
 	pthread_t led_thread;
+	pthread_t store_data_thread;
 
 	baro.initialize();
 	    if(pthread_create(&baro_thread, NULL, acquireBarometerData, (void *)&baro))
@@ -249,6 +287,12 @@ int main(int argc, char *argv[])
 					printf("Error: Failed to create led thread\n");
 						return 0;
 			}
+
+	if(pthread_create(&store_data_thread, NULL, storeData, (void *)))
+					{
+						printf("Error: Failed to create data thread\n");
+							return 0;
+				}
 
     while(count<countMax) {
     	count++;
