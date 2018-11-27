@@ -187,6 +187,7 @@ void * storeData(void *unused ){
 			mpuData.push_back(dtMPU.tv_usec);
 			lsmData.push_back(dtLSM.tv_usec);
 			ledData.push_back(dtLED.tv_usec);
+			usleep(5000);
 		}
 		pthread_exit(NULL);
 }
