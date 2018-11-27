@@ -4,7 +4,7 @@ INCLUDES = -I ../../Navio
 
 all:
 	$(MAKE) -C ../../Navio all
-	$(CXX) $(INCLUDES) -pg Barometer.cpp -L$(NAVIO) -lnavio -o Barometer.o
+	$(CXX) $(INCLUDES) -pg Barometer.cpp -L$(NAVIO) -lnavio -o Barometer
 
 clean:
-	rm -f Barometer.o
+	rm -f Barometer
