@@ -100,7 +100,7 @@ void * acquireBarometerData(void * barom)
 		timersub(&t1, &t0, &dtBARO);
        // baroData.push_back(dt.tv_usec-20000);
 
-        //usleep(5000);
+        usleep(1000);
     }
 
     pthread_exit(NULL);
@@ -123,7 +123,7 @@ void * acquireMPUData(void * imuMPU)
 		gettimeofday(&t1, NULL);
 		timersub(&t1, &t0, &dtMPU);
 		//mpuData.push_back(dt.tv_usec);
-		usleep(500);
+		usleep(1000);
 	}
 	pthread_exit(NULL);
 }
@@ -145,7 +145,7 @@ void * acquireLSMData(void * imuLSM)
 		gettimeofday(&t1, NULL);
 		timersub(&t1, &t0, &dtLSM);
 		//lsmData.push_back(dt.tv_usec);
-		usleep(500);
+		usleep(1000);
 	}
 	pthread_exit(NULL);
 }
