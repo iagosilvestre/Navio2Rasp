@@ -21,6 +21,8 @@ make
 #include <sys/time.h>
 #include <iostream>
 #include <vector>
+#define _GNU_SOURCE
+#include <sched.h>
 
 unsigned long int dtlong=0,auxCount=0,ledCount=0,count=0,countMax=25000;
 float temperatura,pressao;
@@ -31,6 +33,14 @@ int main()
     MS5611 barometer;
     struct timeval t0, t1, dt;
     barometer.initialize();
+
+    cpu_set_t my_set;        /* Define your cpu_set bit mask. */
+   	CPU_ZERO(&my_set);       /* Initialize it all to 0, i.e. no CPUs selected. */
+   	CPU_SET(0, &my_set);     /* set the bit that represents core 7. */
+   	sched_setaffinity(0, sizeof(cpu_set_t), &my_set);
+   	printf("sched_getcpu = %d\n", sched_getcpu());
+
+   	ProfilerStart("baro.log");
 
     while (count<500) {
     	gettimeofday(&t0, NULL);
@@ -63,6 +73,10 @@ int main()
 		fprintf(fBaro, "%d;%d\n",auxCount,*it);
 		fclose(fBaro);
 	}
+
+
+	ProfilerStop();
+
 
     return 0;
 }
