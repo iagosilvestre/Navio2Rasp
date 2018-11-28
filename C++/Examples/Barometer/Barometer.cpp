@@ -23,6 +23,7 @@ make
 #include <vector>
 #define _GNU_SOURCE
 #include <sched.h>
+#include <Common/profiler.h>
 
 unsigned long int dtlong=0,auxCount=0,ledCount=0,count=0,countMax=25000;
 float temperatura,pressao;
