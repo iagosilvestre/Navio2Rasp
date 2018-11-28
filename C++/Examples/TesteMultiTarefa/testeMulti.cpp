@@ -33,6 +33,8 @@ For print help:
 #include <pthread.h>
 #include <iostream>
 #include <vector>
+#include <Common/profiler.h>
+
 //#include <mutex>
 // std::cout
 // std::thread, std::this_thread::sleep_for
@@ -249,11 +251,12 @@ std::string get_sensor_name(int argc, char *argv[])
 //=============================================================================
 int main(int argc, char *argv[])
 {
+
 	unsigned long int min=0,max=0,mem=0,media=0,sum=0;
 	if (check_apm()) {
 	        return 1;
 	    }
-
+	ProfilerStart("multi.log");
 	Led_Navio2 led;
 	MS5611 baro;
 	MPU9250 imuMPU;
@@ -381,6 +384,7 @@ int main(int argc, char *argv[])
 		pthread_exit(NULL);
 		pthread_exit(NULL);
 		pthread_exit(NULL);
+		ProfilerStop();
            return 0;
        }
 
