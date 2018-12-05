@@ -256,7 +256,7 @@ int main(int argc, char *argv[])
 	if (check_apm()) {
 	        return 1;
 	    }
-	ProfilerStart("multi.log");
+	//ProfilerStart("multi.log");
 	Led_Navio2 led;
 	MS5611 baro;
 	MPU9250 imuMPU;
@@ -384,7 +384,7 @@ int main(int argc, char *argv[])
 		pthread_exit(NULL);
 		pthread_exit(NULL);
 		pthread_exit(NULL);
-		ProfilerStop();
+		//ProfilerStop();
            return 0;
        }
 
