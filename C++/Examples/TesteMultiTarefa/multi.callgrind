@@ -1,56 +1,49 @@
 events: Hits
 
 fl=(1) /build/glibc-x07mZ9/glibc-2.24/csu/../sysdeps/unix/sysv/linux/arm/aeabi_read_tp.S
-fn=(1) __aeabi_read_tp
+fn=(1) __aeabi_memset8
 52 2
 
 fl=(1)
-fn=(2) __aeabi_memset8
-52 4
+fn=(2) __aeabi_read_tp
+52 6
+
+fl=(1)
+fn=(2)
+53 3
 
 fl=(2) /build/glibc-x07mZ9/glibc-2.24/io/../sysdeps/unix/syscall-template.S
-fn=(3) open
+fn=(3) write
 cfl=(3) /build/glibc-x07mZ9/glibc-2.24/nptl/../nptl/cancellation.c
 cfn=(4) __libc_disable_asynccancel
-calls=1 94
-84 1
-
-fl=(2)
-fn=(3)
-84 161
-
-fl=(2)
-fn=(3)
-cfl=(3)
-cfn=(4)
 calls=1 75
 84 1
 
 fl=(2)
-fn=(3)
-cfl=(3)
-cfn=(5) __libc_enable_asynccancel
-calls=2 42
-84 2
+fn=(5) open
+84 116
 
 fl=(2)
-fn=(6) write
+fn=(5)
+cfl=(3)
+cfn=(6) __libc_enable_asynccancel
+calls=1 37
+84 1
+
+fl=(2)
+fn=(3)
 cfl=(3)
 cfn=(4)
 calls=1 81
 84 1
 
 fl=(2)
-fn=(6)
-84 170
-
-fl=(2)
-fn=(6)
-85 1
+fn=(3)
+84 143
 
 fl=(4) /build/glibc-x07mZ9/glibc-2.24/io/../sysdeps/unix/sysv/linux/fxstat64.c
 fn=(7) ___fxstat64
-35 20
+35 30
 
 fl=(5) /build/glibc-x07mZ9/glibc-2.24/libio/fileops.c
 fn=(8) _IO_new_file_init_internal
@@ -58,415 +51,339 @@ fn=(8) _IO_new_file_init_internal
 
 fl=(5)
 fn=(9) _IO_new_file_close_it
-172 1
+173 1
 
 fl=(5)
 fn=(9)
 cfl=(5)
 cfn=(10) _IO_new_do_write
-calls=177 502
-173 177
+calls=145 502
+173 145
 
 fl=(5)
 fn=(9)
-180 2
+203 1
 
 fl=(5)
-fn=(9)
-193 1
-
-fl=(5)
-fn=(11) _IO_new_file_finish
-209 1
-
-fl=(5)
-fn=(12) __GI__IO_file_open
+fn=(11) __GI__IO_file_open
 cfl=(2)
-cfn=(3)
-calls=164 84
-229 164
+cfn=(5)
+calls=117 84
+229 117
 
 fl=(5)
-fn=(13) _IO_new_file_fopen
-278 1
+fn=(11)
+242 1
+
+fl=(5)
+fn=(12) _IO_new_file_fopen
+295 2
+
+fl=(5)
+fn=(12)
+cfl=(5)
+cfn=(11)
+calls=117 229
+336 117
+
+fl=(5)
+fn=(12)
+cfl=(5)
+cfn=(11)
+calls=1 242
+336 1
+
+fl=(5)
+fn=(12)
+336 2
+
+fl=(5)
+fn=(12)
+433 1
+
+fl=(5)
+fn=(10)
+cfl=(5)
+cfn=(13) new_do_write
+calls=144 526
+502 144
+
+fl=(5)
+fn=(10)
+cfl=(5)
+cfn=(13)
+calls=1 532
+502 1
 
 fl=(5)
 fn=(13)
 cfl=(5)
-cfn=(12)
-calls=164 229
-336 164
+cfn=(14) _IO_new_file_write
+calls=144 1271
+526 144
 
 fl=(5)
-fn=(10)
-502 2
+fn=(13)
+532 1
 
 fl=(5)
-fn=(10)
-cfl=(5)
-cfn=(14) new_do_write
-calls=2 532
-502 2
+fn=(15) _IO_new_file_overflow
+871 1
 
 fl=(5)
-fn=(10)
-cfl=(5)
-cfn=(14)
-calls=172 526
-502 172
-
-fl=(5)
-fn=(10)
-cfl=(5)
-cfn=(14)
-calls=1 531
-502 1
-
-fl=(5)
-fn=(10)
-cfl=(5)
-cfn=(14)
-calls=1 509
-502 1
+fn=(16) __GI__IO_file_close
+1258 62
 
 fl=(5)
 fn=(14)
-509 2
+cfl=(2)
+cfn=(3)
+calls=144 84
+1271 144
 
 fl=(5)
-fn=(14)
-cfl=(5)
-cfn=(15) _IO_new_file_write
-calls=171 1271
-526 171
+fn=(17) _IO_new_file_xsputn
+1318 2
 
 fl=(5)
-fn=(14)
+fn=(17)
 cfl=(5)
 cfn=(15)
-calls=1 1266
-526 1
-
-fl=(5)
-fn=(14)
-531 1
-
-fl=(5)
-fn=(14)
-532 2
-
-fl=(5)
-fn=(16) _IO_new_file_overflow
-815 1
-
-fl=(5)
-fn=(16)
-828 1
-
-fl=(5)
-fn=(16)
-858 1
-
-fl=(5)
-fn=(17) __GI__IO_file_close
-1258 71
-
-fl=(5)
-fn=(15)
-1266 1
-
-fl=(5)
-fn=(15)
-cfl=(2)
-cfn=(6)
-calls=171 84
-1271 171
-
-fl=(5)
-fn=(18) _IO_new_file_xsputn
-1288 1
-
-fl=(5)
-fn=(18)
-1322 1
-
-fl=(5)
-fn=(18)
-cfl=(5)
-cfn=(16)
-calls=1 828
+calls=1 871
 1339 1
 
 fl=(5)
-fn=(18)
-cfl=(5)
-cfn=(16)
-calls=1 858
-1339 1
+fn=(17)
+cfl=(6) /build/glibc-x07mZ9/glibc-2.24/libio/genops.c
+cfn=(18) __GI__IO_default_xsputn
+calls=1 450
+1360 1
 
 fl=(5)
-fn=(18)
-1345 1
+fn=(17)
+1362 1
 
-fl=(6) /build/glibc-x07mZ9/glibc-2.24/libio/genops.c
+fl=(6)
 fn=(19) __GI__IO_un_link
-64 1
+67 2
 
 fl=(6)
 fn=(19)
-65 1
+86 1
 
 fl=(6)
 fn=(19)
-67 1
-
-fl=(6)
-fn=(19)
-84 1
+89 2
 
 fl=(6)
 fn=(20) __GI__IO_link_in
-98 1
-
-fl=(6)
-fn=(20)
-102 1
-
-fl=(6)
-fn=(20)
 103 1
 
 fl=(6)
 fn=(20)
-105 2
+112 1
+
+fl=(6)
+fn=(20)
+113 2
 
 fl=(6)
 fn=(21) __GI__IO_setb
-380 1
+382 1
 
 fl=(6)
-fn=(22) _IO_old_init
-597 1
-
-fl=(6)
-fn=(23) _IO_no_init
-605 1
-
-fl=(6)
-fn=(24) __GI__IO_default_finish
-645 1
+fn=(18)
+450 1
 
 fl=(7) /build/glibc-x07mZ9/glibc-2.24/libio/iofclose.c
-fn=(25) _IO_new_fclose
-cfl=(6)
-cfn=(21)
-calls=1 380
+fn=(22) _IO_new_fclose
+56 2
+
+fl=(7)
+fn=(22)
+cfl=(5)
+cfn=(9)
+calls=146 173
+58 146
+
+fl=(7)
+fn=(22)
 58 1
 
 fl=(7)
-fn=(25)
+fn=(22)
 cfl=(5)
 cfn=(9)
-calls=177 173
-58 177
-
-fl=(7)
-fn=(25)
-cfl=(5)
-cfn=(9)
-calls=1 193
+calls=1 203
 58 1
-
-fl=(7)
-fn=(25)
-cfl=(5)
-cfn=(9)
-calls=2 180
-58 2
-
-fl=(7)
-fn=(25)
-cfl=(5)
-cfn=(9)
-calls=1 172
-58 1
-
-fl=(7)
-fn=(25)
-81 1
 
 fl=(8) /build/glibc-x07mZ9/glibc-2.24/libio/iofopen.c
-fn=(26) __fopen_internal
-61 2
+fn=(23) __fopen_internal
+61 1
 
 fl=(8)
-fn=(26)
+fn=(23)
 cfl=(5)
-cfn=(13)
-calls=164 336
-86 164
+cfn=(12)
+calls=2 295
+86 2
 
 fl=(8)
-fn=(26)
+fn=(23)
 cfl=(5)
-cfn=(13)
-calls=1 278
+cfn=(12)
+calls=120 336
+86 120
+
+fl=(8)
+fn=(23)
+86 1
+
+fl=(8)
+fn=(23)
+cfl=(5)
+cfn=(12)
+calls=1 433
 86 1
 
 fl=(9) /build/glibc-x07mZ9/glibc-2.24/libio/libioP.h
-fn=(27) IO_validate_vtable
+fn=(24) _IO_acquire_lock_fct
+863 3
+
+fl=(9)
+fn=(25) IO_validate_vtable
 936 1
 
 fl=(10) /build/glibc-x07mZ9/glibc-2.24/malloc/malloc.c
-fn=(28) free_perturb
+fn=(26) free_perturb
 1897 1
 
 fl=(10)
-fn=(29) __GI___libc_malloc
-2923 1
+fn=(27) __GI___libc_malloc
+2939 1
 
 fl=(10)
-fn=(29)
-2944 1
-
-fl=(10)
-fn=(30) __GI___libc_free
+fn=(28) __GI___libc_free
 2954 1
 
 fl=(10)
-fn=(31) _int_malloc
-3391 1
+fn=(28)
+2955 1
 
 fl=(10)
-fn=(31)
-3405 1
+fn=(28)
+2984 1
 
 fl=(10)
-fn=(31)
-3486 1
+fn=(29) _int_malloc
+3357 1
 
 fl=(10)
-fn=(31)
-3723 1
+fn=(29)
+3387 1
 
 fl=(10)
-fn=(31)
+fn=(29)
+3486 3
+
+fl=(10)
+fn=(29)
 3727 1
 
 fl=(10)
-fn=(31)
-3831 1
+fn=(29)
+3838 1
 
 fl=(10)
-fn=(31)
-3857 1
+fn=(29)
+3857 2
 
 fl=(10)
-fn=(32) _int_free
+fn=(30) _int_free
+3879 1
+
+fl=(10)
+fn=(30)
 3910 1
 
 fl=(10)
-fn=(32)
-4000 4
+fn=(30)
+4000 1
 
 fl=(10)
-fn=(32)
-4008 1
-
-fl=(10)
-fn=(32)
-4016 1
-
-fl=(10)
-fn=(32)
-4030 1
-
-fl=(10)
-fn=(32)
-4046 1
-
-fl=(10)
-fn=(32)
-4131 1
-
-fl=(10)
-fn=(32)
-4143 1
+fn=(30)
+4022 1
 
 fl=(11) /build/glibc-x07mZ9/glibc-2.24/math/../sysdeps/ieee754/dbl-64/e_pow.c
-fn=(33) __ieee754_pow
-65 2
-
-fl=(11)
-fn=(33)
-82 1
-
-fl=(11)
-fn=(33)
+fn=(31) __ieee754_pow
 100 1
 
 fl=(11)
-fn=(33)
-111 1
+fn=(32) log1
+327 1
 
-fl=(11)
-fn=(34) log1
-333 2
+fl=(12) /build/glibc-x07mZ9/glibc-2.24/math/w_pow.c
+fn=(33) __pow
+58 1
 
-fl=(11)
+fl=(13) /build/glibc-x07mZ9/glibc-2.24/misc/../sysdeps/posix/usleep.c
+fn=(34) usleep
+26 2
+
+fl=(13)
 fn=(34)
-334 1
+27 1
 
-fl=(12) /build/glibc-x07mZ9/glibc-2.24/misc/../sysdeps/posix/usleep.c
-fn=(35) usleep
-25 1
+fl=(13)
+fn=(34)
+cfl=(14) /build/glibc-x07mZ9/glibc-2.24/posix/../sysdeps/unix/syscall-template.S
+cfn=(35) __nanosleep
+calls=317 84
+32 317
 
-fl=(12)
-fn=(35)
-26 1
-
-fl=(12)
-fn=(35)
-cfl=(13) /build/glibc-x07mZ9/glibc-2.24/posix/../sysdeps/unix/syscall-template.S
-cfn=(36) __nanosleep
-calls=389 84
-32 389
-
-fl=(12)
-fn=(35)
+fl=(13)
+fn=(34)
 33 3
 
-fl=(14) /build/glibc-x07mZ9/glibc-2.24/misc/../sysdeps/unix/syscall-template.S
-fn=(37) ioctl
-84 2568
+fl=(15) /build/glibc-x07mZ9/glibc-2.24/misc/../sysdeps/unix/syscall-template.S
+fn=(36) ioctl
+84 3209
 
-fl=(15) /build/glibc-x07mZ9/glibc-2.24/misc/../sysdeps/unix/sysv/linux/llseek.c
-fn=(38) __llseek
-33 10
+fl=(16) /build/glibc-x07mZ9/glibc-2.24/misc/../sysdeps/unix/sysv/linux/llseek.c
+fn=(37) __llseek
+30 1
 
-fl=(3)
-fn=(5)
-31 1
-
-fl=(3)
-fn=(5)
-42 4
+fl=(16)
+fn=(37)
+33 13
 
 fl=(3)
-fn=(5)
+fn=(6)
+31 2
+
+fl=(3)
+fn=(6)
+37 2
+
+fl=(3)
+fn=(6)
+39 1
+
+fl=(3)
+fn=(6)
+42 3
+
+fl=(3)
+fn=(6)
 46 1
 
 fl=(3)
-fn=(5)
-60 1
+fn=(4)
+66 1
 
 fl=(3)
 fn=(4)
-69 4
-
-fl=(3)
-fn=(4)
-72 1
+69 1
 
 fl=(3)
 fn=(4)
@@ -478,826 +395,880 @@ fn=(4)
 
 fl=(3)
 fn=(4)
-94 1
-
-fl=(3)
-fn=(4)
 101 1
 
-fl=(16) /build/glibc-x07mZ9/glibc-2.24/nptl/../sysdeps/unix/syscall-template.S
-fn=(3)
-84 662
+fl=(17) /build/glibc-x07mZ9/glibc-2.24/nptl/../sysdeps/unix/syscall-template.S
+fn=(38) __close
+84 515
 
-fl=(16)
-fn=(39) __close
-cfl=(17) /build/glibc-x07mZ9/glibc-2.24/nptl/cancellation.c
-cfn=(40) __pthread_disable_asynccancel
-calls=1 81
+fl=(17)
+fn=(5)
+cfl=(18) /build/glibc-x07mZ9/glibc-2.24/nptl/cancellation.c
+cfn=(39) __pthread_enable_asynccancel
+calls=1 37
 84 1
 
-fl=(16)
-fn=(39)
-84 420
+fl=(17)
+fn=(38)
+cfl=(18)
+cfn=(40) __pthread_disable_asynccancel
+calls=1 83
+84 1
 
-fl=(16)
-fn=(6)
-84 37
+fl=(17)
+fn=(3)
+84 46
 
-fl=(16)
-fn=(6)
-cfl=(17)
-cfn=(41) __pthread_enable_asynccancel
+fl=(17)
+fn=(41) __read
+cfl=(18)
+cfn=(39)
 calls=1 42
 84 1
 
-fl=(16)
-fn=(3)
-cfl=(17)
-cfn=(40)
-calls=1 94
+fl=(17)
+fn=(5)
+cfl=(18)
+cfn=(39)
+calls=1 60
 84 1
 
-fl=(16)
-fn=(3)
-cfl=(17)
-cfn=(41)
-calls=4 42
-84 4
-
-fl=(16)
-fn=(39)
-cfl=(17)
+fl=(17)
+fn=(38)
+cfl=(18)
 cfn=(40)
 calls=1 75
 84 1
 
-fl=(16)
-fn=(39)
-cfl=(17)
-cfn=(41)
-calls=1 44
-84 1
+fl=(17)
+fn=(5)
+84 687
 
-fl=(16)
-fn=(42) __read
-84 20
+fl=(17)
+fn=(5)
+cfl=(18)
+cfn=(39)
+calls=5 42
+84 5
 
-fl=(16)
-fn=(3)
-cfl=(17)
+fl=(17)
+fn=(5)
+cfl=(18)
 cfn=(40)
-calls=1 75
-84 1
-
-fl=(16)
-fn=(39)
-cfl=(17)
-cfn=(41)
-calls=2 42
+calls=2 81
 84 2
 
-fl=(16)
-fn=(3)
-85 1
+fl=(17)
+fn=(38)
+cfl=(18)
+cfn=(39)
+calls=1 42
+84 1
 
 fl=(17)
 fn=(41)
-31 5
+84 12
 
-fl=(17)
-fn=(41)
+fl=(18)
+fn=(39)
+31 4
+
+fl=(18)
+fn=(39)
+37 1
+
+fl=(18)
+fn=(39)
 42 8
 
-fl=(17)
-fn=(41)
-44 1
+fl=(18)
+fn=(39)
+60 1
 
-fl=(17)
+fl=(18)
 fn=(40)
 66 1
 
-fl=(17)
+fl=(18)
 fn=(40)
 69 2
 
-fl=(17)
+fl=(18)
 fn=(40)
 72 4
 
-fl=(17)
+fl=(18)
 fn=(40)
-75 2
+75 1
 
-fl=(17)
+fl=(18)
 fn=(40)
-81 1
+81 2
 
-fl=(17)
+fl=(18)
 fn=(40)
-94 1
+83 1
 
-fl=(18) /build/glibc-x07mZ9/glibc-2.24/nptl/cleanup_defer_compat.c
-fn=(43) _pthread_cleanup_push_defer
+fl=(19) /build/glibc-x07mZ9/glibc-2.24/nptl/cleanup_defer_compat.c
+fn=(42) _pthread_cleanup_push_defer
 25 2
 
-fl=(18)
-fn=(43)
-30 1
+fl=(19)
+fn=(42)
+54 1
 
-fl=(18)
-fn=(43)
-35 1
+fl=(19)
+fn=(43) _pthread_cleanup_pop_restore
+63 1
 
-fl=(13)
-fn=(36)
-84 389
-
-fl=(13)
-fn=(36)
+fl=(14)
+fn=(35)
 cfl=(3)
-cfn=(5)
-calls=2 42
-84 2
+cfn=(6)
+calls=1 39
+84 1
 
-fl=(13)
-fn=(36)
+fl=(14)
+fn=(35)
+84 314
+
+fl=(14)
+fn=(35)
 cfl=(3)
 cfn=(4)
 calls=1 81
 84 1
 
-fl=(13)
-fn=(36)
+fl=(14)
+fn=(35)
 cfl=(3)
-cfn=(5)
+cfn=(4)
+calls=1 101
+84 1
+
+fl=(14)
+fn=(35)
+cfl=(3)
+cfn=(6)
+calls=3 42
+84 3
+
+fl=(14)
+fn=(35)
+cfl=(3)
+cfn=(6)
+calls=1 37
+84 1
+
+fl=(14)
+fn=(35)
+cfl=(3)
+cfn=(6)
 calls=1 46
 84 1
 
-fl=(19) /build/glibc-x07mZ9/glibc-2.24/stdio-common/../libio/libioP.h
-fn=(27)
+fl=(20) /build/glibc-x07mZ9/glibc-2.24/stdio-common/../libio/libioP.h
+fn=(25)
 939 1
 
-fl=(20) /build/glibc-x07mZ9/glibc-2.24/stdio-common/_itoa.c
+fl=(21) /build/glibc-x07mZ9/glibc-2.24/stdio-common/_itoa.c
 fn=(44) _itoa_word
-179 2
+168 1
 
-fl=(21) /build/glibc-x07mZ9/glibc-2.24/stdio-common/fprintf.c
+fl=(21)
+fn=(44)
+179 1
+
+fl=(22) /build/glibc-x07mZ9/glibc-2.24/stdio-common/fprintf.c
 fn=(45) __fprintf
-27 1
-
-fl=(21)
-fn=(45)
-cfl=(22) /build/glibc-x07mZ9/glibc-2.24/stdio-common/vfprintf.c
+cfl=(23) /build/glibc-x07mZ9/glibc-2.24/stdio-common/vfprintf.c
 cfn=(46) _IO_vfprintf_internal
-calls=1 1690
-32 1
-
-fl=(21)
-fn=(45)
-cfl=(22)
-cfn=(46)
-calls=1 1370
-32 1
-
-fl=(21)
-fn=(45)
-cfl=(22)
-cfn=(46)
-calls=3 1316
+calls=3 1317
 32 3
 
-fl=(21)
+fl=(22)
 fn=(45)
-cfl=(22)
-cfn=(46)
-calls=1 1275
-32 1
-
-fl=(21)
-fn=(45)
-cfl=(22)
-cfn=(46)
-calls=1 1324
-32 1
-
-fl=(21)
-fn=(45)
-cfl=(22)
-cfn=(46)
-calls=1 1317
-32 1
-
-fl=(21)
-fn=(45)
-cfl=(19)
-cfn=(27)
+cfl=(20)
+cfn=(25)
 calls=1 939
 32 1
 
-fl=(21)
+fl=(22)
 fn=(45)
-cfl=(22)
+cfl=(23)
 cfn=(46)
-calls=18 1636
-32 18
+calls=2 1328
+32 2
 
-fl=(21)
+fl=(22)
 fn=(45)
-cfl=(22)
+cfl=(23)
 cfn=(46)
-calls=1 1350
+calls=1 1349
 32 1
 
-fl=(21)
+fl=(22)
+fn=(45)
+cfl=(23)
+cfn=(46)
+calls=1 1609
+32 1
+
+fl=(22)
+fn=(45)
+cfl=(23)
+cfn=(46)
+calls=19 1636
+32 19
+
+fl=(22)
+fn=(45)
+cfl=(23)
+cfn=(46)
+calls=3 1637
+32 3
+
+fl=(22)
+fn=(45)
+cfl=(24) /build/glibc-x07mZ9/glibc-2.24/stdio-common/printf-parse.h
+cfn=(47) __find_specmb
+calls=1 108
+32 1
+
+fl=(22)
+fn=(45)
+cfl=(23)
+cfn=(46)
+calls=1 1316
+32 1
+
+fl=(22)
+fn=(45)
+cfl=(23)
+cfn=(46)
+calls=2 1668
+32 2
+
+fl=(22)
 fn=(45)
 36 1
 
-fl=(22)
-fn=(46)
-1275 1
-
-fl=(22)
-fn=(46)
-1316 3
-
-fl=(22)
-fn=(46)
-1317 1
-
-fl=(22)
-fn=(46)
-1324 1
-
-fl=(22)
-fn=(46)
-1350 1
-
-fl=(22)
-fn=(46)
-1370 1
-
-fl=(22)
-fn=(46)
-1636 14
-
-fl=(22)
-fn=(46)
-cfl=(5)
-cfn=(18)
-calls=2 1339
-1636 2
-
-fl=(22)
-fn=(46)
-cfl=(5)
-cfn=(18)
-calls=1 1345
-1636 1
-
-fl=(22)
-fn=(46)
-cfl=(5)
-cfn=(18)
-calls=1 1322
-1636 1
-
-fl=(22)
-fn=(46)
-1690 1
-
-fl=(23) /build/glibc-x07mZ9/glibc-2.24/string/../sysdeps/arm/memcpy.S
-fn=(47) memcpy
-242 1
-
-fl=(24) /build/glibc-x07mZ9/glibc-2.24/string/strcmp.c
-fn=(48) __GI_strcmp
-38 2
-
 fl=(24)
+fn=(47)
+108 1
+
+fl=(23)
+fn=(46)
+1316 1
+
+fl=(23)
+fn=(46)
+1317 3
+
+fl=(23)
+fn=(46)
+1328 2
+
+fl=(23)
+fn=(46)
+1349 1
+
+fl=(23)
+fn=(46)
+1609 1
+
+fl=(23)
+fn=(46)
+cfl=(5)
+cfn=(17)
+calls=1 1360
+1636 1
+
+fl=(23)
+fn=(46)
+cfl=(5)
+cfn=(17)
+calls=1 1339
+1636 1
+
+fl=(23)
+fn=(46)
+cfl=(5)
+cfn=(17)
+calls=1 1318
+1636 1
+
+fl=(23)
+fn=(46)
+1636 16
+
+fl=(23)
+fn=(46)
+1637 3
+
+fl=(23)
+fn=(46)
+cfl=(5)
+cfn=(17)
+calls=1 1362
+1668 1
+
+fl=(23)
+fn=(46)
+cfl=(5)
+cfn=(17)
+calls=1 1318
+1668 1
+
+fl=(25) /build/glibc-x07mZ9/glibc-2.24/string/strchrnul.c
+fn=(48) __strchrnul
+37 1
+
+fl=(25)
 fn=(48)
+50 1
+
+fl=(26) /build/glibc-x07mZ9/glibc-2.24/string/strcmp.c
+fn=(49) __GI_strcmp
+38 1
+
+fl=(26)
+fn=(49)
 39 1
 
-fl=(24)
-fn=(48)
-40 1
+fl=(26)
+fn=(49)
+40 2
 
-fl=(24)
-fn=(48)
+fl=(26)
+fn=(49)
 45 1
 
-fl=(25) /build/glibc-x07mZ9/glibc-2.24/string/strstr.c
-fn=(49) __GI_strstr
-53 1
+fl=(27) /build/glibc-x07mZ9/glibc-2.24/string/strstr.c
+fn=(50) __GI_strstr
+58 1
 
-fl=(25)
-fn=(49)
-63 1
+fl=(28) /build/glibc-x07mZ9/glibc-2.24/time/../sysdeps/unix/sysv/linux/gettimeofday.c
+fn=(51) __GI___gettimeofday
+34 1
 
-fl=(25)
-fn=(49)
-65 1
+fl=(28)
+fn=(51)
+35 2
 
-fl=(26) /build/glibc-x07mZ9/glibc-2.24/time/../sysdeps/unix/sysv/linux/gettimeofday.c
-fn=(50) __GI___gettimeofday
-34 2
-
-fl=(26)
-fn=(50)
-35 3
-
-fl=(26)
-fn=(50)
+fl=(28)
+fn=(51)
 36 1
 
-fl=(27) /home/pi/Navio2Rasp/C++/Examples/TesteMultiTarefa/../../Navio/Common/InertialSensor.h
-fn=(51) InertialSensor::read_gyroscope
-12 2
+fl=(29) /home/pi/Navio2Rasp/C++/Examples/TesteMultiTarefa/../../Navio/Common/InertialSensor.h
+fn=(52) InertialSensor::read_accelerometer
+11 1
 
-fl=(27)
-fn=(52) InertialSensor::read_magnetometer
-13 3
+fl=(29)
+fn=(53) InertialSensor::read_magnetometer
+13 2
 
-fl=(28) /home/pi/Navio2Rasp/C++/Examples/TesteMultiTarefa/testeMulti.cpp
-fn=(53) acquireMPUData
+fl=(30) /home/pi/Navio2Rasp/C++/Examples/TesteMultiTarefa/testeMulti.cpp
+fn=(54) acquireBarometerData
+89 1
+
+fl=(30)
+fn=(55) acquireMPUData
 119 2
 
-fl=(28)
-fn=(54) acquireLSMData
-141 1
+fl=(30)
+fn=(55)
+120 1
 
-fl=(28)
-fn=(54)
-148 2
+fl=(30)
+fn=(55)
+122 6
 
-fl=(28)
-fn=(55) storeData
-191 1
+fl=(30)
+fn=(55)
+126 1
 
-fl=(28)
-fn=(56) main
-cfl=(12)
-cfn=(35)
-calls=16 32
-305 16
+fl=(30)
+fn=(56) acquireLSMData
+148 1
 
-fl=(28)
-fn=(56)
-cfl=(8)
-cfn=(26)
-calls=39 86
-313 39
+fl=(30)
+fn=(57) main
+cfl=??
+cfn=(58) Led_Navio2::initialize
+calls=1 0
+289 1
 
-fl=(28)
-fn=(56)
-cfl=(21)
-cfn=(45)
+fl=(30)
+fn=(57)
+cfl=(13)
+cfn=(34)
 calls=8 32
-314 8
+305 8
 
-fl=(28)
-fn=(56)
-314 1
-
-fl=(28)
-fn=(56)
-cfl=(7)
-cfn=(25)
-calls=37 58
-315 37
-
-fl=(28)
-fn=(56)
+fl=(30)
+fn=(57)
 cfl=(8)
-cfn=(26)
-calls=43 86
-325 43
+cfn=(23)
+calls=29 86
+313 29
 
-fl=(28)
-fn=(56)
-cfl=(21)
+fl=(30)
+fn=(57)
+cfl=(22)
 cfn=(45)
-calls=5 32
-326 5
+calls=6 32
+314 6
 
-fl=(28)
-fn=(56)
+fl=(30)
+fn=(57)
 cfl=(7)
-cfn=(25)
-calls=54 58
-327 54
+cfn=(22)
+calls=45 58
+315 45
 
-fl=(28)
-fn=(56)
-cfl=(7)
-cfn=(25)
-calls=1 81
-327 1
+fl=(30)
+fn=(57)
+cfl=(9)
+cfn=(24)
+calls=1 863
+315 1
 
-fl=(28)
-fn=(56)
+fl=(30)
+fn=(57)
+315 1
+
+fl=(30)
+fn=(57)
 cfl=(8)
-cfn=(26)
-calls=39 86
-337 39
+cfn=(23)
+calls=32 86
+325 32
 
-fl=(28)
-fn=(56)
-cfl=(21)
-cfn=(45)
-calls=7 32
-338 7
-
-fl=(28)
-fn=(56)
-cfl=(21)
-cfn=(45)
-calls=1 36
-338 1
-
-fl=(28)
-fn=(56)
-cfl=(7)
-cfn=(25)
-calls=50 58
-339 50
-
-fl=(28)
-fn=(56)
+fl=(30)
+fn=(57)
 cfl=(5)
 cfn=(8)
 calls=1 149
-349 1
+325 1
 
-fl=(28)
-fn=(56)
+fl=(30)
+fn=(57)
+cfl=(22)
+cfn=(45)
+calls=1 36
+326 1
+
+fl=(30)
+fn=(57)
+cfl=(22)
+cfn=(45)
+calls=10 32
+326 10
+
+fl=(30)
+fn=(57)
+cfl=(9)
+cfn=(24)
+calls=1 863
+327 1
+
+fl=(30)
+fn=(57)
+cfl=(7)
+cfn=(22)
+calls=40 58
+327 40
+
+fl=(30)
+fn=(57)
+337 1
+
+fl=(30)
+fn=(57)
 cfl=(8)
-cfn=(26)
-calls=44 86
-349 44
+cfn=(23)
+calls=33 86
+337 33
 
-fl=(28)
-fn=(56)
-cfl=(21)
+fl=(30)
+fn=(57)
+cfl=(22)
 cfn=(45)
 calls=8 32
-350 8
+338 8
 
-fl=(28)
-fn=(56)
+fl=(30)
+fn=(57)
 cfl=(7)
-cfn=(25)
-calls=41 58
-351 41
+cfn=(22)
+calls=29 58
+339 29
 
-fl=(29) /usr/include/c++/6/bits/move.h
-fn=(57) std::forward
-77 2
+fl=(30)
+fn=(57)
+cfl=(9)
+cfn=(24)
+calls=1 863
+339 1
 
-fl=(29)
-fn=(58) std::move
-101 1
+fl=(30)
+fn=(57)
+cfl=(7)
+cfn=(22)
+calls=1 56
+339 1
 
-fl=(29)
-fn=(58)
-102 1
+fl=(30)
+fn=(57)
+cfl=(8)
+cfn=(23)
+calls=29 86
+349 29
 
-fl=(30) /usr/include/c++/6/bits/stl_iterator.h
-fn=(59) __gnu_cxx::operator!=
-880 1
+fl=(30)
+fn=(57)
+cfl=(22)
+cfn=(45)
+calls=10 32
+350 10
 
-fl=(31) /usr/include/c++/6/bits/stl_vector.h
-fn=(60) std::vector::end
-567 1
+fl=(30)
+fn=(57)
+cfl=(7)
+cfn=(22)
+calls=1 56
+351 1
+
+fl=(30)
+fn=(57)
+351 1
+
+fl=(30)
+fn=(57)
+cfl=(7)
+cfn=(22)
+calls=34 58
+351 34
+
+fl=(31) /usr/include/c++/6/bits/stl_iterator.h
+fn=(59) __gnu_cxx::__normal_iterator::__normal_iterator
+776 2
 
 fl=(31)
-fn=(61) std::vector::push_back
-933 1
+fn=(60) __gnu_cxx::__normal_iterator::operator*
+790 1
 
 fl=(31)
-fn=(61)
-cfl=(32) /usr/include/c++/6/bits/vector.tcc
-cfn=(62) std::vector::emplace_back
-calls=1 94
-933 1
+fn=(61) __gnu_cxx::__normal_iterator::base
+842 2
 
-fl=(32)
-fn=(62)
-94 1
+fl=(32) /usr/include/c++/6/bits/stl_vector.h
+fn=(62) std::vector::end
+566 1
+
+fl=(33) /usr/include/c++/6/ext/new_allocator.h
+fn=(63) __gnu_cxx::new_allocator::construct
+119 1
+
+fl=(34) /usr/include/c++/6/new
+fn=(64) operator
+147 1
 
 fl=??
-fn=(63) MPU9250::ReadRegs
-cfl=(12)
-cfn=(35)
+fn=(65) 0xffff0fe4
+0 2
+
+fl=??
+fn=(66) MPU9250::update
+cfl=??
+cfn=(67) MPU9250::ReadRegs
+calls=462 0
+0 462
+
+fl=??
+fn=(68) I2Cdev::writeBytes
+cfl=(17)
+cfn=(3)
+calls=27 84
+0 27
+
+fl=??
+fn=(67)
+cfl=(13)
+cfn=(34)
+calls=42 32
+0 42
+
+fl=??
+fn=(69) 0xffff0fe0
+0 15
+
+fl=??
+fn=(70) 0x7ec3e33c
+0 1
+
+fl=??
+fn=(71) LSM9DS1::ReadRegs
+cfl=(13)
+cfn=(34)
 calls=1 33
 0 1
 
 fl=??
-fn=(64) 0x7efc93b4
-0 1
-
-fl=??
-fn=(65) SPIdev::transfer
-0 14
-
-fl=??
-fn=(66) 0x7efc93a4
-0 1
-
-fl=??
-fn=(67) I2Cdev::readBytes
-cfl=(16)
-cfn=(3)
-calls=15 84
-0 15
-
-fl=??
-fn=(65)
-cfl=(16)
-cfn=(3)
-calls=639 84
-0 639
-
-fl=??
-fn=(68) MPU9250::update
+fn=(72) LSM9DS1::update
 cfl=??
-cfn=(63)
-calls=429 0
-0 429
+cfn=(71)
+calls=1896 0
+0 1896
 
 fl=??
-fn=(67)
-cfl=(16)
-cfn=(42)
-calls=20 84
+fn=(73) Navio::Pin::getRaspberryPiVersion
+cfl=(8)
+cfn=(23)
+calls=1 86
+0 1
+
+fl=??
+fn=(74) MS5611::readPressure
+cfl=??
+cfn=(75) I2Cdev::readBytes
+calls=20 0
 0 20
 
 fl=??
-fn=(69) MPU9250::WriteReg
+fn=(76) 0x7ec3e75c
 0 1
 
 fl=??
-fn=(70) __nss_passwd_lookup
+fn=(77) MPU9250::WriteReg
 0 2
 
 fl=??
-fn=(71) __h_errno
-0 1
-
-fl=??
-fn=(63)
-cfl=??
-cfn=(65)
-calls=362 0
-0 362
-
-fl=??
-fn=(72) LSM9DS1::ReadRegs
-cfl=(12)
-cfn=(35)
-calls=193 32
-0 193
-
-fl=??
-fn=(73) MS5611::refreshTemperature
-cfl=??
-cfn=(74) I2Cdev::writeBytes
-calls=22 0
-0 22
-
-fl=??
-fn=(75) 0x7efc9358
-0 1
-
-fl=??
-fn=(76) 0x7efc96fc
+fn=(78) memcmp
 0 1
 
 fl=??
 fn=(72)
-cfl=??
-cfn=(65)
-calls=1901 0
-0 1901
+0 17
 
 fl=??
-fn=(77) memset
-0 16
+fn=(79) 0x7ec3e764
+0 2
 
 fl=??
-fn=(78) 0x7efc9328
-0 1
-
-fl=??
-fn=(79) 0x7efc9408
-0 1
-
-fl=??
-fn=(80) 0x7efc9764
-0 1
-
-fl=??
-fn=(81) 0x7efc975c
-0 1
-
-fl=??
-fn=(74)
-cfl=(16)
-cfn=(39)
+fn=(75)
+cfl=(17)
+cfn=(41)
 calls=13 84
 0 13
 
 fl=??
-fn=(82) 0x7efc9318
+fn=(67)
+cfl=??
+cfn=(80) SPIdev::transfer
+calls=415 0
+0 415
+
+fl=??
+fn=(71)
+cfl=??
+cfn=(80)
+calls=1718 0
+0 1718
+
+fl=??
+fn=(81) __nss_passwd_lookup
 0 2
 
 fl=??
-fn=(65)
-cfl=(16)
-cfn=(39)
-calls=405 84
-0 405
-
-fl=??
-fn=(83) 0x7efc933c
-0 1
-
-fl=??
-fn=(63)
-cfl=(12)
-cfn=(35)
-calls=57 32
-0 57
-
-fl=??
-fn=(72)
-cfl=(12)
-cfn=(35)
-calls=2 33
-0 2
-
-fl=??
-fn=(67)
-cfl=(16)
-cfn=(6)
-calls=22 84
-0 22
-
-fl=??
-fn=(68)
+fn=(82) MS5611::readTemperature
 cfl=??
-cfn=(69)
-calls=1360 0
-0 1360
+cfn=(75)
+calls=31 0
+0 31
 
 fl=??
-fn=(84) MS5611::readPressure
-cfl=??
-cfn=(67)
-calls=30 0
-0 30
-
-fl=??
-fn=(67)
-cfl=(16)
-cfn=(39)
-calls=6 84
-0 6
-
-fl=??
-fn=(85) 0x7efc96e4
-0 1
-
-fl=??
-fn=(86) 0x7efc9300
-0 1
-
-fl=??
-fn=(63)
-0 9
-
-fl=??
-fn=(87) 0x7efc937c
-0 1
-
-fl=??
-fn=(67)
-cfl=(14)
-cfn=(37)
-calls=1 84
-0 1
-
-fl=??
-fn=(88) 0xffff0fe0
-0 12
-
-fl=??
-fn=(74)
-cfl=(16)
-cfn=(6)
-calls=16 84
-0 16
-
-fl=??
-fn=(89) MS5611::readTemperature
-cfl=??
-cfn=(67)
-calls=34 0
-0 34
-
-fl=??
-fn=(69)
-cfl=??
-cfn=(65)
-calls=1359 0
-0 1359
-
-fl=??
-fn=(90) LSM9DS1::update
-cfl=??
-cfn=(72)
-calls=2101 0
-0 2101
-
-fl=??
-fn=(91) memcmp
-0 1
-
-fl=??
-fn=(90)
-0 44
-
-fl=??
-fn=(92) 0x7efc93c0
-0 1
-
-fl=??
-fn=(74)
-cfl=(14)
-cfn=(37)
-calls=1 84
-0 1
-
-fl=??
-fn=(93) MS5611::refreshPressure
-cfl=??
-cfn=(74)
-calls=21 0
-0 21
-
-fl=??
-fn=(94) LSM9DS1::rotate
-0 1
-
-fl=??
-fn=(65)
-cfl=(14)
-cfn=(37)
-calls=2565 84
-0 2565
-
-fl=??
-fn=(95) 0x7efc96b8
+fn=(75)
 0 1
 
 fl=??
 fn=(68)
+cfl=(17)
+cfn=(38)
+calls=7 84
+0 7
+
+fl=??
+fn=(67)
+0 4
+
+fl=??
+fn=(80)
+cfl=(17)
+cfn=(5)
+calls=673 84
+0 673
+
+fl=??
+fn=(75)
+cfl=(15)
+cfn=(36)
+calls=2 84
+0 2
+
+fl=??
+fn=(67)
+cfl=(13)
+cfn=(34)
+calls=1 33
+0 1
+
+fl=??
+fn=(80)
+0 15
+
+fl=??
+fn=(66)
+cfl=??
+cfn=(77)
+calls=2262 0
+0 2262
+
+fl=??
+fn=(77)
+cfl=??
+cfn=(80)
+calls=2261 0
+0 2261
+
+fl=??
+fn=(75)
+cfl=(17)
+cfn=(5)
+calls=10 84
+0 10
+
+fl=??
+fn=(68)
+cfl=(17)
+cfn=(5)
+calls=13 84
 0 13
 
 fl=??
-fn=(96) 0x7efc9314
+fn=(83) 0x7ec3e6d4
 0 1
 
 fl=??
-fn=(90)
+fn=(84) _init
+0 8
+
+fl=??
+fn=(85) Navio::Pin::init
 cfl=??
-cfn=(65)
+cfn=(73)
 calls=1 0
 0 1
 
 fl=??
-fn=(97) MS5611::calculatePressureAndTemperature
-0 1
-
-fl=??
-fn=(72)
-0 5
-
-fl=??
-fn=(98) _init
+fn=(71)
 0 11
 
 fl=??
-fn=(99) 0x7efc9340
+fn=(75)
+cfl=(17)
+cfn=(38)
+calls=6 84
+0 6
+
+fl=??
+fn=(72)
+cfl=??
+cfn=(80)
+calls=1 0
 0 1
 
 fl=??
-fn=(100) 0x7efc9320
-0 1
+fn=(66)
+0 21
 
 fl=??
-fn=(74)
-cfl=(16)
+fn=(75)
+cfl=(17)
 cfn=(3)
-calls=13 84
-0 13
+calls=19 84
+0 19
+
+fl=??
+fn=(86) MS5611::refreshPressure
+cfl=??
+cfn=(68)
+calls=29 0
+0 29
+
+fl=??
+fn=(87) __h_errno
+0 2
+
+fl=??
+fn=(88) 0x7ec3e408
+0 1
+
+fl=??
+fn=(89) memset
+0 20
+
+fl=??
+fn=(68)
+cfl=(15)
+cfn=(36)
+calls=1 84
+0 1
+
+fl=??
+fn=(90) RGBled::initialize
+cfl=??
+cfn=(85)
+calls=1 0
+0 1
+
+fl=??
+fn=(80)
+cfl=(15)
+cfn=(36)
+calls=3203 84
+0 3203
+
+fl=??
+fn=(71)
+cfl=(13)
+cfn=(34)
+calls=166 32
+0 166
+
+fl=??
+fn=(91) 0x7ec3e328
+0 1
+
+fl=??
+fn=(80)
+cfl=(17)
+cfn=(38)
+calls=504 84
+0 504
+
+fl=??
+fn=(92) MS5611::refreshTemperature
+cfl=??
+cfn=(68)
+calls=19 0
+0 19
+
+fl=??
+fn=(58)
+cfl=??
+cfn=(90)
+calls=1 0
+0 1
 
